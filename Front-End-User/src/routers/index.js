@@ -15,7 +15,6 @@ import OrderPage from "../pages/OrderPage";
 import PaymentPage from "../pages/PaymentPage";
 import PaymentResult from "../pages/PaymentResult";
 import FavoritesPage from "../pages/FavoritesPage";
-import PurchasePage from "../pages/PurchasePage";
 import HotDealPage from "../pages/HotDealPage";
 
 const router = createBrowserRouter([
@@ -86,10 +85,6 @@ const router = createBrowserRouter([
       {
         path: "hotdeal",
         element: <HotDealPage />,
-      },
-      {
-        path: "purchase",
-        element: <PurchasePage />,
       },
       // {
       //   path: "admin-panel",
