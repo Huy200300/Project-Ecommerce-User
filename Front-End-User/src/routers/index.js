@@ -86,20 +86,6 @@ const router = createBrowserRouter([
         path: "hotdeal",
         element: <HotDealPage />,
       },
-      // {
-      //   path: "admin-panel",
-      //   element: <AdminPanel />,
-      //   children: [
-      //     {
-      //       path: "all-users",
-      //       element: <AllUsers />,
-      //     },
-      //     {
-      //       path: "all-products",
-      //       element: <AllProducts />,
-      //     },
-      //   ],
-      // },
     ],
   },
 ]);
