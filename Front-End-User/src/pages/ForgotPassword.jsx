@@ -42,12 +42,12 @@ const ForgotPassword = () => {
 
   }
   return (
-    <div className='mt-14 bgRecovey'>
+    <div className=' bgRecovey'>
       <div className="max-w-screen-xl mx-auto">
         <Toaster position='top-center' reverseOrder={false}></Toaster>
         <div className='flex justify-center items-center'>
           <div className={styles.glass}>
-            <div className="title flex flex-col items-center">
+            <div className="title flex flex-col items-center mt-11">
               <h4 className='text-5xl font-bold'>Xác nhận</h4>
               <span className='py-4 text-xl w-2/3 text-center font-semibold text-gray-500'>
                 Nhập OTP để khôi phục mật khẩu.
