@@ -4,7 +4,6 @@ import displayCurrency from "../helpers/displayCurrency";
 import translatedCategory from "../helpers/translatedCategory";
 import { useEffect, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
-import scrollTop from "../helpers/scrollTop";
 
 const CategoryWiseProductDisplay = ({ category, heading, excludeProductId }) => {
     const [data, setData] = useState([]);

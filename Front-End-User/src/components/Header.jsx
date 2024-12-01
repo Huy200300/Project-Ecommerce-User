@@ -16,7 +16,6 @@ import FavoritesDropdown from './FavoritesDropdown';
 import SearchDropdown from './SearchDropdown';
 import productCategory from '../helpers/productCategory';
 import { BiChevronDown } from 'react-icons/bi';
-import SidebarMenu from './SidebarMenu';
 
 const Header = () => {
     const [menuDisplay, setMenuDisplay] = useState(false);
@@ -106,13 +105,6 @@ const Header = () => {
         setIsOpen(false)
         setIsOpenT(false)
     }
-
-    const productCategories = [
-        { id: 1, title: "Apple (iPhone)", items: ["iPhone 16 Series", "iPhone 15 Series", "iPhone 14 Series"] },
-        { id: 2, title: "Samsung", items: ["Galaxy AI", "Galaxy S Series", "Galaxy A Series"] },
-        { id: 3, title: "Xiaomi", items: ["Poco Series", "Xiaomi Series", "Redmi Note Series"] },
-        { id: 4, title: "Thương hiệu khác", items: ["Tecno", "Realme", "Vivo", "ZTE"] },
-    ];
 
     return (
         <div>
