@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   const cartRef = useRef(cart);
 
   useEffect(() => {
-    cartRef?.current = cart;
+    cartRef.current = cart;
   }, [cart]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const CartProvider = ({ children }) => {
     );
 
     if (existingProduct) {
-      return toast?.error("Sản phẩm đã được cập nhật trong giỏ hàng");
+      return toast.error("Sản phẩm đã được cập nhật trong giỏ hàng");
     } else {
       // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới vào giỏ
       const updatedCart = [...cart, { ...product, amount: count }];

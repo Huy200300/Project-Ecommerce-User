@@ -53,10 +53,10 @@ const VerticalCardProduct = ({ category, heading }) => {
     }, [category]);
 
     const scrollRight = () => {
-        scrollElement?.current?.scrollLeft += 259.6
+        scrollElement.current.scrollLeft += 259.6
     }
     const scrollLeft = () => {
-        scrollElement?.current?.scrollLeft -= 259.6
+        scrollElement.current.scrollLeft -= 259.6
     }
 
     const handleShowMore = () => {

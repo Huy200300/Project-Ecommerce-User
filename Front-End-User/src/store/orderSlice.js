@@ -18,10 +18,10 @@ export const orderSlice = createSlice({
         (item) => item?.product === orderItem?.product
       );
       if (itemOrder) {
-        itemOrder?.amount += orderItem?.amount;
-        state?.isSucessOrder = true;
+        itemOrder.amount += orderItem.amount;
+        state.isSucessOrder = true;
       } else {
-        state?.orderItems?.push(orderItem);
+        state.orderItems.push(orderItem);
       }
     },
     selectedOrder: (state, action) => {

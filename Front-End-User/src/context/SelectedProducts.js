@@ -42,7 +42,7 @@ export const SelectedProductsProvider = ({ children }) => {
       "selectedProducts",
       JSON?.stringify(updatedSelectedProducts)
     );
-    selectedProductsRef?.current = updatedSelectedProducts;
+    selectedProductsRef.current = updatedSelectedProducts;
   };
 
   return (

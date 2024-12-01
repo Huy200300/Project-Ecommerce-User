@@ -16,7 +16,7 @@ export const FavoritesProvider = ({ children }) => {
   const favoritesRef = useRef(favorites);
 
   useEffect(() => {
-    favoritesRef?.current = favorites;
+    favoritesRef.current = favorites;
   }, [favorites]);
 
   useEffect(() => {

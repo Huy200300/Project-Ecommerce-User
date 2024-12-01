@@ -37,10 +37,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
   }, [category])
 
   const scrollRight = () => {
-    scrollElement?.current?.scrollLeft += 350
+    scrollElement.current.scrollLeft += 350
   }
   const scrollLeft = () => {
-    scrollElement?.current?.scrollLeft -= 350
+    scrollElement.current.scrollLeft -= 350
   }
   const handleShowMore = () => {
     navigate(`/product-category?category=${category}`)

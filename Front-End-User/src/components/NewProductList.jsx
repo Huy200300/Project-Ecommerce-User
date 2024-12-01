@@ -45,10 +45,10 @@ const NewProductList = () => {
     useEffect(() => { fetchData() }, [])
 
     const scrollRight = () => {
-        scrollElement?.current?.scrollLeft += 259.6
+        scrollElement.current.scrollLeft += 259.6
     }
     const scrollLeft = () => {
-        scrollElement?.current?.scrollLeft -= 259.6
+        scrollElement.current.scrollLeft -= 259.6
     }
     const handleOnChange = async (value, limit = 10, days = 10) => {
         setLoading(true)
