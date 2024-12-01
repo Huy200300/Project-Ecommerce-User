@@ -45,7 +45,7 @@ const FavoritesDropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                 <div onClick={closeAll} className="origin-top-right absolute z-50 md:-right-[100%] right-0  mt-2 md:w-[400px] w-96 pt-3.5 pb-0 px-3.5 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1 max-h-44 overflow-y-scroll mb-4 flex flex-col gap-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         {
-                            favorites?.length > 0 ? (
+                            favoritesLength > 0 ? (
                                 <>
                                     {favorites?.map((product, index) => (
                                         <div key={index} className="product-widget relative">

@@ -66,7 +66,7 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                 <div onClick={closeAll} className="origin-top-right absolute z-50 right-0 mt-2 w-80 pt-3.5 pb-0 px-3.5 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1 max-h-44 overflow-y-scroll mb-4 flex flex-col gap-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         {
-                            cart?.length > 0 ? (
+                            cartLength > 0 ? (
                                 cart?.map((product, index) => (
                                     <div key={index} className="product-widget relative">
                                         <div className="product-img absolute top-0 left-0 w-[60px]">

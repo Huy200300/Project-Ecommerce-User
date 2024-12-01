@@ -24,7 +24,7 @@ const Cart = () => {
     const { cart, updateCart, cartLength } = useCart();
     const loadingCart = new Array(cartLength).fill(null);
     const navigate = useNavigate();
-    const { favorites, removeFavorite, addToCart } = useFavorites();
+    const { favorites, removeFavorite, addToCart, favoritesLength } = useFavorites();
     const [visibleProducts, setVisibleProducts] = useState(4);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -113,7 +113,7 @@ const Cart = () => {
     }, []);
 
     const selectAllProducts = useCallback(() => {
-        if (selectedProducts?.length === cart?.length) {
+        if (selectedProducts?.length === cartLength) {
             setSelectedProducts([]);
         } else {
             const allProductIds = cart?.map(item => item?._id);
@@ -131,26 +131,26 @@ const Cart = () => {
         addToCart(product);
     };
 
-    const hasItems = cart?.length > 0;
+    const hasItems = cartLength > 0;
     const selectedStorage = cart?.map(item => item?.selectedStorage);
-    const isAllSelected = (selectedProducts?.length === cart?.length && cart?.length > 0);
+    const isAllSelected = (selectedProducts?.length === cartLength && cartLength > 0);
 
     return (
         <div className='max-w-screen-xl mx-auto p-4'>
             <div className=''>
-                {cart?.length > 0 && <div className='flex relative items-end gap-5 pb-6'>
+                {cartLength > 0 && <div className='flex relative items-end gap-5 pb-6'>
                     <h1 className="text-2xl font-bold uppercase">Giỏ Hàng</h1>
                     <span className='font-medium'> <Link to={"/"} className='hover:text-red-500 capitalize cursor-pointer'>trang chủ</Link> / Giỏ Hàng</span>
                     <div className='absolute bottom-0 left-1/2 -ml-[50vw] right-1/2 -mr-[50vw] h-0.5 bg-slate-200 z-10'></div>
                 </div>
                 }
-                {cart?.length > 0 && (
+                {cartLength > 0 && (
                     <Steps totalAmount={selectedProductsTotalPrice} data={itemsDelivery} />
                 )}
             </div>
             <div className='mt-5 p-4'>
                 {
-                    favorites?.length > 0 && (
+                    favoritesLength > 0 && (
                         <div className="p-4 border-2 rounded-lg">
                             <h1 className="text-2xl border-b-2 pb-2 border-black font-bold mb-4 flex items-center justify-between">
                                 <div className='flex items-center '>
@@ -213,7 +213,7 @@ const Cart = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    {visibleProducts < favorites?.length && (
+                                {visibleProducts < favoritesLength && (
                                         <div className="flex justify-center mt-4">
                                             <button
                                                 onClick={handleShowMore}
@@ -237,7 +237,7 @@ const Cart = () => {
                                 <div className='flex gap-1'>
                                     <input type="checkbox" name="" id="" className='' checked={isAllSelected}
                                         onChange={selectAllProducts} />
-                                    <span>Tất cả {cart?.length} sản phẩm</span>
+                                    <span>Tất cả {cartLength} sản phẩm</span>
                                 </div>
                                 <span>Đơn giá</span>
                                 <span>Số lượng</span>

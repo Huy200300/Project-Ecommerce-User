@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 
 const FavoritesPage = () => {
-  const { favorites, removeFavorite, addFavorite } = useFavorites();
+  const { favorites, removeFavorite, addFavorite, favoritesLength } = useFavorites();
   const [compareList, setCompareList] = useState([]);
   const [showMoreLike, setShowMoreLike] = useState(null);
   const [dataShowMoreLike, setDataShowMoreLike] = useState([]);
@@ -70,7 +70,7 @@ const FavoritesPage = () => {
         <div className='absolute bottom-0 left-1/2 -ml-[50vw] right-1/2 -mr-[50vw] h-0.5 bg-slate-200 z-10'></div>
       </div>
       {
-        favorites?.length > 0 ? (
+        favoritesLength > 0 ? (
           <div className="grid grid-cols-4 mt-10 gap-7">
             {favorites?.map((product) => (
               <div key={product._id} className={`relative ${showMoreLike === product?._id ? "col-span-full" : "col-span-2"}"`}>

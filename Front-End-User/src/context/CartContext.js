@@ -40,7 +40,9 @@ export const CartProvider = ({ children }) => {
             return cartItem;
           });
 
-        if (JSON?.stringify(updatedCart) !== JSON?.stringify(cartRef?.current)) {
+        if (
+          JSON?.stringify(updatedCart) !== JSON?.stringify(cartRef?.current)
+        ) {
           setCart(updatedCart);
           localStorage?.setItem("cart", JSON?.stringify(updatedCart));
           cartRef.current = updatedCart;

@@ -47,9 +47,9 @@ const CartSummary = ({ handlePayment, selectedProducts, products }) => {
                 <span className="text-lg text-gray-900">{displayCurrency(total)}</span>
             </div>
             <button
-                disabled={selectedProducts?.length === 0}
+                disabled={(selectedProducts?.length || 0) === 0}
                 onClick={handlePayment}
-                className={`mt-6 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${selectedProducts?.length === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
+                className={`mt-6 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${(selectedProducts?.length || 0) === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
             >
                 Thanh toán
             </button>

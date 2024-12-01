@@ -35,7 +35,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
     } = useAddressSelection();
 
     const [selectedAddress, setSelectedAddress] = useState(() => {
-        if (!dataShipping || dataShipping?.length === 0) {
+        if (!dataShipping || (dataShipping?.length || 0) === 0) {
             return null;
         }
         const defaultAddr = dataShipping?.find(address => address?.defaultAddress);

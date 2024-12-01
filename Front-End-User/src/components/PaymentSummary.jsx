@@ -92,9 +92,9 @@ const PaymentSummary = ({ selectedProducts, handleChange, isOpen, shippingOrClau
                 </div>
 
                 <button
-                    disabled={selectedProducts?.length === 0}
+                    disabled={(selectedProducts?.length||0) === 0}
                     onClick={(e) => handlePlaceOrder(e, selectedProducts)}
-                    className={`bg-red-500 uppercase rounded-full text-white w-full py-3 mt-6 font-bold hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 ${selectedProducts?.length === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
+                    className={`bg-red-500 uppercase rounded-full text-white w-full py-3 mt-6 font-bold hover:bg-red-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 ${(selectedProducts?.length||0) === 0 ? 'cursor-not-allowed opacity-50' : ''}`}
                 >
                     {paymentMethod === 'momo' || paymentMethod === 'vnpay' ? "thanh toán" : "đặt hàng"}
                 </button>

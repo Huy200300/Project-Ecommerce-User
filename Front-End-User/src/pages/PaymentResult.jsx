@@ -73,9 +73,6 @@ const PaymentResult = () => {
 
                                                 <li key={product._id} className="flex items-center mb-2">
                                                     {
-                                                        console.log(product)
-                                                    }
-                                                    {
                                                         product?.colors?.length > 0 ? <img src={product.selectedColorImage} alt={product.name} className="w-16 h-16 mr-4" /> :
                                                             <img src={product.productImage[0]} alt={product.name} className="w-16 h-16 mr-4" />
                                                     }
