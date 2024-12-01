@@ -46,7 +46,7 @@ const CustomGrid = () => {
     ];
 
     return (
-        <div className="container mx-auto my-10 border">
+        <div className="max-w-screen-xl mx-auto my-10 border">
             <div className="grid grid-cols-4 grid-rows-2 gap-4 max-h-[180px]">
                 {categories?.map((category, index) => (
                     <Link to={`/product-category?category=${category?.value}`}

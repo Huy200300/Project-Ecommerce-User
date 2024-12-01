@@ -167,7 +167,7 @@ const FavoritesPage = () => {
           >
             <FaTimes className="text-gray-500 hover:text-red-500" />
           </button>
-          <h3 className="text-xl font-bold mb-4">Similar items</h3>
+          <h3 className="text-xl font-bold mb-4">Các mặt hàng tương tự</h3>
           <div className="relative">
             <button
               onClick={() => document.querySelector('.similar-items-scroll').scrollBy({ left: -200, behavior: 'smooth' })}
