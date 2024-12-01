@@ -43,7 +43,7 @@ export const FavoritesProvider = ({ children }) => {
         ) {
           setFavorites(updatedFavorites);
           localStorage?.setItem("cart", JSON?.stringify(updatedFavorites));
-          favoritesRef?.current = updatedFavorites;
+          favoritesRef.current = updatedFavorites;
         }
       } catch (error) {
         console.error("Error fetching updated products:", error);

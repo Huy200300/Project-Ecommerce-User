@@ -43,7 +43,7 @@ export const CartProvider = ({ children }) => {
         if (JSON?.stringify(updatedCart) !== JSON?.stringify(cartRef?.current)) {
           setCart(updatedCart);
           localStorage?.setItem("cart", JSON?.stringify(updatedCart));
-          cartRef?.current = updatedCart;
+          cartRef.current = updatedCart;
         }
       } catch (error) {
         console.error("Error fetching updated products:", error);

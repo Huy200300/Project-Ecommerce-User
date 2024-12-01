@@ -25,14 +25,14 @@ export const orderSlice = createSlice({
       }
     },
     selectedOrder: (state, action) => {
-      const { selectedProductsTotalPrice, selectedProducts } = action?.payload;
-      state?.orderItemsSelected = selectedProductsTotalPrice;
-      state?.selectedProducts = selectedProducts;
+      const { selectedProductsTotalPrice, selectedProducts } = action.payload;
+      state.orderItemsSelected = selectedProductsTotalPrice;
+      state.selectedProducts = selectedProducts;
     },
     qtyOrder: (state, action) => {
-      const { newQty, id } = action?.payload;
-      state?.count = newQty;
-      state?.id = id;
+      const { newQty, id } = action.payload;
+      state.count = newQty;
+      state.id = id;
     },
   },
 });
