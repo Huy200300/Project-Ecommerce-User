@@ -36,7 +36,6 @@ async function verifyEmailUser(req, res) {
       success: true,
       error: false,
       data: exist,
-      message: "",
     });
   } catch (error) {
     res.json({
