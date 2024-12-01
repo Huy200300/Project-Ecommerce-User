@@ -25,7 +25,6 @@ async function verifyUser(req, res, next) {
 async function verifyEmailUser(req, res) {
   try {
     const { email } =  req.body;;
-    // check the user existance
     const exist = await UserModel.findOne({ email });
     if (!exist)
       return res.json({
@@ -37,7 +36,7 @@ async function verifyEmailUser(req, res) {
       success: true,
       error: false,
       data: exist,
-      message: "Oki",
+      message: "",
     });
   } catch (error) {
     res.json({

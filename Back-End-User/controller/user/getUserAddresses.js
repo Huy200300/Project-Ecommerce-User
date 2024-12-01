@@ -3,7 +3,6 @@ const userModel = require("../../model/userModel");
 async function getUserAddresses(req, res) {
   try {
     const { userId } = req.params;
-    console.log(userId);
 
     const user = await userModel.findById(userId);
 
