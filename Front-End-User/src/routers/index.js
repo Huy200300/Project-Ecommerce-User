@@ -22,70 +22,70 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      // {
-      //   path: "",
-      //   element: <Home />,
-      // },
-      // {
-      //   path: "login",
-      //   element: <Login />,
-      // },
-      // {
-      //   path: "forgot-password",
-      //   element: <ForgotPassword />,
-      // },
-      // {
-      //   path: "payment",
-      //   element: <PaymentPage />,
-      // },
-      // {
-      //   path: "sign-up",
-      //   element: <SignUp />,
-      // },
-      // {
-      //   path: "product-category",
-      //   element: <CategoryProduct />,
-      // },
-      // {
-      //   path: "product/:id",
-      //   element: <ProductDetail />,
-      // },
-      // {
-      //   path: "cart",
-      //   element: <Cart />,
-      // },
-      // {
-      //   path: "order",
-      //   element: <OrderPage />,
-      // },
-      // {
-      //   path: "favorites",
-      //   element: <FavoritesPage />,
-      // },
-      // {
-      //   path: "payment-result",
-      //   element: <PaymentResult />,
-      // },
-      // {
-      //   path: "search",
-      //   element: <SearchProduct />,
-      // },
-      // {
-      //   path: "profile",
-      //   element: <ProfileUser />,
-      // },
-      // {
-      //   path: "recovery",
-      //   element: <Recovery />,
-      // },
-      // {
-      //   path: "reset",
-      //   element: <Reset />,
-      // },
-      // {
-      //   path: "hotdeal",
-      //   element: <HotDealPage />,
-      // },
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "payment",
+        element: <PaymentPage />,
+      },
+      {
+        path: "sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "product-category",
+        element: <CategoryProduct />,
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "order",
+        element: <OrderPage />,
+      },
+      {
+        path: "favorites",
+        element: <FavoritesPage />,
+      },
+      {
+        path: "payment-result",
+        element: <PaymentResult />,
+      },
+      {
+        path: "search",
+        element: <SearchProduct />,
+      },
+      {
+        path: "profile",
+        element: <ProfileUser />,
+      },
+      {
+        path: "recovery",
+        element: <Recovery />,
+      },
+      {
+        path: "reset",
+        element: <Reset />,
+      },
+      {
+        path: "hotdeal",
+        element: <HotDealPage />,
+      },
     ],
   },
 ]);
