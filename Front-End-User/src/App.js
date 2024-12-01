@@ -78,25 +78,27 @@ function App() {
             updateCartProductCount,
           }}
         >
-          <Header />
-          <main id="main-content" className="min-h-[calc(100vh-140px)]">
-            <Outlet />
-          </main>
-          {/* <CompareProductsModal /> */}
-          <Footer />
-          {/* <TabProvider>
+          <TabProvider>
             <ToastContainer position="top-right" />
             <ProductCompareProvider>
               <FavoritesProvider>
                 <SelectedProductsProvider>
                   <CartProvider>
-
+                    <Header />
+                    <main
+                      id="main-content"
+                      className="min-h-[calc(100vh-140px)]"
+                    >
+                      <Outlet />
+                    </main>
+                    <CompareProductsModal />
+                    <Footer />
                   </CartProvider>
                 </SelectedProductsProvider>
               </FavoritesProvider>
             </ProductCompareProvider>
             <ScrollToTopButton />
-          </TabProvider> */}
+          </TabProvider>
         </Context.Provider>
       )}
     </>
