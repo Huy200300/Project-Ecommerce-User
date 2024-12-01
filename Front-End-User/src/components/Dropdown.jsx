@@ -20,7 +20,7 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
             updateCart(parsedCart);
         } catch (error) {
             console.error("Error parsing cart from localStorage:", error);
-            updateCart([]); // Đặt giá trị mặc định nếu có lỗi
+            updateCart([]);
         }
     }, [updateCart]);
 
