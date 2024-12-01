@@ -82,7 +82,7 @@ function App() {
           <main id="main-content" className="min-h-[calc(100vh-140px)]">
             <Outlet />
           </main>
-          <CompareProductsModal />
+          {/* <CompareProductsModal /> */}
           <Footer />
           {/* <TabProvider>
             <ToastContainer position="top-right" />
