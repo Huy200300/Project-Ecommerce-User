@@ -70,7 +70,7 @@ const ForgotPassword = () => {
             </form>
 
             <div className="text-center py-4">
-              <span className='text-gray-500 font-semibold'>Không thể nhận OTP? <button onClick={resendOTP} className='text-red-500 hover:text-red-600'>Gửi lại</button> </span>
+              <span className='text-gray-500 font-semibold'>Tôi chưa nhận được OTP? <button onClick={resendOTP} className='text-red-500 hover:text-red-600'>Gửi lại</button> </span>
             </div>
 
           </div>
