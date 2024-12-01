@@ -10,9 +10,9 @@ const CategoryWiseProductDisplay = ({ category, heading, excludeProductId }) => 
     const [loading, setLoading] = useState(true);
     const loadingList = new Array(7).fill(null);
 
-    const fetchData = async (category) => {
+    const fetchData = async (category, limit = 6, page = 1) => {
         setLoading(true);
-        const categoryProduct = await fetchCategoryWiseProduct(category);
+        const categoryProduct = await fetchCategoryWiseProduct(category, limit, page);
         setLoading(false);
         setData(categoryProduct?.data || []);
     };

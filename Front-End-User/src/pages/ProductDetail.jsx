@@ -175,7 +175,7 @@ const ProductDetail = () => {
 
                         {data?.category && <CategoryWiseProductDisplay
                             category={data?.category}
-                            heading="Sản phẩm đề xuất"
+                            heading="Sản phẩm tương tự"
                             excludeProductId={data?._id}
                         />
                         }
