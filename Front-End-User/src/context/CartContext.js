@@ -107,7 +107,7 @@ export const CartProvider = ({ children }) => {
     );
     setCart(updatedCart);
     localStorage?.setItem("cart", JSON?.stringify(updatedCart));
-    cartRef?.current = updatedCart;
+    cartRef.current = updatedCart;
     toast?.warning("Các sản phẩm đã được xóa khỏi giỏ hàng");
   };
 

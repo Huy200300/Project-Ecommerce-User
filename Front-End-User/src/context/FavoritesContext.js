@@ -84,7 +84,7 @@ export const FavoritesProvider = ({ children }) => {
     const updatedFavorites = favorites?.filter((item) => item?._id !== productId);
     setFavorites(updatedFavorites);
     localStorage?.setItem("favorites", JSON?.stringify(updatedFavorites));
-    favoritesRef?.current = updatedFavorites;
+    favoritesRef.current = updatedFavorites;
     toast?.warning("Sản phẩm đã được xóa khỏi sản phẩm yêu thích");
   };
 
