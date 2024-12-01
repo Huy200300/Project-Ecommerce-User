@@ -43,7 +43,7 @@ const ForgotPassword = () => {
   }
   return (
     <div className='flex justify-center items-center bgRecovey'>
-      <div className="max-w-screen-xl mx-auto h-full">
+      <div className="max-w-screen-xl mx-auto py-14 h-full">
         <Toaster position='top-center' reverseOrder={false}></Toaster>
         <div className='flex justify-center items-center'>
           <div className={styles.glass}>
