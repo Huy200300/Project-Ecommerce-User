@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
-import CategoryGrid from '../components/CategoryGrid'
 
+const CategoryGrid = React.lazy(() => import('../components/CategoryGrid'))
 const Banner = React.lazy(() => import('../components/Banner'))
 const HorizontalCardProduct = React.lazy(() => import('../components/HorizontalCardProduct'))
 const VerticalCardProduct = React.lazy(() => import('../components/VerticalCardProduct'))
