@@ -85,12 +85,12 @@ function App() {
                 <SelectedProductsProvider>
                   <CartProvider>
                     <Header />
-                    <main
+                    {/* <main
                       id="main-content"
                       className="min-h-[calc(100vh-140px)]"
                     >
                       <Outlet />
-                    </main>
+                    </main> */}
                     <CompareProductsModal />
                     <Footer />
                   </CartProvider>

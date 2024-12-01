@@ -81,7 +81,7 @@ const PaymentResult = () => {
                                                         {
                                                             product?.colors?.length > 0 ? <>
                                                                 <p className="text-gray-500">Màu sắc: {product.selectedColor}</p>
-                                                                
+
                                                             </> :
                                                                 <></>
                                                         }
