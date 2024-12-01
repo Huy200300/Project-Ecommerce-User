@@ -29,7 +29,7 @@ const CategoryWiseProductDisplay = ({ category, heading, excludeProductId }) => 
             <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">{heading}</h2>
             <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
                 {loading ? (
-                    loadingList.map((_, index) => (
+                    loadingList?.map((_, index) => (
                         <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden animate-pulse">
                             <div className="bg-gray-200 h-48"></div>
                             <div className="p-4">
@@ -44,8 +44,8 @@ const CategoryWiseProductDisplay = ({ category, heading, excludeProductId }) => 
                     ))
                 ) : (
                     data
-                        .filter(product => product._id !== excludeProductId)
-                        .map((product) => (
+                        ?.filter(product => product?._id !== excludeProductId)
+                        ?.map((product) => (
                             <Link
                                 to={`/product/${product?._id}`}
                                 key={product?._id}

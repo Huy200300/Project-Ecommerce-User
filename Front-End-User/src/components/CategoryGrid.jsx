@@ -48,19 +48,19 @@ const CustomGrid = () => {
     return (
         <div className="container mx-auto my-10 border">
             <div className="grid grid-cols-4 grid-rows-2 gap-4 max-h-[180px]">
-                {categories.map((category, index) => (
-                    <Link to={`/product-category?category=${category.value}`}
+                {categories?.map((category, index) => (
+                    <Link to={`/product-category?category=${category?.value}`}
                         key={index}
-                        className={`bg-white rounded-lg shadow-md p-4 flex ${category.gap} ${category.flex} ${category.className}`}
+                        className={`bg-white rounded-lg shadow-md p-4 flex ${category?.gap} ${category?.flex} ${category?.className}`}
                     >
                         <div className="flex items-start mb-4">
-                            <p className="text-gray-700 font-semibold text-left w-full">{category.label}</p>
+                            <p className="text-gray-700 font-semibold text-left w-full">{category?.label}</p>
                         </div>
                         <div className="overflow-hidden rounded-md flex justify-center items-center relative">
                             <img
-                                src={category.image}
-                                alt={category.name}
-                                className={`object-cover ${category.height} ${category.width} transition-transform duration-300 hover:scale-110`}
+                                src={category?.image}
+                                alt={category?.name}
+                                className={`object-cover ${category?.height} ${category?.width} transition-transform duration-300 hover:scale-110`}
                             />
                         </div>
                     </Link>

@@ -6,23 +6,23 @@ import { selectedOrder } from '../store/orderSlice';
 const CartSummary = ({ handlePayment, selectedProducts, products }) => {
     const dispatch = useDispatch();
 
-    const selectedProductDetails = selectedProducts.map(productId => {
-        const product = products.find(p => p._id === productId || p.productId?._id === productId);
+    const selectedProductDetails = selectedProducts?.map(productId => {
+        const product = products?.find(p => p?._id === productId || p?.productId?._id === productId);
         if (product) {
-            const quantity = product.quantity || product.amount || 1;
+            const quantity = product?.quantity || product?.amount || 1;
             return { productId, quantity };
         }
         return null;
-    }).filter(product => product !== null);
+    })?.filter(product => product !== null);
 
-    const selectedProductsTotalQuantity = selectedProductDetails.reduce((total, product) => {
-        return total + product.quantity;
+    const selectedProductsTotalQuantity = selectedProductDetails?.reduce((total, product) => {
+        return total + product?.quantity;
     }, 0);
 
-    const selectedProductsTotalPrice = selectedProductDetails.reduce((total, product) => {
-        const prod = products.find(p => p._id === product.productId || p.productId?._id === product.productId);
-        const price = prod.sellingPrice || prod.productId?.sellingPrice || 0;
-        return total + (product.quantity * price);
+    const selectedProductsTotalPrice = selectedProductDetails?.reduce((total, product) => {
+        const prod = products?.find(p => p?._id === product?.productId || p?.productId?._id === product?.productId);
+        const price = prod?.sellingPrice || prod?.productId?.sellingPrice || 0;
+        return total + (product?.quantity * price);
     }, 0);
 
     const total = selectedProductsTotalPrice

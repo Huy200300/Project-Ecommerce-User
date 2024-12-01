@@ -35,7 +35,7 @@ const Recovery = () => {
             })
         })
 
-        const dataApi = await dataResponse.json()
+        const dataApi = await dataResponse?.json()
         if (dataApi?.error) {
             toast.error(dataApi.message)
         } else {

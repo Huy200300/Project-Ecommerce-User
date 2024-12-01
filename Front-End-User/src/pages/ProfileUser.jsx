@@ -21,7 +21,7 @@ const ProfileUser = () => {
 
     useEffect(() => {
         fetchUserDetails()
-        const encryptedData = localStorage.getItem('userData');
+        const encryptedData = localStorage?.getItem('userData');
         if (encryptedData) {
             try {
                 const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
@@ -74,7 +74,7 @@ const ProfileUser = () => {
                 [field]: data[field]
             })
         })
-        const dataApi = await dataResponse.json();
+        const dataApi = await dataResponse?.json();
         if (dataApi?.success) {
             toast.success(dataApi?.message)
         } else {
@@ -102,19 +102,19 @@ const ProfileUser = () => {
                         { label: 'Tên tài khoản:', name: 'name', type: 'text' },
                         { label: 'Email:', name: 'email', type: 'email' },
                         { label: 'Điện thoại:', name: 'phone', type: 'text' }
-                    ].map((field) => (
-                        <div key={field.name} className='flex gap-5 p-2 items-center'>
-                            <label htmlFor={field.name} className='w-1/4 font-medium'>{field.label}</label>
+                    ]?.map((field) => (
+                        <div key={field?.name} className='flex gap-5 p-2 items-center'>
+                            <label htmlFor={field?.name} className='w-1/4 font-medium'>{field?.label}</label>
                             <input
-                                type={field.type}
-                                name={field.name}
-                                value={data[field.name]}
-                                id={field.name}
+                                type={field?.type}
+                                name={field?.name}
+                                value={data[field?.name]}
+                                id={field?.name}
                                 onChange={handleOnChange}
                                 className='outline-none bg-gray-100 border border-gray-300 rounded-md p-2 w-full'
                             />
                             <button
-                                onClick={() => handleUpdate(field.name)}
+                                onClick={() => handleUpdate(field?.name)}
                                 className='px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition'
                             >
                                 Cập nhật

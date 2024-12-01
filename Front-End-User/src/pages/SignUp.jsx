@@ -43,15 +43,15 @@ const SignUp = () => {
                 body: JSON.stringify(data)
             })
 
-            const dataAPI = await dataResponse.json();
+            const dataAPI = await dataResponse?.json();
             if (dataAPI.success) {
-                toast.success(dataAPI.message)
+                toast.success(dataAPI?.message)
                 naviagte("/login")
             } else if (dataAPI.error) {
-                toast.error(dataAPI.message)
+                toast.error(dataAPI?.message)
             }
         } else {
-            toast.error("Please check password and confirm password")
+            toast.error("Vui lòng kiểm tra mật khẩu và xác nhận mật khẩu")
         }
 
 
@@ -95,15 +95,15 @@ const SignUp = () => {
                             </div>
                             <div className="textbox flex items-center flex-col gap-4">
                                 <div className='name flex w-3/4 gap-10'>
-                                    <input name="name" value={data.name} className={styles.textbox} onChange={handleOnChange} type="text" placeholder="Tên của bạn*" required />
-                                    <input name="email" value={data.email} className={styles.textbox} onChange={handleOnChange} type="email" placeholder="Email của bạn*" required />
+                                    <input name="name" value={data?.name} className={styles.textbox} onChange={handleOnChange} type="text" placeholder="Tên của bạn*" required />
+                                    <input name="email" value={data?.email} className={styles.textbox} onChange={handleOnChange} type="email" placeholder="Email của bạn*" required />
                                 </div>
                                 <div className='name flex w-3/4 gap-10'>
-                                    <input name="phone" value={data.phone} className={styles.textbox} style={{width:"100%"}} onChange={handleOnChange} type="text" placeholder="Số điện thoại*" required />
+                                    <input name="phone" value={data?.phone} className={styles.textbox} style={{width:"100%"}} onChange={handleOnChange} type="text" placeholder="Số điện thoại*" required />
                                 </div>
                                 <div className='name flex w-3/4 gap-10'>
                                     <div className=' relative'>
-                                        <input name="password" value={data.password} className={styles.textbox} style={{width:"100%"}} onChange={handleOnChange} type={!showPassword ? "password" : "text"} placeholder="Mật khẩu*" required />
+                                        <input name="password" value={data?.password} className={styles.textbox} style={{width:"100%"}} onChange={handleOnChange} type={!showPassword ? "password" : "text"} placeholder="Mật khẩu*" required />
                                         <div className='cursor-pointer text-2xl absolute abPassword ' onClick={() => setShowPassword((preve) => !preve)}>
                                             <span>
                                                 {
@@ -122,7 +122,7 @@ const SignUp = () => {
                                     </div>
 
                                     <div className='relative'>
-                                        <input name="confirmPassword" value={data.confirmPassword} style={{ width: "100%" }} className={styles.textbox} onChange={handleOnChange} type={!showConFirmPassword ? "password" : "text"} placeholder="Xác nhận*" required />
+                                        <input name="confirmPassword" value={data?.confirmPassword} style={{ width: "100%" }} className={styles.textbox} onChange={handleOnChange} type={!showConFirmPassword ? "password" : "text"} placeholder="Xác nhận*" required />
                                         <div className='cursor-pointer text-2xl absolute abPassword' onClick={() => setShowConfirmPassword((preve) => !preve)}>
                                             <span>
                                                 {

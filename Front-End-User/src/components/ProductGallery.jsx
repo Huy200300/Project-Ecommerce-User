@@ -26,11 +26,11 @@ const ProductGallery = ({ images = [] }) => {
         let index = startIndex;
 
         for (let i = 0; i < itemsToShow; i++) {
-            indices.push(index);
+            indices?.push(index);
             index = (index + 1) % images?.length;
         }
 
-        return indices.map(i => images[i]);
+        return indices?.map(i => images[i]);
     };
 
     const handleScrollUp = () => {
@@ -54,10 +54,10 @@ const ProductGallery = ({ images = [] }) => {
 
     const handleZoomInProduct = useCallback((e) => {
         setZoomImageLoading(true);
-        const { left, top, width, height } = e.target.getBoundingClientRect();
+        const { left, top, width, height } = e?.target?.getBoundingClientRect();
         setZoomImage({
-            x: (e.clientX - left) / width,
-            y: (e.clientY - top) / height,
+            x: (e?.clientX - left) / width,
+            y: (e?.clientY - top) / height,
         });
         setShowNavButtons(true);
     }, []);
@@ -79,7 +79,7 @@ const ProductGallery = ({ images = [] }) => {
                 </button>
 
                 <div className="flex md:flex-col flex-row w-full h-full md:mb-0 mb-6 justify-center gap-5 space-y-2">
-                    {displayImages().map((img, index) => (
+                    {displayImages()?.map((img, index) => (
                         <div
                             key={index}
                             onClick={() => setSelectedImage(img)}

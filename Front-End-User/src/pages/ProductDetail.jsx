@@ -43,9 +43,9 @@ const ProductDetail = () => {
             body: JSON.stringify({ productId: id }),
         });
         setLoading(false);
-        const result = await response.json();
-        setData(result.data);
-        setSelectedColor(result.data.colors?.[0]?.colorName)
+        const result = await response?.json();
+        setData(result?.data);
+        setSelectedColor(result?.data?.colors?.[0]?.colorName)
     };
 
     const fetchProductSpec = async (id) => {
@@ -53,7 +53,7 @@ const ProductDetail = () => {
             method: SummaryAip.specifications_by_id.method,
             credentials: "include"
         })
-        const dataApi = await res.json()
+        const dataApi = await res?.json()
         setDataSpec(dataApi.data)
     }
 
@@ -71,22 +71,22 @@ const ProductDetail = () => {
     };
 
     useEffect(() => {
-        fetchProductDetail(params.id);
-        fetchProductSpec(params.id)
+        fetchProductDetail(params?.id);
+        fetchProductSpec(params?.id)
     }, [params]);
 
     const handleAddToCart = (e, product, count, selectedStorage) => {
         e?.stopPropagation();
         e?.preventDefault();
 
-        const filteredColors = product.colors.filter(color => color.size === selectedStorage);
-        const colorData = product.colors.find(color => color.colorName === selectedColor && color.size === selectedStorage);
+        const filteredColors = product?.colors?.filter(color => color?.size === selectedStorage);
+        const colorData = product?.colors?.find(color => color?.colorName === selectedColor && color?.size === selectedStorage);
         const price = colorData?.price || product.price;
-        const sellingPrice = colorData?.sellingPrice || product.sellingPrice
-        const countInStock = colorData?.countInStock || product.countInStock
+        const sellingPrice = colorData?.sellingPrice || product?.sellingPrice
+        const countInStock = colorData?.countInStock || product?.countInStock
         const productWithSelections = {
-            _id: product._id,
-            productName: product.productName,
+            _id: product?._id,
+            productName: product?.productName,
             price,
             sellingPrice,
             amount: count,
@@ -114,15 +114,15 @@ const ProductDetail = () => {
     };
 
     const getSpecialCategoryValues = () => {
-        return productCategory.map(category => category.value);
+        return productCategory?.map(category => category?.value);
     };
-    const isSpecialCategory = getSpecialCategoryValues().includes(data.category);
+    const isSpecialCategory = getSpecialCategoryValues()?.includes(data?.category);
     const imagesToDisplay = isSpecialCategory && selectedColor ?
-        data?.colors?.find(color => color.colorName === selectedColor)?.colorImages || [] :
+        data?.colors?.find(color => color?.colorName === selectedColor)?.colorImages || [] :
         data.productImage;
 
     const handleBrandClick = (brand) => {
-        const params = new URLSearchParams({ category: data.category });
+        const params = new URLSearchParams({ category: data?.category });
 
         params.set('brand', brand);
 
@@ -147,34 +147,34 @@ const ProductDetail = () => {
                             </Link>
                             <span className='text-slate-400'> / </span>
 
-                            <Link to={`/product-category?category=${data.category}`} className='hover:text-red-500 cursor-pointer transition-all font-semibold'>
-                                <span>{translatedCategory(data.category, true)}</span>
+                            <Link to={`/product-category?category=${data?.category}`} className='hover:text-red-500 cursor-pointer transition-all font-semibold'>
+                                <span>{translatedCategory(data?.category, true)}</span>
                             </Link>
                             <span className='text-slate-400'> / </span>
-                            {data.brandName && <>
+                            {data?.brandName && <>
                                 <button
-                                    onClick={() => handleBrandClick(data.brandName)}
+                                    onClick={() => handleBrandClick(data?.brandName)}
                                     className='hover:text-red-500 cursor-pointer transition-all font-semibold'
                                 >
-                                    <span>{data.brandName}</span>
+                                    <span>{data?.brandName}</span>
                                 </button>
 
                                 <span className='text-slate-400'> / </span>
                             </>
                             }
 
-                            <span className='text-slate-900 font-bold'>{data.productName}</span>
+                            <span className='text-slate-900 font-bold'>{data?.productName}</span>
                         </div>
                         <div className="max-w-screen-xl mx-auto my-10 flex md:flex-row flex-col w-full">
                             <ProductGallery images={imagesToDisplay} selectedColor={selectedColor} />
                             <ProductInfo handleCompare={handleCompare} isFavorite={isFavorite} handleFavoriteClick={handleFavoriteClick} setSelectedColor={setSelectedColor} selectedColor={selectedColor} data={data} productId={data?._id} handleAddToCart={handleAddToCart} updateQuantity={updateQuantity} count={count} />
                         </div>
                         <div>
-                            <ProductTabs dataSpec={dataSpec} productId={data._id} product={data} user={user} />
+                            <ProductTabs dataSpec={dataSpec} productId={data?._id} product={data} user={user} />
                         </div>
 
-                        {data.category && <CategoryWiseProductDisplay
-                            category={data.category}
+                        {data?.category && <CategoryWiseProductDisplay
+                            category={data?.category}
                             heading="Sản phẩm đề xuất"
                             excludeProductId={data?._id}
                         />

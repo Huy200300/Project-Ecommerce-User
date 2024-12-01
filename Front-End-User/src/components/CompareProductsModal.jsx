@@ -24,20 +24,20 @@ const CompareProductsModal = () => {
                 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                     {compareList?.map((product) => (
-                        <div key={product._id} className="border bg-white rounded-lg p-3 relative shadow-sm">
+                        <div key={product?._id} className="border bg-white rounded-lg p-3 relative shadow-sm">
                             <button
-                                onClick={() => removeFromCompare(product._id)}
+                                onClick={() => removeFromCompare(product?._id)}
                                 className="absolute cursor-pointer z-50 top-2 right-2 text-white bg-gray-500 hover:bg-gray-700 p-2 rounded-full"
                                 aria-label="Xóa"
                             >
                                 <FaTimes size={12} />
                             </button>
                             <img
-                                src={product.productImage[0]}
-                                alt={product.productName}
+                                src={product?.productImage[0]}
+                                alt={product?.productName}
                                 className="w-full h-32 object-contain mb-1 mix-blend-multiply"
                             />
-                            <h3 className="text-sm font-medium text-gray-700">{product.productName}</h3>
+                            <h3 className="text-sm font-medium text-gray-700">{product?.productName}</h3>
                         </div>
                     ))}
                 </div>

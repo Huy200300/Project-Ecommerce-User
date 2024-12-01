@@ -39,8 +39,8 @@ const Cart = () => {
 
     const handleConfirmDelete = useCallback(async () => {
         setLoading(true);
-        const newCart = cart.filter((item) => item._id !== productToDelete);
-        localStorage.setItem('cart', JSON.stringify(newCart));
+        const newCart = cart?.filter((item) => item?._id !== productToDelete);
+        localStorage?.setItem('cart', JSON?.stringify(newCart));
         updateCart(newCart);
         setLoading(false);
         setShowModal(false);
@@ -48,15 +48,15 @@ const Cart = () => {
     }, [cart, productToDelete, updateCart]);
 
     const handleAddCard = () => {
-        const selectedItems = cart.filter(product => selectedProducts.includes(product._id));
-        localStorage.setItem('selectedProducts', JSON.stringify(selectedItems));
+        const selectedItems = cart?.filter(product => selectedProducts?.includes(product._id));
+        localStorage?.setItem('selectedProducts', JSON?.stringify(selectedItems));
         navigate('/payment')
     };
 
     const handleDeleteAll = () => {
         setLoading(true);
         const emptyCart = [];
-        localStorage.setItem('cart', JSON.stringify(emptyCart));
+        localStorage?.setItem('cart', JSON?.stringify(emptyCart));
         updateCart(emptyCart);
         setLoading(false);
         setIsOpen(false)
@@ -69,12 +69,12 @@ const Cart = () => {
         { title: 'Free ship', value: 3, description: 'Trên 10.000.000 VND' }
     ];
 
-    const selectedProductsTotalPrice = selectedProducts.reduce((total, productId) => {
+    const selectedProductsTotalPrice = selectedProducts?.reduce((total, productId) => {
         const products = cart;
-        const product = products.find(p => p._id === productId);
+        const product = products?.find(p => p?._id === productId);
         if (product) {
-            const quantity = product.amount || 1;
-            const price = product.sellingPrice || 0;
+            const quantity = product?.amount || 1;
+            const price = product?.sellingPrice || 0;
             return total + (quantity * price);
         }
         return total;
@@ -106,8 +106,8 @@ const Cart = () => {
 
     const toggleProductSelection = useCallback((productId) => {
         setSelectedProducts((prevSelected) =>
-            prevSelected.includes(productId)
-                ? prevSelected.filter(id => id !== productId)
+            prevSelected?.includes(productId)
+                ? prevSelected?.filter(id => id !== productId)
                 : [...prevSelected, productId]
         );
     }, []);
@@ -116,7 +116,7 @@ const Cart = () => {
         if (selectedProducts?.length === cart?.length) {
             setSelectedProducts([]);
         } else {
-            const allProductIds = cart.map(item => item._id);
+            const allProductIds = cart?.map(item => item?._id);
             setSelectedProducts(allProductIds);
         }
     }, [selectedProducts, cart]);
@@ -132,7 +132,7 @@ const Cart = () => {
     };
 
     const hasItems = cart?.length > 0;
-    const selectedStorage = cart.map(item => item.selectedStorage);
+    const selectedStorage = cart?.map(item => item?.selectedStorage);
     const isAllSelected = (selectedProducts?.length === cart?.length && cart?.length > 0);
 
     return (
@@ -164,8 +164,8 @@ const Cart = () => {
                             {!isCollapsed &&
                                 <>
                                     <div className="grid grid-cols-4 gap-4">
-                                        {favorites?.slice(0, visibleProducts).map((product) => (
-                                            <div key={product.id} className="cursor-pointer p-4 flex flex-col items-center border rounded-lg relative">
+                                        {favorites?.slice(0, visibleProducts)?.map((product) => (
+                                            <div key={product?.id} className="cursor-pointer p-4 flex flex-col items-center border rounded-lg relative">
                                                 <button
                                                     onClick={() => removeFavorite(product?._id)}
                                                     className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
@@ -174,13 +174,13 @@ const Cart = () => {
                                                 </button>
 
                                                 <img
-                                                    src={product.productImage[0]}
-                                                    alt={product.productName}
+                                                    src={product?.productImage[0]}
+                                                    alt={product?.productName}
                                                     className="w-full h-40 object-contain mb-4"
                                                 />
 
-                                                <a href={`/product/${product._id}`} className="text-blue-600 font-semibold line-clamp-2 hover:underline">
-                                                    {product.productName}
+                                                <a href={`/product/${product?._id}`} className="text-blue-600 font-semibold line-clamp-2 hover:underline">
+                                                    {product?.productName}
                                                 </a>
 
                                                 <div className="flex items-center mt-2">
@@ -195,20 +195,20 @@ const Cart = () => {
                                                             )
                                                         }
                                                     </span>
-                                                    {product.reviewCount > 0 && <span className="ml-2 text-sm text-gray-600">({product.reviewCount})</span>}
+                                                    {product?.reviewCount > 0 && <span className="ml-2 text-sm text-gray-600">({product?.reviewCount})</span>}
                                                 </div>
 
                                                 <div className="flex items-center flex-col mt-2">
-                                                    <div className="text-2xl font-bold">{displayCurrency(product.sellingPrice)}</div>
-                                                    <div className="text-gray-500 line-through">{displayCurrency(product.price)}</div>
+                                                    <div className="text-2xl font-bold">{displayCurrency(product?.sellingPrice)}</div>
+                                                    <div className="text-gray-500 line-through">{displayCurrency(product?.price)}</div>
                                                 </div>
 
                                                 <button
                                                     className={`flex font-semibold items-center justify-center text-nowrap w-full uppercase p-3 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors duration-300 ${product.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                                                     onClick={(e) => handleAddToCart(e, product)}
-                                                    disabled={product.countInStock === 0}
+                                                    disabled={product?.countInStock === 0}
                                                 >
-                                                    {product.countInStock === 0 ? 'Hết hàng' : 'Thêm vào Giỏ hàng'}
+                                                    {product?.countInStock === 0 ? 'Hết hàng' : 'Thêm vào Giỏ hàng'}
                                                 </button>
                                             </div>
                                         ))}
@@ -252,7 +252,7 @@ const Cart = () => {
                             </div>
                         </div>
                         {loading ? (
-                            loadingCart.map((el, index) => (
+                            loadingCart?.map((el, index) => (
                                 <div key={index + "Add To Cart Loading" + el} className='rounded w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse'></div>
                             ))
                         ) : (

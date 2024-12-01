@@ -33,7 +33,7 @@ const Header = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [isHoveringLabel, setIsHoveringlabel] = useState(null);
     const handleCategorySelect = (category) => {
-        setSelectedCategory(category.label);
+        setSelectedCategory(category?.label);
         setIsHovering(false);
     };
 
@@ -50,13 +50,13 @@ const Header = () => {
             credentials: "include"
         });
         const data = await response.json();
-        if (data.success) {
-            localStorage.removeItem('userData');
-            toast.success(data.message);
+        if (data?.success) {
+            localStorage?.removeItem('userData');
+            toast?.success(data?.message);
             dispatch(setUserDetails(null));
             navigate("/");
         } else {
-            toast.error(data.message);
+            toast?.error(data?.message);
         }
     }, [dispatch, navigate]);
 
@@ -71,8 +71,8 @@ const Header = () => {
                 credentials: "include"
             });
             const result = await response.json();
-            if (result.success) {
-                setFilteredSuggestions(result.data);
+            if (result?.success) {
+                setFilteredSuggestions(result?.data);
             }
         } catch (error) {
             console.error("Error fetching product suggestions:", error);
@@ -91,7 +91,7 @@ const Header = () => {
 
     const handleSearchSelect = (suggestion) => {
         setFilteredSuggestions([]);
-        navigate(`/product/${suggestion._id}`);
+        navigate(`/product/${suggestion?._id}`);
     };
 
     const toggleMenu = () => {
@@ -166,24 +166,24 @@ const Header = () => {
 
                                             {isHovering && (
                                                 <ul className="absolute group z-50 left-0 w-[700px] bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
-                                                    {productCategory.map((category) => (
+                                                    {productCategory?.map((category) => (
                                                         <li
-                                                            key={category.id}
+                                                            key={category?.id}
                                                             className="relative w-96 group flex items-center px-4 py-3 cursor-pointer hover:bg-gray-100 transition-colors"
                                                             onClick={() => handleCategorySelect(category)}
-                                                            onMouseEnter={() => setIsHoveringlabel(category.id)}
+                                                            onMouseEnter={() => setIsHoveringlabel(category?.id)}
                                                             onMouseLeave={() => setIsHoveringlabel(null)}
                                                         >
-                                                            <span className="mr-3 text-xl text-blue-500">{category.icon}</span>
-                                                            <span className="text-gray-700 font-medium">{category.label}</span>
-                                                            {isHoveringLabel === category.id && (
+                                                            <span className="mr-3 text-xl text-blue-500">{category?.icon}</span>
+                                                            <span className="text-gray-700 font-medium">{category?.label}</span>
+                                                            {isHoveringLabel === category?.id && (
                                                                 <div className="absolute left-56 top-0 bg-white shadow-lg border rounded-md w-64 mt-2 z-50">
                                                                     <div className="grid grid-cols-1 gap-4 p-4">
                                                                         {category?.subCategories?.map((subCategory) => (
-                                                                            <div key={subCategory.id}>
-                                                                                <h3 className="font-semibold text-gray-800 mb-2">{subCategory.title}</h3>
+                                                                            <div key={subCategory?.id}>
+                                                                                <h3 className="font-semibold text-gray-800 mb-2">{subCategory?.title}</h3>
                                                                                 <ul className="space-y-1">
-                                                                                    {subCategory.items.map((item, index) => (
+                                                                                    {subCategory?.items?.map((item, index) => (
                                                                                         <li
                                                                                             key={index}
                                                                                             className="text-gray-600 hover:text-blue-500 cursor-pointer transition"

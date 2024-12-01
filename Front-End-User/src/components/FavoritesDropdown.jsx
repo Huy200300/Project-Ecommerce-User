@@ -9,9 +9,9 @@ const FavoritesDropdown = ({ isOpen, toggleDropdown, closeAll }) => {
     const { favorites, favoritesLength, removeFavorite, updateFavorite } = useFavorites();
 
     useEffect(() => {
-        const savedFavorites = [JSON.parse(localStorage.getItem('favorites'))];
+        const savedFavorites = [JSON?.parse(localStorage?.getItem('favorites'))];
         try {
-            const parsedFavorites = savedFavorites ? JSON.parse(localStorage.getItem('favorites')) : [];
+            const parsedFavorites = savedFavorites ? JSON?.parse(localStorage?.getItem('favorites')) : [];
             updateFavorite(parsedFavorites)
         } catch (error) {
             console.error("Error parsing cart from localStorage:", error);
@@ -21,8 +21,8 @@ const FavoritesDropdown = ({ isOpen, toggleDropdown, closeAll }) => {
 
     const handleRemove = (productId) => {
         removeFavorite(productId);
-        const updatedFavorites = favorites.filter(item => item._id !== productId);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+        const updatedFavorites = favorites?.filter(item => item?._id !== productId);
+        localStorage?.setItem('favorites', JSON?.stringify(updatedFavorites))
     };
 
     return (
@@ -47,7 +47,7 @@ const FavoritesDropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                         {
                             favorites?.length > 0 ? (
                                 <>
-                                    {favorites.map((product, index) => (
+                                    {favorites?.map((product, index) => (
                                         <div key={index} className="product-widget relative">
                                             <div className="product-img absolute top-0 left-0 w-[60px]">
                                                 <img src={product?.productImage[0]} alt={product?.productName} className='w-full' />
@@ -58,7 +58,7 @@ const FavoritesDropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                                                 </h3>
                                                 <h4 className="product-price text-sm text-black font-bold"><span className="qty font-normal mr-2.5">{product?.amount}x</span>{displayCurrency(product?.sellingPrice)}</h4>
                                             </div>
-                                            <button onClick={() => handleRemove(product._id)} className="delete hover:bg-red-500 absolute top-0 left-0 h-3.5 w-3.5 text-center textbase p-0 bg-black border-none text-white">
+                                            <button onClick={() => handleRemove(product?._id)} className="delete hover:bg-red-500 absolute top-0 left-0 h-3.5 w-3.5 text-center textbase p-0 bg-black border-none text-white">
                                                 <IoIosClose />
                                             </button>
                                         </div>

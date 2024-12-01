@@ -11,16 +11,16 @@ import calculateDiscount from '../helpers/calculateDiscount'
 
 const ProductByCategory = ({ reload, category, handleSortBy }) => {
     const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem("cart");
+        const savedCart = localStorage?.getItem("cart");
         try {
-            return savedCart ? JSON.parse(savedCart) : [];
+            return savedCart ? JSON?.parse(savedCart) : [];
         } catch (error) {
             console.error("Error parsing saved cart from localStorage:", error);
             return [];
         }
     });
     const [data, setdata] = useState([])
-    const user = useSelector(state => state.user.user);
+    const user = useSelector(state => state?.user?.user);
     const [loading, setLoading] = useState(true)
     const loadingList = new Array(data?.length).fill(null)
     const { fetchUserAddToCart } = useContext(Context)
@@ -30,29 +30,9 @@ const ProductByCategory = ({ reload, category, handleSortBy }) => {
         setLoading(false)
         setdata(categoryProduct?.data)
     }
-    const handleAddToCart = async (e, id, product) => {
-        if (product.countInStock === 0) {
-            toast.error("Sản phẩm đã hết hàng");
-            return;
-        }
-        if (user === null) {
-            e?.stopPropagation();
-            e?.preventDefault();
-            if (cart.find(item => item._id === product._id)) {
-                toast.error("Sản phẩm đã có trong giỏ hàng")
-                return;
-            }
-            const newCart = [...cart, { ...product, amount: 1 }];
-            localStorage.setItem("cart", JSON.stringify(newCart));
-            setCart(newCart);
-            toast.success("Sản phẩm đã được thêm vào giỏ hàng")
-        } else {
-            await addToCart(e, id)
-            fetchUserAddToCart()
-        }
-    }
+   
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage?.setItem("cart", JSON?.stringify(cart));
     }, [cart]);
     
     useEffect(() => {

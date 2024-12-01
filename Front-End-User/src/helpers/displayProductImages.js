@@ -9,7 +9,7 @@ export const displayProductImages = (
   if (productImages?.length > 0) {
     return (
       <div className="flex items-center gap-2">
-        {productImages.map((imageUrl, index) => (
+        {productImages?.map((imageUrl, index) => (
           <div className="relative group" key={index}>
             <img
               src={imageUrl}

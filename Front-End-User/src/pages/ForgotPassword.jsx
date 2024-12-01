@@ -8,7 +8,7 @@ import toasts, { Toaster } from "react-hot-toast";
 
 const ForgotPassword = () => {
   const [OTP, setOTP] = useState();
-  const { email, name } = useSelector(state => state.user.email);
+  const { email, name } = useSelector(state => state?.user?.email);
   const navigate = useNavigate()
 
   useEffect(() => {

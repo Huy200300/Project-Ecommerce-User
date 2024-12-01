@@ -10,12 +10,12 @@ import translatedCategory from '../helpers/translatedCategory';
 import calculateDiscount from '../helpers/calculateDiscount';
 
 const VerticalCart = ({ loading, data = [] }) => {
-    const productList = Array.isArray(data) ? data : [];
+    const productList = Array?.isArray(data) ? data : [];
 
     const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem("cart");
+        const savedCart = localStorage?.getItem("cart");
         try {
-            return savedCart ? JSON.parse(savedCart) : [];
+            return savedCart ? JSON?.parse(savedCart) : [];
         } catch (error) {
             console.error("Error parsing saved cart from localStorage:", error);
             return [];
@@ -24,29 +24,7 @@ const VerticalCart = ({ loading, data = [] }) => {
 
     const loadingList = new Array(6).fill(null);
     const { fetchUserAddToCart } = useContext(Context);
-    const user = useSelector(state => state.user.user);
-
-    const handleAddToCart = async (e, id, product) => {
-        if (product.countInStock === 0) {
-            toast.error("Sản phẩm đã hết hàng");
-            return;
-        }
-        if (user === null) {
-            e?.stopPropagation();
-            e?.preventDefault();
-            if (cart.find(item => item._id === product._id)) {
-                toast.error("Sản phẩm đã có trong giỏ hàng");
-                return;
-            }
-            const newCart = [...cart, { ...product, amount: 1 }];
-            localStorage.setItem("cart", JSON.stringify(newCart));
-            setCart(newCart);
-            toast.success("Sản phẩm đã được thêm vào giỏ hàng");
-        } else {
-            await addToCart(e, id);
-            fetchUserAddToCart();
-        }
-    };
+    const user = useSelector(state => state?.user?.user);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -75,7 +53,7 @@ const VerticalCart = ({ loading, data = [] }) => {
                         <Link to={`/product/${product?._id}`} onClick={scrollTop}>
                             <div className='relative bg-gray-100 h-40 rounded-t-lg overflow-hidden'>
                                 <img src={product?.productImage[0]} alt={product?.category} className='object-cover w-full h-full transform hover:scale-105 transition-transform duration-300' />
-                                {product.countInStock === 0 && (
+                                {product?.countInStock === 0 && (
                                     <span className='absolute top-2 left-2 bg-red-600 text-white px-2 py-1 text-xs rounded'>Hết hàng</span>
                                 )}
                             </div>

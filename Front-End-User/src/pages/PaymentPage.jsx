@@ -65,7 +65,7 @@ const PaymentPage = () => {
                 "content-type": "application/json"
             },
         })
-        const dataApi = await res.json()
+        const dataApi = await res?.json()
         setDataShipping(dataApi?.data)
     }
     useEffect(() => { if (dataUser?._id) fetchDataShipping(dataUser?._id) }, [dataUser])
@@ -90,12 +90,12 @@ const PaymentPage = () => {
     const isFirstRun = useRef(true);
 
     useEffect(() => {
-        if (isFirstRun.current) {
+        if (isFirstRun?.current) {
             if (data?.fullAddress) {
-                const parts = data.fullAddress.split(' ');
-                const city = parts.slice(0, 2).join(' ');
-                const district = parts.slice(2, 4).join(' ');
-                const ward = parts.slice(4).join(' ');
+                const parts = data?.fullAddress?.split(' ');
+                const city = parts?.slice(0, 2)?.join(' ');
+                const district = parts?.slice(2, 4)?.join(' ');
+                const ward = parts?.slice(4)?.join(' ');
 
                 setSelectedCity(city);
                 setSelectedDistrict(district);
@@ -109,7 +109,7 @@ const PaymentPage = () => {
         if (!dataShipping || dataShipping?.length === 0) {
             return null;
         }
-        const defaultAddr = dataShipping.find(address => address.defaultAddress);
+        const defaultAddr = dataShipping?.find(address => address?.defaultAddress);
 
         return defaultAddr || dataShipping[0];
     });
@@ -120,7 +120,7 @@ const PaymentPage = () => {
             return;
         }
 
-        const defaultAddr = dataShipping.find(address => address.defaultAddress);
+        const defaultAddr = dataShipping?.find(address => address?.defaultAddress);
         setSelectedAddress(defaultAddr || dataShipping[0]);
     }, [dataShipping]);
 
@@ -157,7 +157,7 @@ const PaymentPage = () => {
                 ...data
             })
         });
-        const dataApi = await dataResponse.json();
+        const dataApi = await dataResponse?.json();
         if (dataApi?.success) {
             toast.success(dataApi?.message);
             fetchUserDetails();
@@ -173,20 +173,20 @@ const PaymentPage = () => {
         }
     };
 
-    const total = selectedProducts.reduce((total, product) => {
-        return total + (product.sellingPrice * product.amount);
+    const total = selectedProducts?.reduce((total, product) => {
+        return total + (product?.sellingPrice * product?.amount);
     }, 0) + shippingFee;
 
     const getSelectedProductInfo = (selectedProducts) => {
-        return selectedProducts.map(product => ({
-            productId: product._id,
-            color: product.selectedColor || "",
-            colorImage: product.selectedColorImage || product.productImage,
-            stock: product.stock || product?.countInStock,
-            price: product.price,
-            sellingPrice: product.sellingPrice,
-            quantity: product.amount,
-            productName: product.productName
+        return selectedProducts?.map(product => ({
+            productId: product?._id,
+            color: product?.selectedColor || "",
+            colorImage: product?.selectedColorImage || product?.productImage,
+            stock: product?.stock || product?.countInStock,
+            price: product?.price,
+            sellingPrice: product?.sellingPrice,
+            quantity: product?.amount,
+            productName: product?.productName
         }));
     };
 
@@ -222,7 +222,7 @@ const PaymentPage = () => {
                 },
                 body: JSON.stringify(body)
             });
-            return await response.json();
+            return await response?.json();
         } catch (error) {
             toast.error("Đã xảy ra lỗi khi gọi API.");
             console.error(error);

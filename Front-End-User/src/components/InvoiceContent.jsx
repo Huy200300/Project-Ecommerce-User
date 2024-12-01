@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 
 
-const InvoiceContent = React.forwardRef(({ dataDetails, displayCurrency },ref) => (
+const InvoiceContent = React?.forwardRef(({ dataDetails, displayCurrency },ref) => (
     <div id="invoice-content" className="p-1 bg-white rounded-lg shadow-lg print:shadow-none font-semibold">
         <h2 className="text-2xl font-bold text-center mb-4">HÓA ĐƠN MUA HÀNG</h2>
         
@@ -10,26 +10,26 @@ const InvoiceContent = React.forwardRef(({ dataDetails, displayCurrency },ref) =
             <h3 className="text-xl text-center font-bold mb-4 capitalize">
                 Thông tin đơn hàng
             </h3>
-            {dataDetails.map((detail, index) => (
+            {dataDetails?.map((detail, index) => (
                 <div key={index} className="flex flex-col gap-2">
                     <p>
                         <span className="font-bold">Ngày tạo:</span>{" "}
-                        {moment(detail.createdAt).format("DD / MM / YYYY")}
+                        {moment(detail?.createdAt).format("DD / MM / YYYY")}
                     </p>
                     <p>
-                        <span className="font-bold">Mã đơn hàng:</span> #{detail.orderId}
+                        <span className="font-bold">Mã đơn hàng:</span> #{detail?.orderId}
                     </p>
                     <p>
                         <span className="font-bold">Tên người nhận:</span>{" "}
-                        {detail.shippingDetails[0].shippingAddress.fullName}
+                        {detail?.shippingDetails[0]?.shippingAddress?.fullName}
                     </p>
                     <p>
                         <span className="font-bold">Số điện thoại:</span>{" "}
-                        {detail.shippingDetails[0].shippingAddress.phone}
+                        {detail?.shippingDetails[0]?.shippingAddress?.phone}
                     </p>
                     <p>
                         <span className="font-bold">Địa chỉ:</span>{" "}
-                        {detail.shippingDetails[0].shippingAddress.fullAddress}
+                        {detail?.shippingDetails[0]?.shippingAddress?.fullAddress}
                     </p>
                 </div>
             ))}
@@ -72,8 +72,8 @@ const InvoiceContent = React.forwardRef(({ dataDetails, displayCurrency },ref) =
                                 </td>
                                 <td className="px-4 py-2 text-center">{product?.quantity}</td>
                                 <td className='px-4 py-2 text-center'>{product?.color}</td>
-                                <td className="px-4 py-2 text-center">{product.sellingPrice.toLocaleString('vi-VN')}</td>
-                                <td className="px-4 py- text-center">{(product.sellingPrice * product.quantity).toLocaleString('vi-VN')}</td>
+                                <td className="px-4 py-2 text-center">{product?.sellingPrice?.toLocaleString('vi-VN')}</td>
+                                <td className="px-4 py- text-center">{(product?.sellingPrice * product?.quantity)?.toLocaleString('vi-VN')}</td>
                             </tr>
                         ))
                     ))}

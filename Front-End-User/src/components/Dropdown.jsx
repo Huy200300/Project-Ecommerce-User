@@ -14,9 +14,9 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
     const naviagte = useNavigate()
 
     useEffect(() => {
-        const savedCart = [localStorage.getItem('cart')];
+        const savedCart = [localStorage?.getItem('cart')];
         try {
-            const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+            const parsedCart = savedCart ? JSON?.parse(savedCart) : [];
             updateCart(parsedCart);
         } catch (error) {
             console.error("Error parsing cart from localStorage:", error);
@@ -26,7 +26,7 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
 
 
     useEffect(() => {
-        const newTotalPrice = cart.reduce((total, product) => {
+        const newTotalPrice = cart?.reduce((total, product) => {
             const price = product?.sellingPrice || 0;
             return total + (product?.amount * price);
         }, 0);
@@ -36,8 +36,8 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
 
     const handleRemove = (productId) => {
         removeFromCart(productId);
-        const updatedCart = cart.filter(item => item._id !== productId);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        const updatedCart = cart?.filter(item => item?._id !== productId);
+        localStorage?.setItem('cart', JSON?.stringify(updatedCart));
     };
 
     const handleCheckOut = (selected) => {
@@ -67,7 +67,7 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                     <div className="py-1 max-h-44 overflow-y-scroll mb-4 flex flex-col gap-2" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         {
                             cart?.length > 0 ? (
-                                cart.map((product, index) => (
+                                cart?.map((product, index) => (
                                     <div key={index} className="product-widget relative">
                                         <div className="product-img absolute top-0 left-0 w-[60px]">
                                             <img src={product?.selectedColorImage} alt={product?.productName} className='w-full' />
@@ -76,7 +76,7 @@ const Dropdown = ({ isOpen, toggleDropdown, closeAll }) => {
                                             <h3 className="product-name text-base capitalize"><Link to={"#"} className='font-bold hover:text-red-500'>{product?.productName}</Link></h3>
                                             <h4 className="product-price text-sm text-black font-bold"><span className="qty font-normal mr-2.5">{product?.amount}x</span>{displayCurrency(product?.sellingPrice)}</h4>
                                         </div>
-                                        <button onClick={() => handleRemove(product._id)} className="delete hover:bg-red-500 absolute top-0 left-0 h-3.5 w-3.5 text-center textbase p-0 bg-black border-none text-white"><IoIosClose /></button>
+                                        <button onClick={() => handleRemove(product?._id)} className="delete hover:bg-red-500 absolute top-0 left-0 h-3.5 w-3.5 text-center textbase p-0 bg-black border-none text-white"><IoIosClose /></button>
                                     </div>
                                 ))
                             ) : (

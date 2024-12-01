@@ -16,7 +16,7 @@ export const FavoritesProvider = ({ children }) => {
   const favoritesRef = useRef(favorites);
 
   useEffect(() => {
-    favoritesRef.current = favorites;
+    favoritesRef?.current = favorites;
   }, [favorites]);
 
   useEffect(() => {
@@ -24,13 +24,13 @@ export const FavoritesProvider = ({ children }) => {
       try {
         const updatedProducts = await fetchAllProducts("Completed");
 
-        const updatedFavorites = favoritesRef.current.map((cartItem) => {
-          const productFromDB = updatedProducts.find(
-            (product) => product._id === cartItem._id
+        const updatedFavorites = favoritesRef?.current?.map((cartItem) => {
+          const productFromDB = updatedProducts?.find(
+            (product) => product?._id === cartItem?._id
           );
           if (
             productFromDB &&
-            new Date(productFromDB.updatedAt) > new Date(cartItem.updatedAt)
+            new Date(productFromDB?.updatedAt) > new Date(cartItem?.updatedAt)
           ) {
             return { ...cartItem, ...productFromDB };
           }
@@ -38,12 +38,12 @@ export const FavoritesProvider = ({ children }) => {
         });
 
         if (
-          JSON.stringify(updatedFavorites) !==
-          JSON.stringify(favoritesRef.current)
+          JSON?.stringify(updatedFavorites) !==
+          JSON?.stringify(favoritesRef?.current)
         ) {
           setFavorites(updatedFavorites);
-          localStorage.setItem("cart", JSON.stringify(updatedFavorites));
-          favoritesRef.current = updatedFavorites;
+          localStorage?.setItem("cart", JSON?.stringify(updatedFavorites));
+          favoritesRef?.current = updatedFavorites;
         }
       } catch (error) {
         console.error("Error fetching updated products:", error);
@@ -55,10 +55,10 @@ export const FavoritesProvider = ({ children }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const storedCart = JSON.parse(localStorage.getItem("favorites")) || [];
-      const productsWithReviews = await Promise.all(
+      const storedCart = JSON?.parse(localStorage?.getItem("favorites")) || [];
+      const productsWithReviews = await Promise?.all(
         storedCart?.map(async (product) => {
-          const reviewStats = await fetchReviewStats(product._id);
+          const reviewStats = await fetchReviewStats(product?._id);
           return { ...product, ...reviewStats };
         })
       );
@@ -68,30 +68,30 @@ export const FavoritesProvider = ({ children }) => {
   }, []);
 
   const addFavorite = (product) => {
-    const existingProduct = favorites.find((item) => item?._id === product._id);
+    const existingProduct = favorites?.find((item) => item?._id === product?._id);
     if (existingProduct) {
-      toast.error("Sản phẩm đã có trong sản phẩm yêu thích");
+      toast?.error("Sản phẩm đã có trong sản phẩm yêu thích");
       return;
     } else {
       const updatedFavorites = [...favorites, product];
       setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      toast.success("Sản phẩm đã được thêm vào sản phẩm yêu thích");
+      localStorage?.setItem("favorites", JSON?.stringify(updatedFavorites));
+      toast?.success("Sản phẩm đã được thêm vào sản phẩm yêu thích");
     }
   };
 
   const removeFavorite = (productId) => {
-    const updatedFavorites = favorites.filter((item) => item._id !== productId);
+    const updatedFavorites = favorites?.filter((item) => item?._id !== productId);
     setFavorites(updatedFavorites);
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    favoritesRef.current = updatedFavorites;
-    toast.warning("Sản phẩm đã được xóa khỏi sản phẩm yêu thích");
+    localStorage?.setItem("favorites", JSON?.stringify(updatedFavorites));
+    favoritesRef?.current = updatedFavorites;
+    toast?.warning("Sản phẩm đã được xóa khỏi sản phẩm yêu thích");
   };
 
  const updateFavorite = (newFavorite) => {
-   if (JSON.stringify(newFavorite) !== JSON.stringify(favorites)) {
+   if (JSON.stringify(newFavorite) !== JSON?.stringify(favorites)) {
      setFavorites(newFavorite);
-     localStorage.setItem("favorites", JSON.stringify(newFavorite));
+     localStorage?.setItem("favorites", JSON?.stringify(newFavorite));
    }
  };
 

@@ -48,16 +48,16 @@ const OrderPage = () => {
   const fetchOrder = async (id, page = 1, limit, status, startDate, endDate) => {
     // setLoading(true);
     const response = await fetch(`http://localhost:8080/api/orders/user/${id}?page=${page}&limit=${limit}&status=${status}&startDate=${startDate}&endDate=${endDate}`);
-    const dataApi = await response.json();
+    const dataApi = await response?.json();
     // setLoading(false);
 
     const fetchedOrders = dataApi?.data || [];
-    setCurrentPage(dataApi.currentPage);
-    setTotalPages(dataApi.totalPages);
+    setCurrentPage(dataApi?.currentPage);
+    setTotalPages(dataApi?.totalPages);
     setOrders(fetchedOrders);
 
-    fetchedOrders.forEach(order => {
-      fetchStatusHistory(order._id);
+    fetchedOrders?.forEach(order => {
+      fetchStatusHistory(order?._id);
     });
   };
 
@@ -71,7 +71,7 @@ const OrderPage = () => {
       },
       body: JSON.stringify({ orderId: orderId })
     });
-    const dataApi = await response.json();
+    const dataApi = await response?.json();
     if (dataApi?.success) {
       setDataDetails(dataApi?.data || []);
       setIsOpenModalOrderDetails(true);
@@ -86,7 +86,7 @@ const OrderPage = () => {
     const response = await fetch(`http://localhost:8080/api/orders/staff/${orderId}`, {
       method: "GET",
     });
-    const dataApi = await response.json();
+    const dataApi = await response?.json();
     if (dataApi?.success) {
       setStatusHistories(prev => ({
         ...prev,
@@ -105,7 +105,7 @@ const OrderPage = () => {
 
   const handleSearch = async () => {
     if (!searchQuery) return;
-    const cleanedQuery = searchQuery.replace('#', '').trim();
+    const cleanedQuery = searchQuery?.replace('#', '').trim();
     setLoading(true);
     const response = await fetch(`http://localhost:8080/api/orders/search?query=${cleanedQuery}&page=${currentPage}&limit=${limit}`, {
       method: 'GET',
@@ -113,10 +113,10 @@ const OrderPage = () => {
     });
 
     setLoading(false);
-    const dataApi = await response.json();
-    setOrders(dataApi.data);
-    setCurrentPage(dataApi.currentPage);
-    setTotalPages(dataApi.totalPages);
+    const dataApi = await response?.json();
+    setOrders(dataApi?.data);
+    setCurrentPage(dataApi?.currentPage);
+    setTotalPages(dataApi?.totalPages);
   };
 
   const handleKeyPress = (e) => {
@@ -131,7 +131,7 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    if (dataUser && dataUser._id) {
+    if (dataUser && dataUser?._id) {
 
       fetchOrder(dataUser._id, currentPage, limit, statusFilter, startDate, endDate);
 
@@ -141,7 +141,7 @@ const OrderPage = () => {
   const handleRefresh = () => {
     setStartDate("");
     setEndDate(new Date().toISOString().split("T")[0]);
-    fetchOrder(dataUser._id, currentPage, limit, statusFilter);
+    fetchOrder(dataUser?._id, currentPage, limit, statusFilter);
   };
 
 
@@ -149,26 +149,26 @@ const OrderPage = () => {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
 
-  const getCurrentStatus = (order) => order.slice(-1)[0]?.orderStatus;
+  const getCurrentStatus = (order) => order?.slice(-1)[0]?.orderStatus;
 
   const renderSteps = (orderId) => {
     const statusHistory = statusHistories[orderId] || {};
-    const currentStatus = getCurrentStatus(statusHistory.statusHistory || []);
+    const currentStatus = getCurrentStatus(statusHistory?.statusHistory || []);
 
-    const hasDelivered = statusHistory.statusHistory?.some(s => s.orderStatus === 'Delivered');
+    const hasDelivered = statusHistory?.statusHistory?.some(s => s?.orderStatus === 'Delivered');
 
     return (
       <div className="flex items-center justify-center border-2 rounded-lg shadow-sm mb-4 space-x-4">
-        {steps.map((step, index) => {
-          if (hasDelivered && step.status === 'Cancelled') return null;
+        {steps?.map((step, index) => {
+          if (hasDelivered && step?.status === 'Cancelled') return null;
           const isCancelled = currentStatus === 'Cancelled';
 
-          const isActive = currentStatus === step.status;
-          const isCompleted = statusHistory.statusHistory?.findIndex(s => s.orderStatus === step.status) !== -1;
+          const isActive = currentStatus === step?.status;
+          const isCompleted = statusHistory?.statusHistory?.findIndex(s => s?.orderStatus === step?.status) !== -1;
 
           const nextVisibleStep = steps
-            .slice(index + 1)
-            .find(nextStep => !(hasDelivered && nextStep.status === 'Cancelled'));
+            ?.slice(index + 1)
+            ?.find(nextStep => !(hasDelivered && nextStep?.status === 'Cancelled'));
 
           const stepColor = isCancelled
             ? 'bg-red-500 text-white'
@@ -189,22 +189,22 @@ const OrderPage = () => {
                   {index + 1}
                 </div>
                 <div className={`ml-2 text-nowrap text-sm font-semibold ${isCancelled ? "text-red-600" : isCompleted ? 'text-green-600' : (isActive ? step.textColor : 'text-gray-500')}`}>
-                  {step.label}
+                  {step?.label}
                 </div>
 
                 {step.status !== 'Pending' && (
                   <div className="mt-2">
-                    {statusHistory.statusHistory?.some(s => s.orderStatus === step.status) && (
+                    {statusHistory?.statusHistory?.some(s => s?.orderStatus === step?.status) && (
                       <>
                         {/* <div className={`text-sm font-semibold ${isCompleted || isActive ? 'text-gray-800' : 'text-gray-400'}`}>
                           Nhân viên: {statusHistory.statusHistory.find(s => s.orderStatus === step.status)?.createdBy?.name || 'Không'}
                         </div> */}
                         <div className={`text-xs font-semibold ${isCompleted || isActive ? 'text-gray-800' : 'text-gray-400'}`}>
-                          Ngày cập nhật: {new Date(statusHistory.statusHistory.find(s => s.orderStatus === step.status)?.updatedAt).toLocaleString() || 'Không có dữ liệu'}
+                          Ngày cập nhật: {new Date(statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.updatedAt).toLocaleString() || 'Không có dữ liệu'}
                         </div>
-                        {step.status === 'Cancelled' && statusHistory.statusHistory.find(s => s.orderStatus === step.status)?.reason && (
+                        {step?.status === 'Cancelled' && statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.reason && (
                           <div className={`text-xs font-semibold text-red-500`}>
-                            Lý do: {statusHistory.statusHistory.find(s => s.orderStatus === step.status).reason}
+                            Lý do: {statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.reason}
                           </div>
                         )}
                       </>
@@ -258,18 +258,18 @@ const OrderPage = () => {
             { key: "Shipped", label: "Chờ giao hàng" },
             { key: "Delivered", label: "Hoàn thành" },
             { key: "Cancelled", label: "Đã hủy" },
-          ].map((status) => (
-            <div key={status.key} className="relative group py-5 text-current">
+          ]?.map((status) => (
+            <div key={status?.key} className="relative group py-5 text-current">
               <button
                 onClick={() => {
-                  setStatusFilter(status.key);
+                  setStatusFilter(status?.key);
                   setCurrentPage(1);
                 }}
-                className={`hover:text-[#D10024] font-semibold relative focus:outline-none ${statusFilter === status.key ? "text-[#D10024]" : ""}`}
+                className={`hover:text-[#D10024] font-semibold relative focus:outline-none ${statusFilter === status?.key ? "text-[#D10024]" : ""}`}
               >
-                {status.label}
+                {status?.label}
               </button>
-              <span className={`absolute left-0 bottom-0 w-0 h-[2px] bg-[#D10024] transition-all duration-200 ${statusFilter === status.key ? "w-full" : "group-hover:w-full"}`}></span>
+              <span className={`absolute left-0 bottom-0 w-0 h-[2px] bg-[#D10024] transition-all duration-200 ${statusFilter === status?.key ? "w-full" : "group-hover:w-full"}`}></span>
             </div>
           ))}
         </div>
@@ -349,12 +349,12 @@ const OrderPage = () => {
             <>
               {
                 orders?.map((item) => (
-                  <div key={item._id} className="mb-8">
+                  <div key={item?._id} className="mb-8">
                     <div className="border-2 border-slate-300 rounded-md p-4 bg-white shadow-xl overflow-x-auto">
                       <div className="flex justify-between items-center mb-4 p-4 border-2 rounded-lg shadow-sm bg-white">
                         <div className='font-semibold'>
                           <p className="md:text-xl text-base text-gray-800">
-                            Ngày {moment(item.createdAt).format('DD / MM / YYYY [lúc] HH:mm:ss')}
+                            Ngày {moment(item?.createdAt).format('DD / MM / YYYY [lúc] HH:mm:ss')}
                           </p>
                           <p className="mb-2 md:text-lg text-base text-gray-600">Mã giao dịch: {item?.transactionId}</p>
                         </div>
@@ -387,30 +387,30 @@ const OrderPage = () => {
                           </tr>
                         </thead>
                         <tbody className='font-bold'>
-                          {item?.productDetails && item?.productDetails?.length > 0 && item.productDetails.map((product, productIndex) => (
+                          {item?.productDetails && item?.productDetails?.length > 0 && item?.productDetails.map((product, productIndex) => (
                             <tr key={product.id} className="border-t">
                               <td className="p-2 text-center border border-gray-300">{productIndex + 1}</td>
                               <td className="p-2 text-sm max-w-xs break-words text-center border border-gray-300">
-                                <div className="line-clamp-2">{product.productName}</div>
+                                <div className="line-clamp-2">{product?.productName}</div>
                               </td>
                               <td className='text-center'>{product?.color}</td>
                               <td className="p-2 text-center border border-gray-300">
                                 {
-                                  !product.color ?
+                                  !product?.color ?
                                     <img
-                                      src={product.colorImage[0]}
-                                      alt={product.productName}
+                                      src={product?.colorImage[0]}
+                                      alt={product?.productName}
                                       className="w-24 h-24 object-contain mx-auto"
                                     />
                                     :
                                     <img
-                                      src={product.colorImage}
-                                      alt={product.productName}
+                                      src={product?.colorImage}
+                                      alt={product?.productName}
                                       className="w-24 h-24 object-contain mx-auto"
                                     />
                                 }
                               </td>
-                              <td className="p-2 text-center border border-gray-300">{product.quantity}</td>
+                              <td className="p-2 text-center border border-gray-300">{product?.quantity}</td>
                               <td className="p-2 text-center border border-gray-300">{displayCurrency(product.sellingPrice)}</td>
                               {productIndex === 0 && (
                                 <>
@@ -418,13 +418,13 @@ const OrderPage = () => {
                                     <div className="">
                                       <div className="flex flex-col items-center justify-center border-gray-300 p-2 h-full">
                                         <span>
-                                          {item.paymentDetails && item.paymentDetails.some(i => i.card !== "không") ? "Bằng thẻ" : "Chưa thanh toán"}
+                                          {item?.paymentDetails && item?.paymentDetails?.some(i => i?.card !== "không") ? "Bằng thẻ" : "Chưa thanh toán"}
                                         </span>
                                       </div>
                                     </div>
                                   </td>
                                   <td className="p-2 text-center border border-gray-300" rowSpan={item?.productDetails?.length}>
-                                    {item.status === "paid" ? 'Trả rồi' : 'Chưa trả'}
+                                    {item?.status === "paid" ? 'Trả rồi' : 'Chưa trả'}
                                   </td>
                                 </>
                               )}
@@ -436,22 +436,22 @@ const OrderPage = () => {
                             <td className="p-2 text-center border border-gray-300" ></td>
                             <td className="p-2 text-center border border-gray-300">
                               <span>
-                                {item?.shippingDetails && item?.shippingDetails?.length > 0 && displayCurrency(item.shippingDetails.map(i => i.shipping))}
+                                {item?.shippingDetails && item?.shippingDetails?.length > 0 && displayCurrency(item?.shippingDetails?.map(i => i?.shipping))}
                               </span>
                             </td>
                             <td className="p-2 text-center border border-gray-300" colSpan={2}>
-                              Phương Thức Vận chuyển : {item.shippingDetails && item.shippingDetails.map(i => i.shippingMethod)}
+                              Phương Thức Vận chuyển : {item?.shippingDetails && item?.shippingDetails?.map(i => i?.shippingMethod)}
                             </td>
                           </tr>
 
                           <tr className="text-xl text-gray-800">
                             <td className="p-2 text-center border border-gray-300" colSpan={4}>Tổng cộng:</td>
                             <td className="p-2 text-center border border-gray-300">
-                              {item.productDetails && item.productDetails.reduce((acc, product) => acc + product.quantity, 0)}
+                              {item?.productDetails && item?.productDetails.reduce((acc, product) => acc + product?.quantity, 0)}
                             </td>
-                            <td className="p-2 text-center border border-gray-300">{displayCurrency(item.amount)}</td>
+                            <td className="p-2 text-center border border-gray-300">{displayCurrency(item?.amount)}</td>
                             <td className="p-2 text-center border border-gray-300" colSpan={2}>
-                              Thanh toán qua : {item.paymentDetails && item.paymentDetails.map(i => i.bank === "không" ? "khi nhận hàng" : i.bank)}
+                              Thanh toán qua : {item?.paymentDetails && item?.paymentDetails.map(i => i?.bank === "không" ? "khi nhận hàng" : i?.bank)}
                             </td>
                           </tr>
                         </tbody>

@@ -34,10 +34,10 @@ const AllProducts = () => {
       body: JSON.stringify({ status: filterStatus, page, limit })
     });
     setLoading(false)
-    const dataApi = await response.json();
+    const dataApi = await response?.json();
     setAllProducts(dataApi?.data);
-    setTotalPages(dataApi.totalPages);
-    setCurrentPage(dataApi.currentPage);
+    setTotalPages(dataApi?.totalPages);
+    setCurrentPage(dataApi?.currentPage);
   };
 
   const deleteProduct = async (id, status) => {
@@ -51,7 +51,7 @@ const AllProducts = () => {
       body: JSON.stringify({ _id: id })
     });
     setLoading(false)
-    const dataApi = await response.json();
+    const dataApi = await response?.json();
     if (dataApi?.success) {
       toast.success(dataApi?.message)
       fetchProductsByStatus(status)

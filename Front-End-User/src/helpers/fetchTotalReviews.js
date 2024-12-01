@@ -12,7 +12,7 @@ const fetchTotalReviews = async (page, limit, productId) => {
       body: JSON.stringify({ productId }),
     }
   );
-  const data = await response.json();
+  const data = await response?.json();
   return data;
 };
 export default fetchTotalReviews;

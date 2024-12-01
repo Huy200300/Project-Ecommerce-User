@@ -23,12 +23,12 @@ const UpdateInfoModal = ({ data, handleOnChange, handleUpdateInfo, setIsOpenModa
     const isFirstRun = useRef(true);
 
     useEffect(() => {
-        if (isFirstRun.current) {
+        if (isFirstRun?.current) {
             if (data?.fullAddress) {
-                const parts = data.fullAddress.split(' ');
-                const city = parts.slice(0, 2).join(' ');
-                const district = parts.slice(2, 4).join(' ');
-                const ward = parts.slice(4).join(' ');
+                const parts = data?.fullAddress?.split(' ');
+                const city = parts?.slice(0, 2)?.join(' ');
+                const district = parts?.slice(2, 4)?.join(' ');
+                const ward = parts?.slice(4)?.join(' ');
 
                 setSelectedCity(city);
                 setSelectedDistrict(district);

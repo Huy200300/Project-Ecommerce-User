@@ -38,12 +38,12 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
         if (!dataShipping || dataShipping?.length === 0) {
             return null;
         }
-        const defaultAddr = dataShipping.find(address => address.defaultAddress);
+        const defaultAddr = dataShipping?.find(address => address?.defaultAddress);
 
         return defaultAddr || dataShipping[0];
     });
     const handleSelectAddress = (id) => {
-        const address = dataShipping?.find(address => address._id === id);
+        const address = dataShipping?.find(address => address?._id === id);
         setSelectedAddress(address);
         setIsModalOpen(false);
     };
@@ -56,14 +56,14 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
         }
     };
     const handleOnChange = (event) => {
-        const { name, value, checked, type } = event.target;
+        const { name, value, checked, type } = event?.target;
         setData(prevData => ({
             ...prevData,
             [name]: type === 'checkbox' ? checked : value
         }));
     };
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e?.target;
         setData(prevData => ({
             ...prevData,
             [name]: value
@@ -81,11 +81,11 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                                 <h3 className="text-lg font-bold mb-2">Địa chỉ đã chọn:</h3>
                                 <p className='text-lg font-bold flex capitalize items-center gap-2'>Thay đổi <IoIosArrowDroprightCircle /></p>
                             </div>
-                            <p className='font-medium'><span className='font-bold text-lg'>Họ tên:</span> {selectedAddress.fullName}</p>
-                            <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ:</span> {selectedAddress.fullAddress}</p>
-                            <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ cụ thể:</span> {selectedAddress.detailAddress}</p>
-                            <p className='font-medium'><span className='font-bold text-lg'>Giao tới:</span> {selectedAddress.addressType}</p>
-                            <p className='font-medium'><span className='font-bold text-lg'>Số điện thoại:</span> {selectedAddress.phone}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Họ tên:</span> {selectedAddress?.fullName}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ:</span> {selectedAddress?.fullAddress}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ cụ thể:</span> {selectedAddress?.detailAddress}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Giao tới:</span> {selectedAddress?.addressType}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Số điện thoại:</span> {selectedAddress?.phone}</p>
                         </div>
                     )}
 
@@ -97,22 +97,22 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                         children={
                             <div className='overflow-y-auto'>
                                 {dataShipping?.map(address => (
-                                    <div key={address._id} className="p-4 bg-gray-100 border rounded-md mb-4 cursor-pointer">
+                                    <div key={address?._id} className="p-4 bg-gray-100 border rounded-md mb-4 cursor-pointer">
                                         <label className="flex items-center">
                                             <input
                                                 type="radio"
                                                 name="selectedAddress"
-                                                value={address._id}
-                                                checked={selectedAddress?._id === address._id}
-                                                onChange={() => handleSelectAddress(address._id)}
+                                                value={address?._id}
+                                                checked={selectedAddress?._id === address?._id}
+                                                onChange={() => handleSelectAddress(address?._id)}
                                                 className="form-radio h-5 w-5 accent-red-500"
                                             />
                                             <div className="ml-4">
-                                                <p className='font-semibold'>Họ tên: {address.fullName}</p>
-                                                <p className='font-semibold'>Địa chỉ: {address.fullAddress}</p>
-                                                <p className='font-semibold'>Địa chỉ cụ thể: {address.detailAddress}</p>
-                                                <p className='font-semibold'>Giao tới: {address.addressType}</p>
-                                                <p className='font-semibold'>Số điện thoại: {address.phone}</p>
+                                                <p className='font-semibold'>Họ tên: {address?.fullName}</p>
+                                                <p className='font-semibold'>Địa chỉ: {address?.fullAddress}</p>
+                                                <p className='font-semibold'>Địa chỉ cụ thể: {address?.detailAddress}</p>
+                                                <p className='font-semibold'>Giao tới: {address?.addressType}</p>
+                                                <p className='font-semibold'>Số điện thoại: {address?.phone}</p>
                                                 <p className='font-bold text-red-500 uppercase'>{address?.defaultAddress ? "mặc định" : ""}</p>
                                             </div>
                                         </label>
@@ -171,7 +171,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                         <input
                             type="text"
                             name="fullName"
-                            value={data.fullName || ''}
+                            value={data?.fullName || ''}
                             onChange={handleInputChange}
                             className="w-full font-semibold p-2 border rounded-md"
                         />
@@ -217,7 +217,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                                     </button>
                                 </div>
                                 <div className="max-h-48 overflow-y-auto">
-                                    {selectedTab === 'city' && cities.map(city => (
+                                    {selectedTab === 'city' && cities?.map(city => (
                                         <div key={city} className="p-2 font-semibold cursor-pointer hover:bg-gray-100" onClick={() => handleCitySelect(city)}>
                                             {city}
                                         </div>
@@ -241,7 +241,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                         <input
                             type="text"
                             name="detailAddress"
-                            value={data.detailAddress || ''}
+                            value={data?.detailAddress || ''}
                             onChange={handleInputChange}
                             className="w-full font-semibold p-2 border rounded-md"
                         />
@@ -270,7 +270,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                         <input
                             type="text"
                             name="phone"
-                            value={data.phone || ''}
+                            value={data?.phone || ''}
                             onChange={handleInputChange}
                             className="w-full font-semibold p-2 border rounded-md"
                         />

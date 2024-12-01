@@ -35,7 +35,7 @@ const Login = () => {
             },
             body: JSON.stringify(data)
         })
-        const dataApi = await dataReponse.json()
+        const dataApi = await dataReponse?.json()
         if (dataApi?.success) {
             toast.success(dataApi?.message)
             if (location?.state) {

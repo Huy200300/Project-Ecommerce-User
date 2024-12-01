@@ -82,7 +82,7 @@ const PaymentSummary = ({ selectedProducts, handleChange, isOpen, shippingOrClau
                         <input
                             type="checkbox"
                             name="termsAccepted"
-                            value={shippingOrClause.clause}
+                            value={shippingOrClause?.clause}
                             checked={isOpen}
                             onChange={handleChange}
                             className="form-checkbox h-4 w-4 accent-red-500 border-black"

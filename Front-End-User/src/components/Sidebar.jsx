@@ -23,7 +23,7 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
             },
         });
         setLoading(false);
-        const dataApi = await res.json();
+        const dataApi = await res?.json();
         setData(dataApi?.data);
     };
 
@@ -32,7 +32,7 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
             method: SummaryAip.count_category_product.method,
             credentials: "include"
         })
-        const dataApi = await res.json();
+        const dataApi = await res?.json();
         setCategoryCounts(dataApi?.data);
     }
 
@@ -60,7 +60,7 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
     };
 
     const handleInputChange = (e, index) => {
-        const newValue = parseInt(e.target.value.replace(/[^0-9]/g, ""), 10);
+        const newValue = parseInt(e?.target?.value?.replace(/[^0-9]/g, ""), 10);
         if (!isNaN(newValue)) {
             const updatedValues = [...values];
             updatedValues[index] = newValue;
@@ -74,7 +74,7 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
             <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-2">Danh mục khác</h2>
                 <ul className='font-medium'>
-                    {Object.entries(categoryCounts).map(([category, count]) => {
+                    {Object?.entries(categoryCounts)?.map(([category, count]) => {
                         if (category === selectedCategory) return null;
 
                         return <li key={category}>
@@ -137,13 +137,13 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
                     {
                         !loading && data?.map((product, i) =>
                             <Link to={"/product/" + product?._id} key={i} className="flex group items-center space-x-4 w-full cursor-pointer">
-                                <img src={product?.productImage[0]} alt={product.productName} className="w-12 h-12 object-cover" />
+                                <img src={product?.productImage[0]} alt={product?.productName} className="w-12 h-12 object-cover" />
                                 <div className='w-full'>
-                                    <p className="text-gray-500 text-xs">{translatedCategory(product.category)}</p>
+                                    <p className="text-gray-500 text-xs">{translatedCategory(product?.category)}</p>
                                     <p className="text-wrap text-xs group-hover:text-red-500 font-bold w-full text-ellipsis truncate-2-lines break-words overflow-hidden">
                                         {product?.productName}
                                     </p>
-                                    <p className="text-red-500 group-hover:text-black text-sm font-bold">{displayCurrency(product.sellingPrice)} <span className="line-through text-gray-500">{displayCurrency(product.price)}</span></p>
+                                    <p className="text-red-500 group-hover:text-black text-sm font-bold">{displayCurrency(product?.sellingPrice)} <span className="line-through text-gray-500">{displayCurrency(product?.price)}</span></p>
                                 </div>
                             </Link>
                         )

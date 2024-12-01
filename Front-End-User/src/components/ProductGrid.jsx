@@ -31,7 +31,7 @@ const ProductGrid = ({ totalPages, handleCompare, loading, isFavorite, handleAdd
             </div>
 
             <div className="mt-4 flex justify-center">
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array?.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index + 1}
                         onClick={() => changePage(index + 1)}

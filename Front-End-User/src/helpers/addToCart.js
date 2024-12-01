@@ -17,7 +17,7 @@ const addToCart = async (e, id,count) => {
       count:count || 1
     }),
   });
-  const dataApi = await dataResponse.json();
+  const dataApi = await dataResponse?.json();
 
   if (dataApi?.success) {
     toast.success(dataApi?.message);

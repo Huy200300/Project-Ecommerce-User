@@ -26,7 +26,7 @@ const Reset = () => {
                     password: data.password
                 })
             })
-            const dataApi = await dataResponse.json()
+            const dataApi = await dataResponse?.json()
             if (dataApi?.success) {
                 navigate("/login")
                 toast.success(dataApi?.message)

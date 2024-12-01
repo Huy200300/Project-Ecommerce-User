@@ -26,7 +26,7 @@ const TopSellingProduct = () => {
             },
             body: JSON.stringify({ limit })
         })
-        const dataApi = await res.json();
+        const dataApi = await res?.json();
         setLoading(false);
         setData(dataApi?.data);
     }
@@ -34,10 +34,10 @@ const TopSellingProduct = () => {
     useEffect(() => { fetchData() }, [])
 
     const scrollRight = () => {
-        scrollElement.current.scrollLeft += 259.6
+        scrollElement?.current?.scrollLeft += 259.6
     }
     const scrollLeft = () => {
-        scrollElement.current.scrollLeft -= 259.6
+        scrollElement?.current?.scrollLeft -= 259.6
     }
 
     const handleOnChange = async (value, limit = 10) => {
@@ -51,11 +51,11 @@ const TopSellingProduct = () => {
             body: JSON.stringify({ limit, category: value })
         })
         setLoading(false)
-        const dataApi = await res.json();
+        const dataApi = await res?.json();
         if (dataApi?.success) {
             const products = dataApi?.data || [];
-            const productsWithReviews = await Promise.all(products.map(async (product) => {
-                const reviewStats = await fetchReviewStats(product._id);
+            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
+                const reviewStats = await fetchReviewStats(product?._id);
                 return { ...product, ...reviewStats };
             }));
             setData(productsWithReviews)
@@ -113,7 +113,7 @@ const TopSellingProduct = () => {
             {
                 loading ? <div className='flex space-x-4 overflow-scroll scrollbar-none transition-all ease-in-out' ref={scrollElement}>
                     {
-                        loadingList.map((_, index) => {
+                        loadingList?.map((_, index) => {
                             return (
                                 <div key={index} className="border-2 group hover:border-red-500 p-4 w-full min-w-[203px] md:min-w-[243px] max-w-[203px] md:max-w-[243px] rounded-md shadow-lg relative hover:shadow-xl transition-shadow duration-300">
                                     <div className="relative w-full">
@@ -178,7 +178,7 @@ const TopSellingProduct = () => {
                 </div> : <div className="flex space-x-4 overflow-scroll scrollbar-none transition-all ease-in-out" ref={scrollElement}>
                     {data?.map((product) => (
                         <ProductsListCards
-                            key={product._id} isFavorite={isFavorite} data={product} handleAddToCart={handleAddToCart} handleFavoriteClick={handleFavoriteClick} />
+                            key={product?._id} isFavorite={isFavorite} data={product} handleAddToCart={handleAddToCart} handleFavoriteClick={handleFavoriteClick} />
                     ))}
                 </div>
             }

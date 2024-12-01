@@ -18,8 +18,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
     setLoading(true);
     const categoryProduct = await fetchCategoryWiseProduct(category);
     const products = categoryProduct?.data || [];
-    const productsWithReviews = await Promise.all(products.map(async (product) => {
-      const reviewStats = await fetchReviewStats(product._id);
+    const productsWithReviews = await Promise?.all(products?.map(async (product) => {
+      const reviewStats = await fetchReviewStats(product?._id);
       return { ...product, ...reviewStats };
     }));
     setLoading(false);
@@ -29,7 +29,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const handleAddToCart = (e, product) => {
     e?.stopPropagation();
     e?.preventDefault();
-    navigate(`/product/${product._id}`)
+    navigate(`/product/${product?._id}`)
   };
 
   useEffect(() => {
@@ -37,10 +37,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
   }, [category])
 
   const scrollRight = () => {
-    scrollElement.current.scrollLeft += 350
+    scrollElement?.current?.scrollLeft += 350
   }
   const scrollLeft = () => {
-    scrollElement.current.scrollLeft -= 350
+    scrollElement?.current?.scrollLeft -= 350
   }
   const handleShowMore = () => {
     navigate(`/product-category?category=${category}`)
@@ -105,9 +105,9 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       }
                     </div>
                     <button
-                      className={`bg-red-500 font-bold uppercase hover:bg-red-600 rounded-full px-3 text-white py-1 text-sm mt-0.5 ${product.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`bg-red-500 font-bold uppercase hover:bg-red-600 rounded-full px-3 text-white py-1 text-sm mt-0.5 ${product?.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                       onClick={(e) => handleAddToCart(e, product)}
-                      disabled={product.countInStock === 0}
+                      disabled={product?.countInStock === 0}
                     >
                       Xem sản phẩm
                     </button>

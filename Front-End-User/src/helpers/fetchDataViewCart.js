@@ -6,7 +6,7 @@ const fetchDataViewCart = async () => {
     credentials: "include",
     headers: { "content-type": "application/json" },
   });
-  const result = await response.json();
+  const result = await response?.json();
   return result;
 };
 

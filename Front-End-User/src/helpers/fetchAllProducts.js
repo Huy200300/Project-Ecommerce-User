@@ -9,8 +9,8 @@ const fetchAllProducts = async (status) => {
     },
     body: JSON.stringify({ status: status }),
   });
-  const products = await response.json();
-  return products.data || [];
+  const products = await response?.json();
+  return products?.data || [];
 };
 
 export default fetchAllProducts;

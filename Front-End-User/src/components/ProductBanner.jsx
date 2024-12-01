@@ -50,19 +50,19 @@ const ProductBanner = () => {
             <div className="text-center">
                 <div className="flex space-x-4 justify-center">
                     <div className="bg-red-600 text-white p-4 rounded-full">
-                        <p className="text-2xl">{timeLeft.days.toString().padStart(2, '0')}</p>
+                        <p className="text-2xl">{timeLeft?.days?.toString()?.padStart(2, '0')}</p>
                         <p>DAYS</p>
                     </div>
                     <div className="bg-red-600 text-white p-4 rounded-full">
-                        <p className="text-2xl">{timeLeft.hours.toString().padStart(2, '0')}</p>
+                        <p className="text-2xl">{timeLeft?.hours?.toString()?.padStart(2, '0')}</p>
                         <p>HOURS</p>
                     </div>
                     <div className="bg-red-600 text-white p-4 rounded-full">
-                        <p className="text-2xl">{timeLeft.minutes.toString().padStart(2, '0')}</p>
+                        <p className="text-2xl">{timeLeft?.minutes?.toString()?.padStart(2, '0')}</p>
                         <p>MINUTES</p>
                     </div>
                     <div className="bg-red-600 text-white p-4 rounded-full">
-                        <p className="text-2xl">{timeLeft.seconds.toString().padStart(2, '0')}</p>
+                        <p className="text-2xl">{timeLeft?.seconds?.toString()?.padStart(2, '0')}</p>
                         <p>SECONDS</p>
                     </div>
                 </div>

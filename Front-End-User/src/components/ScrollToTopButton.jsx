@@ -9,7 +9,7 @@ const ScrollToTopButton = () => {
     const [showContact, setShowContact] = useState(false);
 
     const toggleVisibility = () => {
-        if (window.pageYOffset > 500) {
+        if (window?.pageYOffset > 500) {
             setIsVisible(true);
         } else {
             setIsVisible(false);
@@ -17,7 +17,7 @@ const ScrollToTopButton = () => {
     };
 
     const scrollToTop = () => {
-        window.scrollTo({
+        window?.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
@@ -28,15 +28,15 @@ const ScrollToTopButton = () => {
     };
 
     useEffect(() => {
-        window.addEventListener('scroll', toggleVisibility);
-        return () => window.removeEventListener('scroll', toggleVisibility);
+        window?.addEventListener('scroll', toggleVisibility);
+        return () => window?.removeEventListener('scroll', toggleVisibility);
     }, []);
 
     const calculatePosition = (index, totalItems) => {
-        const angle = (index / (totalItems - 1)) * Math.PI - Math.PI / 2;
+        const angle = (index / (totalItems - 1)) * Math?.PI - Math?.PI / 2;
         const radius = 3.5;
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
+        const x = radius * Math?.cos(angle);
+        const y = radius * Math?.sin(angle);
         return { x, y };
     };
 
@@ -59,13 +59,13 @@ const ScrollToTopButton = () => {
             <div className="fixed bottom-10 right-3 flex flex-col items-center">
                 {showContact && (
                     <div className="relative">
-                        {items.map((item, index) => {
+                        {items?.map((item, index) => {
                             const { x, y } = calculatePosition(index, items?.length);
                             return (
                                 <a
                                     key={index}
-                                    href={item.link}
-                                    className={`absolute ${item.colorClass} text-white p-3 rounded-full shadow-lg transition-colors`}
+                                    href={item?.link}
+                                    className={`absolute ${item?.colorClass} text-white p-3 rounded-full shadow-lg transition-colors`}
                                     style={{
                                         top: `calc(50% - ${y}rem)`,
                                         right: `calc(50% + ${x}rem)`,

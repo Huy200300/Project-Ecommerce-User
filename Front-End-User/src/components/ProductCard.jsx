@@ -11,14 +11,14 @@ const ProductCard = ({ data, handleAddToCart, handleFavoriteClick, handleCompare
                 data?.map((product, index) => (
                     <div key={index} className="group cursor-pointer border-2 border-gray-200 p-4 rounded-lg relative overflow-hidden transition-shadow duration-300 max-w-full hover:shadow-2xl">
                         <img
-                            src={product?.productImage[0] || product.productImage}
-                            alt={product.productName}
+                            src={product?.productImage[0] || product?.productImage}
+                            alt={product?.productName}
                             className="w-full h-48 mb-4 object-scale-down transition-transform duration-300 group-hover:scale-105"
                         />
                         <div className="flex flex-col items-center gap-1 w-full">
-                            <p className="text-sm font-semibold">{translatedCategory(product.category)}</p>
-                            <p className="text-xl font-bold text-center w-full truncate-2-lines">{product.productName}</p>
-                            <p className="text-lg font-semibold text-red-500">{displayCurrency(product.sellingPrice)}</p>
+                            <p className="text-sm font-semibold">{translatedCategory(product?.category)}</p>
+                            <p className="text-xl font-bold text-center w-full truncate-2-lines">{product?.productName}</p>
+                            <p className="text-lg font-semibold text-red-500">{displayCurrency(product?.sellingPrice)}</p>
                         </div>
 
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

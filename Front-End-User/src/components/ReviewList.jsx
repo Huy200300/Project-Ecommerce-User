@@ -38,11 +38,11 @@ const ReviewList = ({ productId, loading, user }) => {
             },
             body: JSON.stringify({ productId })
         });
-        const data = await response.json();
+        const data = await response?.json();
         if (data?.success) {
             setReviews(data?.data);
-            setCurrentPage(data.currentPage);
-            setTotalPages(data.totalPages);
+            setCurrentPage(data?.currentPage);
+            setTotalPages(data?.totalPages);
             setTotalReview(data?.totalReview?.count)
         } else {
             toast.error(data?.message)
@@ -79,16 +79,16 @@ const ReviewList = ({ productId, loading, user }) => {
         if (json?.error) {
             toast.error(json?.message);
         } else if (json?.success) {
-            setReviews(reviews.map(review =>
-                review._id === reviewId
+            setReviews(reviews?.map(review =>
+                review?._id === reviewId
                     ? {
                         ...review,
-                        likedBy: review.likedBy.includes(userId)
-                            ? review.likedBy
-                            : [...review.likedBy, userId],
-                        likes: review.likedBy.includes(userId)
-                            ? review.likes
-                            : review.likes + 1
+                        likedBy: review?.likedBy?.includes(userId)
+                            ? review?.likedBy
+                            : [...review?.likedBy, userId],
+                        likes: review?.likedBy.includes(userId)
+                            ? review?.likes
+                            : review?.likes + 1
                     }
                     : review
             ));
@@ -116,7 +116,7 @@ const ReviewList = ({ productId, loading, user }) => {
                 avatar: avatar
             })
         })
-        const reply = await response.json();
+        const reply = await response?.json();
         if (reply?.success) {
             const updatedReviews = reviews?.map((review) =>
                 review?._id === reviewId ? { ...review, replies: [...review?.replies, reply?.data?.replies.pop()] } : review
@@ -138,8 +138,8 @@ const ReviewList = ({ productId, loading, user }) => {
                     <div className="flex items-center mb-2 flex-col">
                         <p>Đánh giá trung bình</p>
                         <span className="flex">
-                            {[...Array(5)].map((_, index) => (
-                                <FaStar key={index} className={`text-lg ${index < averageRating.toFixed(1) ? 'text-yellow-500' : 'text-gray-300'} mr-1`} />
+                            {[...Array(5)]?.map((_, index) => (
+                                <FaStar key={index} className={`text-lg ${index < averageRating?.toFixed(1) ? 'text-yellow-500' : 'text-gray-300'} mr-1`} />
                             ))}
                         </span>
                         <span className="ml-2 text-lg">{averageRating.toFixed(1)}</span>
@@ -166,7 +166,7 @@ const ReviewList = ({ productId, loading, user }) => {
                                                     <div className="flex-grow">
                                                         <h2 className="text-xl text-gray-700">{review?.userId?.name}</h2>
                                                         <div className="flex items-center mb-2">
-                                                            {[...Array(5)].map((_, index) => (
+                                                            {[...Array(5)]?.map((_, index) => (
                                                                 <span
                                                                     key={index}
                                                                     className={`text-lg ${index < review?.rating ? 'text-yellow-500' : 'text-gray-300'} mr-1`}
@@ -177,7 +177,7 @@ const ReviewList = ({ productId, loading, user }) => {
                                                         </div>
                                                         <p className="text-gray-600">{review?.comment}</p>
                                                         <div className='flex items-center gap-4'>
-                                                            <span className='text-slate-400'>Ngày {moment(review?.createAt).format('DD/MM/YYYY')}</span>
+                                                            <span className='text-slate-400'>Ngày {moment(review?.createAt)?.format('DD/MM/YYYY')}</span>
                                                             <button
                                                                 onClick={() => toggleReplyForm(review?._id)}
                                                                 className="text-gray-500 hover:underline flex items-center"

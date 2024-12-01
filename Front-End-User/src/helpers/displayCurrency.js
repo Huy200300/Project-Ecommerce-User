@@ -4,7 +4,7 @@ const displayCurrency = (num) => {
     currency: "VND",
     minimumFractionDigits: 0,
   });
-  return formatter.format(num).replace("₫", "VND");
+  return formatter?.format(num)?.replace("₫", "VND");
 };
 
 export default displayCurrency;

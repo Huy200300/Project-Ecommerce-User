@@ -18,24 +18,24 @@ const CartItem = ({
     selectedStorage,
     handleCheckboxChange
 }) => {
-    const [selectedColor, setSelectedColor] = useState(product.selectedColor);
-    const [selectedColorImage, setSelectedColorImage] = useState(product.selectedColorImage);
+    const [selectedColor, setSelectedColor] = useState(product?.selectedColor);
+    const [selectedColorImage, setSelectedColorImage] = useState(product?.selectedColorImage);
     const { cart, updateCart } = useCart();
     const { updateSelectedProducts } = useSelectedProducts()
     const productId = product?._id;
-    const isChecked = selectedProducts.includes(productId);
+    const isChecked = selectedProducts?.includes(productId);
 
     useEffect(() => {
-        const selectedProductss = JSON.parse(localStorage.getItem("selectedProducts")) || [];
-        const updatedSelectedProductst = selectedProductss.map(item =>
+        const selectedProductss = JSON?.parse(localStorage?.getItem("selectedProducts")) || [];
+        const updatedSelectedProductst = selectedProductss?.map(item =>
             item._id === productId
                 ? { ...item, selectedColor, selectedColorImage }
                 : item
         );
         updateSelectedProducts(updatedSelectedProductst)
 
-        const updatedCart = cart.map(item =>
-            item._id === productId
+        const updatedCart = cart?.map(item =>
+            item?._id === productId
                 ? { ...item, selectedColor, selectedColorImage }
                 : item
         );
@@ -85,17 +85,17 @@ const CartItem = ({
                                             <div className="absolute w-full mt-2 left-0 p-2 border border-gray-300 shadow-lg rounded-md bg-white z-50 max-h-60 overflow-auto">
                                                 <div className="flex flex-wrap gap-2">
                                                     {product?.colors
-                                                        .map((color) => (
+                                                        ?.map((color) => (
                                                             <div
-                                                                key={color.colorName}
-                                                                className={`relative flex flex-row items-center cursor-pointer border-2 rounded-lg p-2 ${color.colorName === selectedColor ? 'border-2 border-red-500' : ''}`}
-                                                                onClick={() => handleColorClick(color.colorName, color.colorImages?.[0])}
+                                                                key={color?.colorName}
+                                                                className={`relative flex flex-row items-center cursor-pointer border-2 rounded-lg p-2 ${color?.colorName === selectedColor ? 'border-2 border-red-500' : ''}`}
+                                                                onClick={() => handleColorClick(color?.colorName, color?.colorImages?.[0])}
                                                             >
-                                                                <p className={`mr-2 text-sm ${color.colorName === selectedColor ? 'font-bold' : ''}`}>{color.colorName}</p>
-                                                                {color.colorImages?.[0] && (
-                                                                    <img src={color.colorImages[0]} alt={color.colorName} className="w-10 h-10 object-cover rounded-md" />
+                                                                <p className={`mr-2 text-sm ${color?.colorName === selectedColor ? 'font-bold' : ''}`}>{color?.colorName}</p>
+                                                                {color?.colorImages?.[0] && (
+                                                                    <img src={color?.colorImages[0]} alt={color?.colorName} className="w-10 h-10 object-cover rounded-md" />
                                                                 )}
-                                                                {selectedColor === color.colorName && (
+                                                                {selectedColor === color?.colorName && (
                                                                     <div className="absolute top-0 right-0 bg-red-500 w-4 h-4 border-2 rounded-e-sm border-red-500 flex items-center justify-center">
                                                                         <FaCheck className="text-white w-3 h-3" />
                                                                     </div>
@@ -124,7 +124,7 @@ const CartItem = ({
                         <div className='flex gap-3 justify-center items-center'>
                             <button
                                 disabled={product?.amount === 1}
-                                onClick={() => updateQuantity(product?._id, "decrease", product?.amount === 1, product.selectedColor, product.selectedStorage)}
+                                onClick={() => updateQuantity(product?._id, "decrease", product?.amount === 1, product?.selectedColor, product?.selectedStorage)}
                                 className='text-xl text-gray-500 hover:text-gray-900 cursor-pointer transition-all ease-in-out'>
                                 <FaMinus className='text-lg' />
                             </button>

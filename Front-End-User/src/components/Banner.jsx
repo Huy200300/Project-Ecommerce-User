@@ -55,7 +55,7 @@ const Banner = () => {
                 <div className='hidden md:flex gap-2 h-full rounded-md p-1.5 border-2'>
                     <div className='hidden md:flex w-full h-full overflow-hidden flex-col'>
                         <div className='h-full w-full overflow-hidden relative'>
-                            {desktopImage.map((imageURL, index) => (
+                            {desktopImage?.map((imageURL, index) => (
                                 <div
                                     className={`w-full h-full absolute transition-opacity duration-700 ease-in-out transform ${currentImage === index ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-95'
                                         }`}
@@ -69,7 +69,7 @@ const Banner = () => {
                     </div>
                 </div>
                 <div className='flex w-full h-full overflow-hidden md:hidden relative' >
-                    {mobileImage.map((imageURL, index) => (
+                    {mobileImage?.map((imageURL, index) => (
                         <div
                             className={`w-full h-full absolute transition-opacity duration-700 ease-in-out transform ${currentImage === index ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-95'
                                 }`}

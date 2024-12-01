@@ -38,7 +38,7 @@ const ReviewForm = ({ productId, user }) => {
             })
         });
         setLoading(false)
-        const dataApi = await response.json();
+        const dataApi = await response?.json();
         if (dataApi?.success) {
             toast.success(dataApi?.message);
             reset();

@@ -18,10 +18,10 @@ const HotDealPage = () => {
                 credentials: "include"
             }
         );
-        const dataApi = await res.json();
-        setData(dataApi.data);
-        setTotalPages(dataApi.totalPages);
-        setCurrentPage(dataApi.currentPage);
+        const dataApi = await res?.json();
+        setData(dataApi?.data);
+        setTotalPages(dataApi?.totalPages);
+        setCurrentPage(dataApi?.currentPage);
     }
 
     useEffect(() => {
@@ -55,20 +55,20 @@ const HotDealPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {data?.map((deal) => (
-                        <div key={deal.id} className="bg-white cursor-pointer p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div key={deal?.id} className="bg-white cursor-pointer p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                             <img
-                                src={deal.productImage[0]}
-                                alt={deal.productName}
+                                src={deal?.productImage[0]}
+                                alt={deal?.productName}
                                 className="object-scale-down w-full h-48 hover:scale-110 transition-all mix-blend-multiply"
                             />
-                            <h2 className="text-lg font-semibold line-clamp-2">{deal.productName}</h2>
+                            <h2 className="text-lg font-semibold line-clamp-2">{deal?.productName}</h2>
                             <div className="flex flex-col items-center justify-between mt-2">
-                                <span className="text-xl font-bold text-red-600">{displayCurrency(deal.sellingPrice)}</span>
+                                <span className="text-xl font-bold text-red-600">{displayCurrency(deal?.sellingPrice)}</span>
                                 {deal?.price !== 0 && <span className="text-gray-400 line-through">{displayCurrency(deal?.price)}</span>}
                             </div>
                             <div className="flex items-center justify-between mt-4">
-                                <span className="text-green-500 font-semibold">{deal.hotDealDiscount}% OFF</span>
-                                <button onClick={() => handleDetails(deal._id)} className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 flex items-center">
+                                <span className="text-green-500 font-semibold">{deal?.hotDealDiscount}% OFF</span>
+                                <button onClick={() => handleDetails(deal?._id)} className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 flex items-center">
                                     <FaEye className="mr-2" /> Xem chi tiết
                                 </button>
                             </div>

@@ -24,14 +24,14 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
 
     useEffect(() => {
         if (scrollToReviews && activeTab === "reviews") {
-            reviewsRef.current?.scrollIntoView({ behavior: 'smooth' });
+            reviewsRef?.current?.scrollIntoView({ behavior: 'smooth' });
             setScrollToReviews(false);
         }
     }, [activeTab, scrollToReviews, setScrollToReviews]);
 
 
     const handleCommentChange = (event) => {
-        setComment(event.target.value);
+        setComment(event?.target?.value);
     };
 
     const reset = () => {
@@ -41,7 +41,7 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
     }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event?.preventDefault();
         setLoading(true);
 
         const response = await fetch(SummaryAip.newReview.url, {
@@ -57,9 +57,9 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
             })
         });
         setLoading(false)
-        const dataApi = await response.json();
+        const dataApi = await response?.json();
         if (dataApi?.success) {
-            toast.success(dataApi?.message);
+            toast?.success(dataApi?.message);
             reset();
         } else {
             toast.error(dataApi?.message);
@@ -86,8 +86,8 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
             setReviews(data?.data);
             setTotalPages(data.totalPages);
             setTotalReview(data?.totalReview?.count);
-            if (currentPage !== data.currentPage) {
-                setCurrentPage(data.currentPage);
+            if (currentPage !== data?.currentPage) {
+                setCurrentPage(data?.currentPage);
             }
         } else {
             toast.error(data?.message)
@@ -142,16 +142,16 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
         if (json?.error) {
             toast.error(json?.message);
         } else if (json?.success) {
-            setReviews(reviews.map(review =>
+            setReviews(reviews?.map(review =>
                 review._id === reviewId
                     ? {
                         ...review,
-                        likedBy: review.likedBy.includes(userId)
-                            ? review.likedBy
+                        likedBy: review?.likedBy?.includes(userId)
+                            ? review?.likedBy
                             : [...review.likedBy, userId],
-                        likes: review.likedBy.includes(userId)
-                            ? review.likes
-                            : review.likes + 1
+                        likes: review?.likedBy?.includes(userId)
+                            ? review?.likes
+                            : review?.likes + 1
                     }
                     : review
             ));
@@ -174,7 +174,7 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                 avatar: avatar
             })
         })
-        const reply = await response.json();
+        const reply = await response?.json();
         if (reply?.success) {
             const updatedReviews = reviews?.map((review) =>
                 review?._id === reviewId ? { ...review, replies: [...review?.replies, reply?.data?.replies.pop()] } : review
@@ -200,9 +200,9 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                         {dataSpec && (
                             <div className="w-full max-w-4xl">
                                 <div className="flex flex-wrap justify-center">
-                                    {Object.entries(dataSpec?.specificationsRef || {})
-                                        .filter(([key]) => key !== "_id" && key !== "__v")
-                                        .map(([key, value]) => {
+                                    {Object?.entries(dataSpec?.specificationsRef || {})
+                                        ?.filter(([key]) => key !== "_id" && key !== "__v")
+                                        ?.map(([key, value]) => {
                                            
                                             const vietnameseLabels = {
                                                 screenSize: "Kích thước màn hình",
@@ -245,10 +245,10 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                             <div className="flex gap-2 items-center">
                                 <span className="flex">
                                     {[...Array(5)].map((_, index) => (
-                                        <FaStar key={index} className={`text-lg ${index < averageRating.toFixed(1) ? 'text-red-500' : 'text-gray-300'} mr-1`} />
+                                        <FaStar key={index} className={`text-lg ${index < averageRating?.toFixed(1) ? 'text-red-500' : 'text-gray-300'} mr-1`} />
                                     ))}
                                 </span>
-                                <span className="ml-2 text-lg">{averageRating.toFixed(1)}</span>
+                                <span className="ml-2 text-lg">{averageRating?.toFixed(1)}</span>
                             </div>
 
                             <div className="space-y-2 mt-2">
@@ -258,20 +258,20 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                                     { stars: 3, percent: "w-[0%]", count: 0 },
                                     { stars: 2, percent: "w-[0%]", count: 0 },
                                     { stars: 1, percent: "w-[0%]", count: 0 },
-                                ].map((item, index) => (
+                                ]?.map((item, index) => (
                                     <div key={index} className="flex items-center space-x-2">
                                         <div className="flex space-x-1">
-                                            {[...Array(item.stars)].map((_, i) => (
+                                            {[...Array(item?.stars)].map((_, i) => (
                                                 <span key={i} className="text-red-500 text-sm">★</span>
                                             ))}
-                                            {[...Array(5 - item.stars)].map((_, i) => (
+                                            {[...Array(5 - item?.stars)].map((_, i) => (
                                                 <span key={i} className="text-gray-300 text-sm">★</span>
                                             ))}
                                         </div>
                                         <div className="bg-gray-300 h-2 rounded-full flex-1 relative">
-                                            <div className={`bg-red-500 h-2 rounded-full ${item.percent}`} />
+                                            <div className={`bg-red-500 h-2 rounded-full ${item?.percent}`} />
                                         </div>
-                                        <div className="text-gray-500 text-sm">{item.count}</div>
+                                        <div className="text-gray-500 text-sm">{item?.count}</div>
                                     </div>
                                 ))}
                             </div>
@@ -290,7 +290,7 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                                                         <p className="font-semibold">{review?.userId?.name}</p>
                                                         <p className="text-xs">Ngày {moment(review?.createAt).format('DD/MM/YYYY')}</p>
                                                         <div className="flex items-center mb-2">
-                                                            {[...Array(5)].map((_, index) => (
+                                                            {[...Array(5)]?.map((_, index) => (
                                                                 <span
                                                                     key={index}
                                                                     className={`text-lg ${index < review?.rating ? 'text-red-500' : 'text-gray-300'} mr-1`}

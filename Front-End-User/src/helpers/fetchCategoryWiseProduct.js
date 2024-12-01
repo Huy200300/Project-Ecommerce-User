@@ -11,7 +11,7 @@ const fetchCategoryWiseProduct = async (category) => {
     }),
   });
 
-  const dataApi = await data.json();
+  const dataApi = await data?.json();
 
   return dataApi;
 };

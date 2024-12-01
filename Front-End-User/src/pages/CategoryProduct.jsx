@@ -31,7 +31,6 @@ const CategoryProduct = () => {
   const { closeCompareModal, addToCompare } = useProductCompare();
 
   const fetchDataFilter = async (category, brands, priceRange, page = 1, limit = 6) => {
-    console.log(priceRange)
     setLoading(true);
     const dataResponse = await fetch(SummaryAip.filter_product.url, {
       method: SummaryAip.filter_product.method,
@@ -41,7 +40,7 @@ const CategoryProduct = () => {
       },
       body: JSON.stringify({ category, brands, priceRange, page, limit }),
     });
-    const dataApi = await dataResponse.json();
+    const dataApi = await dataResponse?.json();
     setLoading(false);
     setData(dataApi?.data || []);
     setTotalPages(dataApi?.totalPages || 1);
@@ -69,8 +68,8 @@ const CategoryProduct = () => {
   };
 
   const handleCheckboxChange = (brand) => {
-    const updatedBrands = selectedBrands.includes(brand)
-      ? selectedBrands.filter((b) => b !== brand)
+    const updatedBrands = selectedBrands?.includes(brand)
+      ? selectedBrands?.filter((b) => b !== brand)
       : [...selectedBrands, brand];
 
     setSelectedBrands(updatedBrands);
@@ -111,12 +110,12 @@ const CategoryProduct = () => {
   };
 
   const renderBrandCheckboxes = (brandList) => {
-    return brandList.map((categoryName, index) => (
+    return brandList?.map((categoryName, index) => (
       <div key={index} className="flex items-center gap-3 font-medium">
         <input
           type="checkbox"
           name="brandName"
-          checked={selectedBrands.includes(categoryName?.value)}
+          checked={selectedBrands?.includes(categoryName?.value)}
           value={categoryName?.value}
           id={categoryName?.value}
           onChange={() => handleCheckboxChange(categoryName?.value)}
@@ -181,7 +180,7 @@ const CategoryProduct = () => {
           {translatedCategory(category, true)}
         </span>
         <span className="uppercase font-semibold">
-          ({data?.length} Results)
+          ({data?.length} Kết quả)
         </span>
       </div>
       <div className="absolute left-1/2 -translate-x-1/2 w-screen h-0.5 bg-slate-200 top-20">

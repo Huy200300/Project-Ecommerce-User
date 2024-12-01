@@ -15,7 +15,7 @@ const CategoryList = () => {
             credentials: "include"
         });
         setLoading(false);
-        const dataApi = await dataResponse.json();
+        const dataApi = await dataResponse?.json();
         setCategoryProduct(dataApi?.data || []);
     };
     useEffect(() => {

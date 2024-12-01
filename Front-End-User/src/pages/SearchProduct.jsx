@@ -25,19 +25,19 @@ const SearchProduct = () => {
   
 
     if (filters.price) {
-      filterQuery.append('price', filters.price);
+      filterQuery.append('price', filters?.price);
     }
 
     if (filters.category) {
-      filterQuery.append('category', filters.category);
+      filterQuery.append('category', filters?.category);
     }
 
     if (filters.inStock) {
-      filterQuery.append('inStock', filters.inStock);
+      filterQuery.append('inStock', filters?.inStock);
     }
 
     if (filters.onSale) {
-      filterQuery.append('onSale', filters.onSale);
+      filterQuery.append('onSale', filters?.onSale);
     }
 
     // Kết hợp các query lọc với query tìm kiếm
@@ -50,7 +50,7 @@ const SearchProduct = () => {
     });
 
     setLoading(false);
-    const dataApi = await dataResponse.json();
+    const dataApi = await dataResponse?.json();
     setData(dataApi?.data);
   };
 
@@ -91,7 +91,7 @@ const SearchProduct = () => {
             <select
               name='price'
               id='price'
-              value={filters.price}
+              value={filters?.price}
               onChange={handleFilterChange}
               className='w-full p-2 border border-gray-300 rounded-lg'>
               <option value=''>Tất cả</option>
@@ -107,7 +107,7 @@ const SearchProduct = () => {
             <select
               name='category'
               id='category'
-              value={filters.category}
+              value={filters?.category}
               onChange={handleFilterChange}
               className='w-full p-2 border border-gray-300 rounded-lg'>
               <option value=''>Tất cả</option>
@@ -136,7 +136,7 @@ const SearchProduct = () => {
               <input
                 type='checkbox'
                 name='onSale'
-                checked={filters.onSale}
+                checked={filters?.onSale}
                 onChange={handleFilterChange}
                 className='form-checkbox'
               />
@@ -149,30 +149,27 @@ const SearchProduct = () => {
           {data?.length === 0 && !loading && (
             <p className='bg-white text-lg text-center p-4'>Không tìm thấy sản phẩm nào...</p>
           )}
-          {
-            console.log(data)
-          }
           {data?.length !== 0 && !loading && (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
               {data.map(product => {
                 return (
-                  <div key={product._id} className='bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300'>
-                    <img src={product.productImage[0]} alt={product.productName} className='object-scale-down h-28 w-full hover:scale-110 transition-all mix-blend-multiply' />
-                    <h3 className='text-lg font-semibold mt-2'>{product.productName}</h3>
+                  <div key={product?._id} className='bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300'>
+                    <img src={product?.productImage[0]} alt={product?.productName} className='object-scale-down h-28 w-full hover:scale-110 transition-all mix-blend-multiply' />
+                    <h3 className='text-lg font-semibold mt-2'>{product?.productName}</h3>
                     <>
                       <div className='flex items-center'>
                         <p className='text-red-600 font-bold'>
                           {displayCurrency(product?.sellingPrice)}
                         </p>
-                        {calculateDiscount(product.price, product.sellingPrice) !== 0 && <p className='ml-2 text-sm text-green-600 font-semibold'>
-                          (-{calculateDiscount(product.price, product.sellingPrice)}%)
+                        {calculateDiscount(product?.price, product?.sellingPrice) !== 0 && <p className='ml-2 text-sm text-green-600 font-semibold'>
+                          (-{calculateDiscount(product?.price, product?.sellingPrice)}%)
                         </p>}
                       </div>
                       <p className='line-through text-gray-500'>
                         {displayCurrency(product?.price)}
                       </p>
                     </>
-                    <button onClick={(e) => handleDetails(e,product._id)} className='mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300'>
+                    <button onClick={(e) => handleDetails(e,product?._id)} className='mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300'>
                       Xem chi tiết
                     </button>
                   </div>

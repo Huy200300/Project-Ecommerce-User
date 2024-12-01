@@ -39,7 +39,7 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
             }
         );
         setLoading(false);
-        const dataApi = await response.json();
+        const dataApi = await response?.json();
         if (dataApi?.success) {
             setTotalReview(dataApi?.totalReview?.count);
             setDataReview(dataApi?.data)
@@ -63,7 +63,7 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     useEffect(() => {
         if (data?.colors?.length > 0 && !selectedColor) {
-            setSelectedColor(data.colors[0].colorName);
+            setSelectedColor(data?.colors[0]?.colorName);
         }
     }, [data, selectedColor, setSelectedColor]);
 
@@ -74,13 +74,13 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     const handleStorageChange = (size) => {
         setSelectedStorage(size);
-        const filteredColors = data.colors.filter(color => color.size === size);
+        const filteredColors = data?.colors?.filter(color => color?.size === size);
         setAvailableColors(filteredColors);
 
         if (filteredColors?.length > 0) {
             const firstAvailableColor = filteredColors[0];
-            setSelectedColor(firstAvailableColor.colorName);
-            updatePrice(size, firstAvailableColor.colorName);
+            setSelectedColor(firstAvailableColor?.colorName);
+            updatePrice(size, firstAvailableColor?.colorName);
         } else {
             setSelectedColor(null);
         }
@@ -88,12 +88,12 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     const updatePrice = (size, colorName) => {
         const selectedColorData = data?.colors?.find(
-            (color) => color.size === size && color.colorName === colorName
+            (color) => color?.size === size && color?.colorName === colorName
         );
 
-        if (selectedColorData && selectedColorData.price > 0 && selectedColorData.sellingPrice > 0) {
-            setDisplayPrice(selectedColorData.sellingPrice);
-            setDisplayOriginalPrice(selectedColorData.price);
+        if (selectedColorData && selectedColorData?.price > 0 && selectedColorData?.sellingPrice > 0) {
+            setDisplayPrice(selectedColorData?.sellingPrice);
+            setDisplayOriginalPrice(selectedColorData?.price);
         } else {
             setDisplayPrice(data?.sellingPrice || 0);
             setDisplayOriginalPrice(data?.price || 0);
@@ -102,11 +102,11 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     useEffect(() => {
         if (data?.colors?.length > 0) {
-            const firstColor = data.colors[0];
-            setSelectedStorage(firstColor.size);
-            setAvailableColors(data.colors.filter((color) => color.size === firstColor.size));
-            setSelectedColor(firstColor.colorName);
-            updatePrice(firstColor.size, firstColor.colorName);
+            const firstColor = data?.colors[0];
+            setSelectedStorage(firstColor?.size);
+            setAvailableColors(data?.colors?.filter((color) => color?.size === firstColor?.size));
+            setSelectedColor(firstColor?.colorName);
+            updatePrice(firstColor?.size, firstColor?.colorName);
         } else {
             setDisplayPrice(data?.sellingPrice || 0);
             setDisplayOriginalPrice(data?.price || 0);
@@ -116,8 +116,8 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     const selectedProductStock = (data) => {
         if (data?.colors?.length > 0) {
-            return data.colors.find(color =>
-                color.colorName === selectedColor && color.size === selectedStorage
+            return data?.colors?.find(color =>
+                color?.colorName === selectedColor && color?.size === selectedStorage
             )?.stock || 0;
         }
         return data?.countInStock;
@@ -125,7 +125,7 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
 
     //loại bỏ các giá trị trùng lặp trong mảng đó, chỉ giữ lại các kích thước duy nhất.
     //chứa tất cả các kích thước không trùng lặp của các màu sắc có trong data.colors.
-    const uniqueSizes = [...new Set(data?.colors?.map(color => color.size))];
+    const uniqueSizes = [...new Set(data?.colors?.map(color => color?.size))];
 
     return (
         <>
@@ -136,7 +136,7 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                         <div className='flex items-center mt-2'>
 
                             <div className="flex items-center ">
-                                {[...Array(5)].map((_, index) => (
+                                {[...Array(5)]?.map((_, index) => (
                                     <span
                                         key={index}
                                         className={`text-lg ${index <= averageRating?.toFixed(1) || 0 ? 'text-yellow-500' : 'text-gray-300'} mr-1`}
@@ -167,13 +167,13 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                                 {
                                     data?.colors?.length > 0 && (
                                         <>
-                                            {uniqueSizes.filter(size => size !== undefined && size !== null)?.length > 0 && (
+                                            {uniqueSizes?.filter(size => size !== undefined && size !== null)?.length > 0 && (
                                                 <div className="flex gap-3 items-center mt-2">
                                                     <label className="block text-sm font-semibold capitalize">Dung lượng</label>
                                                     <div className="flex gap-2">
                                                         {uniqueSizes
-                                                            .filter(size => size !== undefined && size !== null)
-                                                            .map(size => (
+                                                            ?.filter(size => size !== undefined && size !== null)
+                                                            ?.map(size => (
                                                                 <button
                                                                     key={size}
                                                                     className={`px-4 py-2 border rounded ${selectedStorage === size ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
@@ -189,17 +189,17 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                                             <div className="flex gap-3 items-center mt-2">
                                                 <label className="block text-sm font-semibold capitalize">Màu sắc</label>
                                                 <div className="grid grid-cols-2 gap-3 ml-8">
-                                                    {availableColors.map((color, index) => (
+                                                    {availableColors?.map((color, index) => (
                                                         <div
                                                             key={index}
                                                             className={`relative flex flex-row items-center cursor-pointer border-2 rounded-lg p-2 ${selectedColor === color.colorName ? 'border-red-500' : 'border-gray-300'
                                                                 }`}
-                                                            onClick={() => handleColorChange(color.colorName)}
+                                                            onClick={() => handleColorChange(color?.colorName)}
                                                         >
                                                             {color?.colorImages && color?.colorImages?.length > 0 ? (
                                                                 <img
-                                                                    src={color.colorImages[0]}
-                                                                    alt={color.colorName}
+                                                                    src={color?.colorImages[0]}
+                                                                    alt={color?.colorName}
                                                                     className="w-10 h-10 object-cover"
                                                                 />
                                                             ) : (
@@ -208,9 +208,9 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                                                                 </div>
                                                             )}
 
-                                                            <span className="ml-2 text-sm font-medium">{color.colorName}</span>
+                                                            <span className="ml-2 text-sm font-medium">{color?.colorName}</span>
 
-                                                            {selectedColor === color.colorName && (
+                                                            {selectedColor === color?.colorName && (
                                                                 <div className="absolute top-0 right-0 bg-red-500 w-4 h-4 border-2 rounded-e-sm border-red-500 flex items-center justify-center">
                                                                     <FaCheck className="text-white w-3 h-3" />
                                                                 </div>

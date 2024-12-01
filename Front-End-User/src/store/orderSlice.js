@@ -18,21 +18,21 @@ export const orderSlice = createSlice({
         (item) => item?.product === orderItem?.product
       );
       if (itemOrder) {
-        itemOrder.amount += orderItem?.amount;
-        state.isSucessOrder = true;
+        itemOrder?.amount += orderItem?.amount;
+        state?.isSucessOrder = true;
       } else {
-        state.orderItems.push(orderItem);
+        state?.orderItems?.push(orderItem);
       }
     },
     selectedOrder: (state, action) => {
-      const { selectedProductsTotalPrice, selectedProducts } = action.payload;
-      state.orderItemsSelected = selectedProductsTotalPrice;
-      state.selectedProducts = selectedProducts;
+      const { selectedProductsTotalPrice, selectedProducts } = action?.payload;
+      state?.orderItemsSelected = selectedProductsTotalPrice;
+      state?.selectedProducts = selectedProducts;
     },
     qtyOrder: (state, action) => {
-      const { newQty, id } = action.payload;
-      state.count = newQty;
-      state.id = id;
+      const { newQty, id } = action?.payload;
+      state?.count = newQty;
+      state?.id = id;
     },
   },
 });

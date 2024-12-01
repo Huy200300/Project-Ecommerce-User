@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 const ChangeUserRole = ({ name, email, role, onClose, userId,callFun }) => {
   const [userRole, setUserRole] = useState(role)
   const handleOnChangeSelect = (e) => {
-    setUserRole(e.target.value)
+    setUserRole(e?.target?.value)
   }
   const updateUserRole = async () => {
     const dataResponse = await fetch(SummaryAip.update_user.url, {
@@ -21,9 +21,9 @@ const ChangeUserRole = ({ name, email, role, onClose, userId,callFun }) => {
         role : userRole
       })
     })
-    const dataApi = await dataResponse.json()
-    if (dataApi.success) {
-      toast.success(dataApi.message)
+    const dataApi = await dataResponse?.json()
+    if (dataApi?.success) {
+      toast?.success(dataApi?.message)
       onClose()
       callFun()
     }

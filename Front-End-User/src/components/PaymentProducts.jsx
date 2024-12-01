@@ -13,7 +13,7 @@ const PaymentProducts = ({ selectedProducts }) => {
                             </h2>
                             <div className='px-6 py-2 bg-white rounded-lg flex flex-col gap-3 shadow-md w-full'>
                                 {
-                                    selectedProducts.map((product) =>
+                                    selectedProducts?.map((product) =>
                                         <div className="">
                                             <div className="flex items-center justify-between border-t pt-4">
                                                 <div className="flex items-start gap-2">

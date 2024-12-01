@@ -18,8 +18,8 @@ const FavoritesPage = () => {
   const showMoreLikeRef = useRef(null);
 
   useEffect(() => {
-    if (showMoreLike && showMoreLikeRef.current) {
-      showMoreLikeRef.current.scrollIntoView({ behavior: "smooth" });
+    if (showMoreLike && showMoreLikeRef?.current) {
+      showMoreLikeRef?.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [showMoreLike]);
 
@@ -27,7 +27,7 @@ const FavoritesPage = () => {
     if (isChecked) {
       setCompareList([...compareList, product]);
     } else {
-      setCompareList(compareList.filter((p) => p._id !== product._id));
+      setCompareList(compareList?.filter((p) => p?._id !== product?._id));
     }
   };
 
@@ -73,7 +73,7 @@ const FavoritesPage = () => {
         favorites?.length > 0 ? (
           <div className="grid grid-cols-4 mt-10 gap-7">
             {favorites?.map((product) => (
-              <div key={product._id} className={`relative ${showMoreLike === product._id ? "col-span-full" : "col-span-2"}"`}>
+              <div key={product._id} className={`relative ${showMoreLike === product?._id ? "col-span-full" : "col-span-2"}"`}>
                 <div className="cursor-pointer border-2 border-gray-200 p-4 rounded-lg relative transition-shadow duration-300 max-w-full hover:shadow-2xl">
                   <div className='flex items-end justify-end w-full'>
                     <button
@@ -84,12 +84,12 @@ const FavoritesPage = () => {
                     </button>
                   </div>
                   <img
-                    src={product.productImage[0]}
+                    src={product?.productImage[0]}
                     alt="Product"
                     className="w-full h-48 mb-4 object-scale-down transition-transform duration-300"
                   />
                   <div className="mt-4 flex-grow">
-                    <h2 className="text-xl font-bold text-center w-full line-clamp-1">{product.productName}</h2>
+                    <h2 className="text-xl font-bold text-center w-full line-clamp-1">{product?.productName}</h2>
                     <div className="flex items-center justify-center my-2">
                       <span className="text-yellow-500 flex font-bold">
                         {product?.averageRating > 0 && (
@@ -100,11 +100,11 @@ const FavoritesPage = () => {
                           </>
                         )}
                       </span>
-                      {product.reviewCount > 0 && <span className="ml-2 text-sm text-gray-600">({product.reviewCount})</span>}
+                      {product?.reviewCount > 0 && <span className="ml-2 text-sm text-gray-600">({product?.reviewCount})</span>}
                     </div>
                     <div className="flex items-center flex-col justify-center space-x-4 mt-2">
-                      <div className="text-2xl font-bold">{displayCurrency(product.sellingPrice)}</div>
-                      <div className="text-gray-500 line-through">{displayCurrency(product.price)}</div>
+                      <div className="text-2xl font-bold">{displayCurrency(product?.sellingPrice)}</div>
+                      <div className="text-gray-500 line-through">{displayCurrency(product?.price)}</div>
                     </div>
                     <div className='flex items-center justify-between mt-2'>
                       <div className="text-green-600 font-semibold text-xs">Nhận hàng hôm nay</div>
@@ -116,8 +116,8 @@ const FavoritesPage = () => {
                   <div className="mt-4">
                     <button
                       className={`flex font-semibold items-center justify-center text-nowrap w-full uppercase p-3 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors duration-300 ${product.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                      onClick={(e) => handleAddToCart(e, product._id)}
-                      disabled={product.countInStock === 0}
+                      onClick={(e) => handleAddToCart(e, product?._id)}
+                      disabled={product?.countInStock === 0}
                     >
                       Xem chi tiết
                     </button>
@@ -137,7 +137,7 @@ const FavoritesPage = () => {
                         className=" text-blue-600 hover:underline cursor-pointer font-semibold flex gap-1 items-center"
                       >
                         Xem thêm
-                        {showMoreLike === product._id ? <FiChevronUp className='text-xl text-black' /> : <FiChevronDown className='text-xl text-black' />}
+                        {showMoreLike === product?._id ? <FiChevronUp className='text-xl text-black' /> : <FiChevronDown className='text-xl text-black' />}
                       </div>
                     </div>
                   </div>
@@ -191,11 +191,11 @@ const FavoritesPage = () => {
                     {isFavorite(pro) ? <FaHeart /> : <FaRegHeart />}
                   </button>
                   <img
-                    src={pro.productImage[0]}
-                    alt={pro.productName}
+                    src={pro?.productImage[0]}
+                    alt={pro?.productName}
                     className="w-full h-32 object-contain mb-2"
                   />
-                  <div className="text-center text-sm line-clamp-2">{pro.productName}</div>
+                  <div className="text-center text-sm line-clamp-2">{pro?.productName}</div>
                 </div>
               ))}
             </div>
@@ -205,7 +205,7 @@ const FavoritesPage = () => {
 
       {compareList?.length > 0 && (
         <div className="mt-4 p-4 border rounded-lg">
-          <h3 className="font-bold mb-2">Products to Compare:</h3>
+          <h3 className="font-bold mb-2">Sản phẩm so sánh:</h3>
           <ul>
             {compareList?.map((p) => (
               <li key={p?._id}>{p.productName}</li>
