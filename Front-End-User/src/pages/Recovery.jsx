@@ -51,8 +51,8 @@ const Recovery = () => {
                 <div className='flex justify-center items-center'>
                     <div className={styles.glass}>
                         <div className="title flex flex-col items-center mt-9">
-                            <h4 className='text-5xl'>Xin chào lần nữa!</h4>
-                            <span className='py-4 text-xl w-2/3 text-center text-gray-500'>
+                            <h4 className='text-5xl font-bold'>Xin chào lần nữa!</h4>
+                            <span className='py-4 text-xl font-semibold w-2/3 text-center text-gray-500'>
                                 Khám phá thêm bằng cách kết nối với chúng tôi.
                             </span>
                         </div>

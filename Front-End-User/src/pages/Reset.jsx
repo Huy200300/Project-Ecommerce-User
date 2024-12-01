@@ -56,8 +56,8 @@ const Reset = () => {
                 <div className='flex justify-center items-center'>
                     <div className={styles.glass} style={{ width: "50%" }}>
                         <div className="title flex flex-col items-center mt-14">
-                            <h4 className='text-5xl'>Thay đổi mật khẩu</h4>
-                            <span className='py-2 text-xl w-2/3 text-center text-gray-500'>
+                            <h4 className='text-5xl font-bold'>Thay đổi mật khẩu</h4>
+                            <span className='py-2 text-xl font-semibold w-2/3 text-center text-gray-500'>
                                 Nhập mật khẩu mới.
                             </span>
                         </div>

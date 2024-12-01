@@ -5,8 +5,6 @@ import pk from '../assets/phu_kien_thum_2_21c419aa09.png'
 import ip from '../assets/may_tinh_bang_cate_thumb_00e3b3eefa.png'
 import dh from '../assets/dong_ho_cate_thumb_fefdd822ba.png'
 import tv from '../assets/tivi_thumb_2_fc9b0f8bde.png'
-import ap from '../assets/img-icon-apple.webp'
-import cm from '../assets/OIP.jpg'
 import { Link } from "react-router-dom";
 
 const CustomGrid = () => {
@@ -35,14 +33,6 @@ const CustomGrid = () => {
             label: "Tivi",
             value: "televisions", image: tv, className: "row-span-2 col-start-4 row-start-1", width: "w-180", height: "h-180",
         },
-        // {
-        //     label: "Apple",
-        //     value: "apple", image: ap, className: "col-start-5 row-start-1", width: "w-[80px]", height: "h-[80px]", gap: "gap-14"
-        // },
-        // {
-        //     label: "Camera",
-        //     value: "camera", image: cm, className: "col-start-5 row-start-2", width: "w-20", height: "h-20", gap: "gap-14"
-        // },
     ];
 
     return (

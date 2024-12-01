@@ -81,7 +81,7 @@ const Login = () => {
 
                                 </div>
                                 <div className="w-full flex justify-center items-center flex-col gap-2">
-                                    <Link to="/recovery" className='text-gray-500 ml-auto mr-20 hover:text-red- font-bold'>Quên mật khẩu</Link>
+                                    <Link to="/recovery" className='text-gray-500 ml-auto mr-20 hover:text-red-500 font-bold'>Quên mật khẩu</Link>
                                     <button className={styles.btn} style={{ width: "75%",fontWeight:700 }} type='submit'>Đăng nhập</button>
                                 </div>
                                 <div>
