@@ -70,7 +70,7 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
     const fetchReviews = async (page = 1, limit = 3) => {
         setLoading(true);
         const response = await fetch(
-            `http://localhost:8080/api/get-reviews?page=${page}&limit=${limit}`,
+            `${SummaryAip.getReview.url}?page=${page}&limit=${limit}`,
             {
                 method: SummaryAip.getReview.method,
                 credentials: "include",
@@ -203,7 +203,7 @@ const ProductTabs = ({ productId, product, user, dataSpec }) => {
                                     {Object?.entries(dataSpec?.specificationsRef || {})
                                         ?.filter(([key]) => key !== "_id" && key !== "__v")
                                         ?.map(([key, value]) => {
-                                           
+
                                             const vietnameseLabels = {
                                                 screenSize: "Kích thước màn hình",
                                                 resolution: "Độ phân giải màn hình",

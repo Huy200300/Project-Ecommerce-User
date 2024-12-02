@@ -30,7 +30,7 @@ const ReviewList = ({ productId, loading, user }) => {
     }, [reviews]);
 
     const fetchReviews = async (page = 1, limit = 3) => {
-        const response = await fetch(`http://localhost:8080/api/get-reviews?page=${page}&limit=${limit}`, {
+        const response = await fetch(`${SummaryAip.getReview.url}?page=${page}&limit=${limit}`, {
             method: SummaryAip.getReview.method,
             credentials: "include",
             headers: {
