@@ -79,6 +79,8 @@ const ProductDetail = () => {
         e?.stopPropagation();
         e?.preventDefault();
 
+        console.log(product, count, selectedStorage)
+
         const filteredColors = product?.colors?.filter(color => color?.size === selectedStorage);
         const colorData = product?.colors?.find(color => color?.colorName === selectedColor && color?.size === selectedStorage);
         const price = colorData?.price || product.price;
