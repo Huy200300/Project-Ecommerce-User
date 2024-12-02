@@ -7,16 +7,16 @@ const ProductGrid = ({ totalPages, handleCompare, loading, isFavorite, handleAdd
         <div className="md:w-3/4 w-full p-4">
             <div className="flex gap-10 items-center mb-4">
                 <div className="flex items-center">
-                    <label className="mr-2 text-gray-700 text-sm">Sort By:</label>
-                    <select className="border p-1 outline-none" value={sortBy} onChange={handleSortBy}>
+                    <label className="mr-2 text-gray-700 text-sm font-semibold">Lọc:</label>
+                    <select className="border p-1 outline-none font-semibold" value={sortBy} onChange={handleSortBy}>
                         <option value="">Chọn</option>
                         <option value="asc">Giá: Từ Thấp đến Cao</option>
                         <option value="dsc">Giá: Từ Cao đến Thấp</option>
                     </select>
                 </div>
                 <div className="flex items-center">
-                    <label className="mr-2 text-gray-700 text-sm">Hiển thị:</label>
-                    <select className="border p-1 outline-none"
+                    <label className="mr-2 text-gray-700 text-sm font-semibold">Hiển thị:</label>
+                    <select className="border p-1 outline-none font-semibold"
                         value={limit}
                         onChange={handleLimitChange}
                     >
