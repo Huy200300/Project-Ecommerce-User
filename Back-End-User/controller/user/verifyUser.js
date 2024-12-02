@@ -24,7 +24,7 @@ async function verifyUser(req, res, next) {
 
 async function verifyEmailUser(req, res) {
   try {
-    const { email } =  req.body;;
+    const { email } = req.body;
     const exist = await UserModel.findOne({ email });
     if (!exist)
       return res.json({
