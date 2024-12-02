@@ -201,10 +201,18 @@ const SummaryAip = {
     url: `${backendDomain}/api/reviews/stats`,
     method: "GET",
   },
-  // totalReviews: {
-  //   url: `${backendDomain}/api/reviews/total`,
-  //   method: "POST",
-  // },
+  getOrder: {
+    url: `${backendDomain}/api/orders/user`,
+    method: "GET",
+  },
+  getOrderStaff: {
+    url: `${backendDomain}/api/orders/staff`,
+    method: "GET",
+  },
+  getOrderSearch: {
+    url: `${backendDomain}/api/orders/search`,
+    method: "GET",
+  },
 };
 
 export default SummaryAip;

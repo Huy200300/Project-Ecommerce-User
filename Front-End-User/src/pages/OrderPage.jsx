@@ -47,7 +47,7 @@ const OrderPage = () => {
 
   const fetchOrder = async (id, page = 1, limit, status, startDate, endDate) => {
     // setLoading(true);
-    const response = await fetch(`http://localhost:8080/api/orders/user/${id}?page=${page}&limit=${limit}&status=${status}&startDate=${startDate}&endDate=${endDate}`);
+    const response = await fetch(`${SummaryAip.getOrder.url}/${id}?page=${page}&limit=${limit}&status=${status}&startDate=${startDate}&endDate=${endDate}`);
     const dataApi = await response?.json();
     // setLoading(false);
 
@@ -83,8 +83,8 @@ const OrderPage = () => {
   };
 
   const fetchStatusHistory = async (orderId) => {
-    const response = await fetch(`http://localhost:8080/api/orders/staff/${orderId}`, {
-      method: "GET",
+    const response = await fetch(`${SummaryAip.getOrderStaff.url}/${orderId}`, {
+      method: SummaryAip.getOrderStaff.method,
     });
     const dataApi = await response?.json();
     if (dataApi?.success) {
@@ -107,8 +107,8 @@ const OrderPage = () => {
     if (!searchQuery) return;
     const cleanedQuery = searchQuery?.replace('#', '').trim();
     setLoading(true);
-    const response = await fetch(`http://localhost:8080/api/orders/search?query=${cleanedQuery}&page=${currentPage}&limit=${limit}`, {
-      method: 'GET',
+    const response = await fetch(`${SummaryAip.getOrderSearch.url}?query=${cleanedQuery}&page=${currentPage}&limit=${limit}`, {
+      method: SummaryAip.getOrderSearch.method,
       credentials: "include"
     });
 
@@ -321,7 +321,7 @@ const OrderPage = () => {
                 onClick={handleClearSearch}
                 className="absolute right-[22%] transform text-lg font-semibold text-gray-500 cursor-pointer hover:text-red-600 transition duration-200"
               >
-                <FaTimes/>
+                <FaTimes />
               </span>
             )}
 
