@@ -28,7 +28,7 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
     const fetchReviews = async (page = 1, limit = 3, productId) => {
         setLoading(true);
         const response = await fetch(
-            `http://localhost:8080/api/get-reviews?page=${page}&limit=${limit}`,
+            `${SummaryAip.getReview.url}?page=${page}&limit=${limit}`,
             {
                 method: SummaryAip.getReview.method,
                 credentials: "include",
