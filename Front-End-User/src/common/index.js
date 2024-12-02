@@ -197,6 +197,14 @@ const SummaryAip = {
     url: `${backendDomain}/api/specifications-by-id`,
     method: "GET",
   },
+  review_stats: {
+    url: `${backendDomain}/api/reviews/stats`,
+    method: "GET",
+  },
+  // totalReviews: {
+  //   url: `${backendDomain}/api/reviews/total`,
+  //   method: "POST",
+  // },
 };
 
 export default SummaryAip;

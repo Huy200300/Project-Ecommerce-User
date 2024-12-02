@@ -2,7 +2,7 @@ import SummaryAip from "../common";
 
 const fetchTotalReviews = async (page, limit, productId) => {
   const response = await fetch(
-    `https://backend-ecommerce-mobile.vercel.app/api/get-reviews?page=${page}&limit=${limit}`,
+    `${SummaryAip.getReview.url}?page=${page}&limit=${limit}`,
     {
       method: SummaryAip.getReview.method,
       credentials: "include",

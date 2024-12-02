@@ -1,7 +1,7 @@
+import SummaryAip from "../common";
+
 const fetchReviewStats = async (productId) => {
-  const response = await fetch(
-    `https://backend-ecommerce-mobile.vercel.app/api/reviews/stats/${productId}`
-  );
+  const response = await fetch(`${SummaryAip.review_stats.url}/${productId}`);
   const data = await response?.json();
   if (data.success) {
     return {
