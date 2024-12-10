@@ -15,6 +15,7 @@ async function paymentCastOnDelivery(req, res) {
       shipping,
       shippingMethod,
       shippingAddress,
+      sourceApp,
     } = req.body;
     const user = await userModel.findById(userId);
 
@@ -50,9 +51,18 @@ async function paymentCastOnDelivery(req, res) {
       },
     });
     await order.save();
-    res.redirect(
-      `http://localhost:8080/api/payment-result?resultCode=0`
-    );
+
+    if (sourceApp === "ReactNative") {
+      return res.json({
+        message: "Đặt hàng thành công",
+        success: true,
+        error: false,
+      });
+    } else {
+      return res.redirect(
+        `http://localhost:8080/api/payment-result?resultCode=0`
+      );
+    }
   } catch (error) {
     console.log(error);
     res.status(400).json({

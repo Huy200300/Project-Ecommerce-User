@@ -66,13 +66,17 @@ const getProductHotdeals = require("../controller/product/getProductHotdeals");
 const countCategoryProduct = require("../controller/product/countCategoryProduct");
 const getProductSpecificationsById = require("../controller/product/getProductSpecificationsById");
 const orderSearch = require("../controller/order/orderSearch");
-
+const userDetailsMobiles = require("../controller/user/userDetailsMobiles");
+const updateStatusOrder = require("../controller/order/updateStatusOrder");
+const authorizeRole = require("../middleware/authorizeRole");
 
 const router = express.Router();
 
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
 router.get("/user-details", authToken, userDetailsController);
+router.get("/user/details/:userId", userDetailsMobiles);
+
 router.post("/authenticate", verifyUser, (req, res) => res.end());
 router.post("/verify-email", verifyEmailUser);
 router.get("/logout", userLogOut);
@@ -80,7 +84,7 @@ router.get("/generateOTP", verifyUser, localVariables, generateOTP);
 router.post("/registerMail", registerMail);
 router.get("/verifyOTP", verifyUser, verifyOTP);
 router.put("/resetPassword", resetPassword);
-router.post("/addNewAddress", authToken, addNewAddress);
+router.post("/addNewAddress", addNewAddress);
 router.get("/user/:userId/address", getUserAddresses);
 
 // addmin-panel
@@ -110,7 +114,6 @@ router.get("/get-product-hot-deals", getProductHotdeals);
 router.get("/count-category-product", countCategoryProduct);
 router.get("/specifications-by-id/:productId", getProductSpecificationsById);
 
-
 // user add to cart
 router.post("/add-to-cart", authToken, addToCartController);
 router.get("/count-add-to-cart", authToken, countAddToCart);
@@ -123,18 +126,23 @@ router.post("/delete-all-cart-product", authToken, deleteAllAddToCartProduct);
 router.post("/create_payment_url", authToken, createVNPAYTransaction);
 router.get("/vnpay_return", vnpayReturn);
 router.get("/orders/user/:userId", orderVNPAY);
-router.post("/orders-detail", authToken, orderDetails);
+router.post("/orders-detail", orderDetails);
 router.post("/payment_momo", paymentMomo);
 router.post("/callback", paymentCallback);
 router.post("/transaction_tatus", transactionStatus);
 router.get("/payment-result", paymentResult);
-router.post("/get-order-status", orderStatus)
+router.post("/get-order-status", orderStatus);
 router.post("/payment_cast_on_delivery", paymentCastOnDelivery);
 router.get("/orders/staff/:orderId", orderByStaff);
 router.get("/orders/search", orderSearch);
+router.post(
+  "/update-status-order",
+  authorizeRole(["GENERAL"]),
+  updateStatusOrder
+);
 
 // review product
-router.post("/reviews", authToken, newReviews);
+router.post("/reviews", newReviews);
 router.post("/get-reviews", getReviews);
 router.post("/reviews/like", likeReview);
 router.post("/reviews/replies", repliesReview);

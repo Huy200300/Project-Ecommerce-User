@@ -2,7 +2,6 @@ const Order = require("../../model/orderModel");
 
 async function orderDetails(req, res) {
   try {
-    const sessionUser = req.userId;
     const orderId = req?.body?.orderId;
     const order = await Order.find({ orderId: orderId });
     if (!order) {

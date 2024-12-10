@@ -11,8 +11,8 @@ async function orderSearch(req, res) {
           { "productDetails.productName": { $regex: query, $options: "i" } },
         ],
       })
-      .skip((page - 1) * limit) // Phân trang, bỏ qua những bản ghi trước đó
-      .limit(parseInt(limit)) // Giới hạn số lượng kết quả trả về
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
       .exec();
     
     const totalOrders = await orderModel.countDocuments({

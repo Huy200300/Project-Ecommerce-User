@@ -14,9 +14,19 @@ const paymentMomo = async (req, res) => {
     shipping,
     shippingMethod,
     shippingAddress,
-    mobiles,
+    sourceApp,
   } = req.body;
   // console.log(req.body);
+
+  // console.log(accessKey, secretKey);
+
+  if (!["ReactNative", "ReactJS"].includes(sourceApp)) {
+    return res.status(400).json({
+      success: false,
+      error: true,
+      message: "Nguồn yêu cầu không hợp lệ.",
+    });
+  }
 
   // Kiểm tra xem có giao dịch nào trước đó chưa hoàn tất hoặc bị lỗi không
   const existingOrder = await Order.findOne({
@@ -25,17 +35,16 @@ const paymentMomo = async (req, res) => {
   });
 
   if (existingOrder) {
-    // Nếu có giao dịch bị lỗi hoặc chưa hoàn tất, trả về phản hồi
     await Order.deleteOne({
-      _id: existingOrder._id
+      _id: existingOrder._id,
     });
     return res.status(400).json({
       success: false,
       error: true,
       message:
         "Giao dịch trước đó chưa hoàn tất hoặc bị lỗi. Vui lòng thanh toán sau ít phút nữa.",
-      orderId: existingOrder.orderId, // Trả về orderId của giao dịch lỗi để người dùng biết
-      status: existingOrder.status, // Trạng thái của giao dịch trước đó
+      orderId: existingOrder.orderId,
+      status: existingOrder.status,
     });
   }
 
@@ -67,25 +76,15 @@ const paymentMomo = async (req, res) => {
 
   const orderInfo = "pay with MoMo";
   const partnerCode = "MOMO";
-  let redirectUrl;
 
-  if (mobiles) {
-    res.json({
-      error: false,
-      success: true,
-      message: "Thanh toán thành công",
-    });
-  } else {
-    redirectUrl = `http://localhost:8080/api/payment-result`;
-    res.redirect(redirectUrl);
-  }
-
-  const ipnUrl = "https://6ef1-42-118-12-148.ngrok-free.app/api/callback";
+  const redirectUrl =
+    sourceApp === "ReactNative" ? "" : "http://localhost:3000/payment-result";
+  const ipnUrl = "https://a378-58-187-76-86.ngrok-free.app/api/callback";
   const requestType = "payWithMethod";
   const amount = req.body.amount;
   const orderId = partnerCode + new Date().getTime();
   const requestId = orderId;
-  const extraData = "";
+  const extraData = sourceApp;
   const orderGroupId = "";
   const autoCapture = true;
   const lang = req.body.lang;
@@ -133,7 +132,6 @@ const paymentMomo = async (req, res) => {
     extraData: extraData,
     orderGroupId: orderGroupId,
     signature: signature,
-    mobiles: req.body.mobiles || false,
   };
 
   const options = {
@@ -183,7 +181,6 @@ const paymentCallback = async (req, res) => {
     orderType,
     message,
   } = req.body;
-  console.log(req.body);
 
   const order = await Order.findOne({ orderId: orderId });
   if (!order) {
@@ -261,13 +258,20 @@ const paymentCallback = async (req, res) => {
     await Promise.all(promises);
     await order.save();
 
-    return res
-      .status(200)
-      .json({ success: true, error: false, message: "Payment processed" });
+    return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Thanh toán thành công.",
+    });
   } else {
-    return res
-      .status(200)
-      .json({ success: false, error: false, message: "Payment rejected" });
+    return res.status(400).json({
+      success: false,
+      error: true,
+      message: "Thanh toán thất bại.",
+      orderId: orderId,
+      resultCode,
+      message: message || "Giao dịch không thành công.",
+    });
   }
 };
 

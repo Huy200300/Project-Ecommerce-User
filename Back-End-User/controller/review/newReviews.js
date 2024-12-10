@@ -2,17 +2,24 @@ const reviewModel = require("../../model/reviewModel");
 
 async function newReviews(req, res) {
   try {
-    const { rating, comment } = req.body;
-    const currentUserId = req.userId;
+    const { rating, comment, userId } = req.body;
+    console.log(userId);
     if (!rating) {
       throw new Error("Hãy đánh giá sản phẩm nhé ");
     }
     if (!comment) {
       throw new Error("Bạn chưa nhập nhận xét");
     }
+    if (!userId) {
+      return res.json({
+        message: "bạn chưa đăng nhập...!",
+        success: false,
+        error: true,
+      });
+    }
     const payload = {
       ...req.body,
-      userId: currentUserId,
+      userId: userId,
     };
     const review = new reviewModel(payload);
     const saveReview = await review.save();

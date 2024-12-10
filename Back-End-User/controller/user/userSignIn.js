@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 async function userSignInController(req, res) {
   try {
     const { email, password } = req.body;
+
     if (!email) {
       throw new Error("Bạn Chưa Nhập email");
     }

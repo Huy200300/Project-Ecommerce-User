@@ -11,9 +11,6 @@ const accessorySpecsSchema = new mongoose.Schema({
   batteryLife: String, // Thời gian pin nếu có (ví dụ: "20 hours")
 });
 
-// Kiểm tra nếu model đã tồn tại, thì không đăng ký lại
-const AccessorySpecs =
-  mongoose.models.accessory ||
-  mongoose.model("accessory", accessorySpecsSchema);
+const AccessorySpecs = mongoose.model("accessory", accessorySpecsSchema);
 
 module.exports = AccessorySpecs;

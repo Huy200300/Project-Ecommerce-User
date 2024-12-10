@@ -1,4 +1,6 @@
 const userModel = require("../../model/userModel");
+const phoneRegex = /^(03|05|07|08|09|02)\d{8,9}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 async function updateUser(req, res) {
   try {
@@ -18,6 +20,25 @@ async function updateUser(req, res) {
       detailAddress,
       fullAddress,
     } = req.body;
+
+    if (email && !emailRegex.test(email)) {
+      return res.status(400).json({
+        message:
+          "Định dạng email không hợp lệ.Đã khôi phục về email cũ của bạn ...!",
+        success: false,
+        error: true,
+      });
+    }
+
+    if (phone && !phoneRegex.test(phone)) {
+      return res.status(400).json({
+        message:
+          "Số điện thoại không hợp lệ, Đã khôi phục về số điện thoại cũ của bạn ...!",
+        error: true,
+        success: false,
+      });
+    }
+
     const payload = {
       ...(email && { email: email }),
       ...(name && { name: name }),

@@ -1,13 +1,11 @@
 const userModel = require("../../model/userModel");
 const bcrypt = require("bcryptjs");
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const phoneRegex = /^(03|05|07|08|09|02)\d{8}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const phoneRegex = /^(03|05|07|08|09|02)\d{8,9}$/;
 
 async function userSignUpController(req, res) {
   try {
     const { email, name, phone, password } = req.body;
-
-    console.log(req.body);
 
     const user = await userModel.findOne({ email });
     if (user) {

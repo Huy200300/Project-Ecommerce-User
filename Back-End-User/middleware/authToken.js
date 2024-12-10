@@ -8,7 +8,6 @@ async function authToken(req, res, next) {
         message: "Vui Lòng Đăng Nhập...!",
         error: true,
         success: false,
-
       });
     }
     jwt.verify(token, process.env.TOKEN_SECRET_KEY, function (error, decoded) {
@@ -27,7 +26,6 @@ async function authToken(req, res, next) {
     });
   }
 }
-
 
 async function localVariables(req, res, next) {
   req.app.locals = {

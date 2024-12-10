@@ -1,5 +1,5 @@
 const userModel = require("../../model/userModel");
-const phoneRegex = /^(03|05|07|08|09|02)\d{8}$/;
+const phoneRegex = /^(03|05|07|08|09|02)\d{8,9}$/;
 
 async function addNewAddress(req, res) {
   try {
