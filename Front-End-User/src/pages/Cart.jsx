@@ -7,12 +7,8 @@ import CartContent from '../components/CartContent ';
 import CartSummary from '../components/CartSummary';
 import { useCart } from '../context/CartContext';
 import GenericModal from '../components/GenericModal';
-import { useFavorites } from '../context/FavoritesContext';
-import { AiOutlineClose } from "react-icons/ai";
-import { FaHeart, FaStar } from 'react-icons/fa';
-import displayCurrency from '../helpers/displayCurrency';
-import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import FavoritesInCart from '../components/FavoritesInCart';
 
 
 const Cart = () => {
@@ -24,13 +20,7 @@ const Cart = () => {
     const { cart, updateCart, cartLength } = useCart();
     const loadingCart = new Array(cartLength).fill(null);
     const navigate = useNavigate();
-    const { favorites, removeFavorite, addToCart, favoritesLength } = useFavorites();
-    const [visibleProducts, setVisibleProducts] = useState(4);
-    const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const handleToggleCollapse = () => {
-        setIsCollapsed(!isCollapsed);
-    };
 
     const handleDelete = useCallback((index) => {
         setProductToDelete(index);
@@ -102,8 +92,6 @@ const Cart = () => {
     };
 
 
-
-
     const toggleProductSelection = useCallback((productId) => {
         setSelectedProducts((prevSelected) =>
             prevSelected?.includes(productId)
@@ -121,19 +109,12 @@ const Cart = () => {
         }
     }, [selectedProducts, cart]);
 
-    const handleShowMore = () => {
-        setVisibleProducts((prevCount) => prevCount + 4);
-    };
 
-    const handleAddToCart = (e, product) => {
-        e?.stopPropagation();
-        e?.preventDefault();
-        addToCart(product);
-    };
 
     const hasItems = cartLength > 0;
     const selectedStorage = cart?.map(item => item?.selectedStorage);
     const isAllSelected = (selectedProducts?.length === cartLength && cartLength > 0);
+
 
     return (
         <div className='max-w-screen-xl mx-auto p-4'>
@@ -144,91 +125,11 @@ const Cart = () => {
                     <div className='absolute bottom-0 left-1/2 -ml-[50vw] right-1/2 -mr-[50vw] h-0.5 bg-slate-200 z-10'></div>
                 </div>
                 }
-                {cartLength > 0 && (
+                {/* {cartLength > 0 && (
                     <Steps totalAmount={selectedProductsTotalPrice} data={itemsDelivery} />
-                )}
+                )} */}
             </div>
-            <div className='mt-5 p-4'>
-                {
-                    favoritesLength > 0 && (
-                        <div className="p-4 border-2 rounded-lg">
-                            <h1 className="text-2xl border-b-2 pb-2 border-black font-bold mb-4 flex items-center justify-between">
-                                <div className='flex items-center '>
-                                    <FaHeart size={28} className="mr-2" />
-                                    Sản Phẩm Yêu Thích
-                                </div>
-                                <button onClick={handleToggleCollapse} className="flex items-center">
-                                    {isCollapsed ? <FiChevronDown size={28} /> : <FiChevronUp size={28} />}
-                                </button>
-                            </h1>
-                            {!isCollapsed &&
-                                <>
-                                    <div className="grid grid-cols-4 gap-4">
-                                        {favorites?.slice(0, visibleProducts)?.map((product) => (
-                                            <div key={product?.id} className="cursor-pointer p-4 flex flex-col items-center border rounded-lg relative">
-                                                <button
-                                                    onClick={() => removeFavorite(product?._id)}
-                                                    className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
-                                                >
-                                                    <AiOutlineClose size={20} />
-                                                </button>
-
-                                                <img
-                                                    src={product?.productImage[0]}
-                                                    alt={product?.productName}
-                                                    className="w-full h-40 object-contain mb-4"
-                                                />
-
-                                                <a href={`/product/${product?._id}`} className="text-blue-600 font-semibold line-clamp-2 hover:underline">
-                                                    {product?.productName}
-                                                </a>
-
-                                                <div className="flex items-center mt-2">
-                                                    <span className="text-yellow-500 flex">
-                                                        {
-                                                            product?.averageRating > 0 && (
-                                                                <>
-                                                                    {[...Array(5)].map((_, index) => (
-                                                                        <FaStar key={index} className={`text-lg ${index < product?.averageRating?.toFixed(1) ? 'text-yellow-500' : 'text-gray-300'} mr-1`} />
-                                                                    ))}
-                                                                </>
-                                                            )
-                                                        }
-                                                    </span>
-                                                    {product?.reviewCount > 0 && <span className="ml-2 text-sm text-gray-600">({product?.reviewCount})</span>}
-                                                </div>
-
-                                                <div className="flex items-center flex-col mt-2">
-                                                    <div className="text-2xl font-bold">{displayCurrency(product?.sellingPrice)}</div>
-                                                    <div className="text-gray-500 line-through">{displayCurrency(product?.price)}</div>
-                                                </div>
-
-                                                <button
-                                                    className={`flex font-semibold items-center justify-center text-nowrap w-full uppercase p-3 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors duration-300 ${product.countInStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                                    onClick={(e) => handleAddToCart(e, product)}
-                                                    disabled={product?.countInStock === 0}
-                                                >
-                                                    {product?.countInStock === 0 ? 'Hết hàng' : 'Thêm vào Giỏ hàng'}
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                {visibleProducts < favoritesLength && (
-                                        <div className="flex justify-center mt-4">
-                                            <button
-                                                onClick={handleShowMore}
-                                                className="text-blue-600 hover:underline font-semibold"
-                                            >
-                                                Xem thêm
-                                            </button>
-                                        </div>
-                                    )}
-                                </>
-                            }
-                        </div>
-                    )
-                }
-            </div>
+            <FavoritesInCart />
             {hasItems ? (
                 <div className='flex flex-col mt-0 lg:flex-row min-h-[calc(100vh-205px)] gap-10 lg:justify-between p-6'>
                     <div className='w-full max-w-3xl flex flex-col gap-2'>

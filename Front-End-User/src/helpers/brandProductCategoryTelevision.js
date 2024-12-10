@@ -19,6 +19,26 @@ const bandProductCategoryTelevision = [
     label: "Hisense",
     value: "hisense",
   },
+  {
+    id: 5,
+    label: "LG",
+    value: "lg",
+  },
+  {
+    id: 6,
+    label: "Sony",
+    value: "sony",
+  },
+  {
+    id: 7,
+    label: "Coex",
+    value: "coex",
+  },
+  {
+    id: 8,
+    label: "TCL",
+    value: "tcl",
+  },
 ];
 
-export default bandProductCategoryTelevision ;
+export default bandProductCategoryTelevision;

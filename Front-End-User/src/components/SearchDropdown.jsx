@@ -15,6 +15,7 @@ const SearchDropdown = ({ suggestions, search, onSearchChange, onSearchSelect })
         const handleClickOutside = (event) => {
             if (dropdownRef?.current && !dropdownRef?.current?.contains(event?.target)) {
                 setIsVisible(false);
+                setInputValue('');
             }
         };
         document?.addEventListener('mousedown', handleClickOutside);

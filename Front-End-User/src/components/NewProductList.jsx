@@ -18,7 +18,7 @@ const NewProductList = () => {
     const loadingList = new Array(10).fill(null)
     const { closeCompareModal, addToCompare } = useProductCompare();
 
-    const fetchData = async (limit = 10, days = 50) => {
+    const fetchData = async (limit = 20, days = 50) => {
         setLoading(true)
         const res = await fetch(SummaryAip.get_new_product.url, {
             method: SummaryAip.get_new_product.method,
@@ -28,8 +28,8 @@ const NewProductList = () => {
             },
             body: JSON.stringify({ limit, days })
         })
-        setLoading(false)
         const dataApi = await res?.json();
+        setLoading(false)
         if (dataApi?.success) {
             const products = dataApi?.data || [];
             const productsWithReviews = await Promise?.all(products?.map(async (product) => {
@@ -50,7 +50,7 @@ const NewProductList = () => {
     const scrollLeft = () => {
         scrollElement.current.scrollLeft -= 259.6
     }
-    const handleOnChange = async (value, limit = 10, days = 10) => {
+    const handleOnChange = async (value, limit = 20, days = 10) => {
         setLoading(true)
         const res = await fetch(SummaryAip.get_new_product_by_category.url, {
             method: SummaryAip.get_new_product_by_category.method,
@@ -128,7 +128,7 @@ const NewProductList = () => {
                 </div>
             </div>
             {
-                loading ? <div className='flex space-x-4 overflow-scroll scrollbar-none transition-all ease-in-out' ref={scrollElement}>
+                loading ? <div className='flex space-x-2 overflow-scroll scrollbar-none transition-all ease-in-out' ref={scrollElement}>
                     {
                         loadingList?.map((_, index) => {
                             return (

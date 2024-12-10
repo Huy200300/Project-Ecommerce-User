@@ -16,6 +16,16 @@ import FavoritesDropdown from './FavoritesDropdown';
 import SearchDropdown from './SearchDropdown';
 import productCategory from '../helpers/productCategory';
 import { BiChevronDown } from 'react-icons/bi';
+import iphone from '../assets/133_logo_apple_a96d38701f.png';
+import samsung from '../assets/samsung_icon_menu_80d224e1c9.png';
+import oppo from '../assets/25_logo_oppo_5fa74f12b2.png';
+import xiaomi from '../assets/18_logo_xiaomi_b7c20fd2cd.svg'
+import asus from '../assets/1_logo_asus_62f06660f1.svg'
+import acer from '../assets/9_logo_acer_e50fcdd1b5.png'
+import lg from '../assets/lg-OI70q3.png'
+import fetchDataTopSelling from '../helpers/fetchDataTopSelling';
+import translatedCategory from '../helpers/translatedCategory';
+import displayCurrency from '../helpers/displayCurrency';
 
 const Header = () => {
     const [menuDisplay, setMenuDisplay] = useState(false);
@@ -28,13 +38,10 @@ const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
     const location = useLocation();
-    const [selectedCategory, setSelectedCategory] = useState('Danh Mục');
     const [isHovering, setIsHovering] = useState(false);
     const [isHoveringLabel, setIsHoveringlabel] = useState(null);
-    const handleCategorySelect = (category) => {
-        setSelectedCategory(category?.label);
-        setIsHovering(false);
-    };
+    const [data, setData] = useState([])
+    const [isCategory, setIsCategory] = useState('');
 
 
     const closeAllDropdowns = () => {
@@ -65,8 +72,8 @@ const Header = () => {
 
     const fetchProductSuggestions = async (query) => {
         try {
-            const response = await fetch(`https://backend-ecommerce-mobile.vercel.app/api/search?query=${query}`, {
-                method: 'GET',
+            const response = await fetch(`${SummaryAip.getSearchName.url}?query=${query}`, {
+                method: SummaryAip.getSearchName.method,
                 credentials: "include"
             });
             const result = await response.json();
@@ -77,7 +84,6 @@ const Header = () => {
             console.error("Error fetching product suggestions:", error);
         }
     };
-
 
     const handleSearchChange = useCallback((value) => {
         setSearch(value);
@@ -104,6 +110,62 @@ const Header = () => {
     const close = (setIsOpen, setIsOpenT) => {
         setIsOpen(false)
         setIsOpenT(false)
+    }
+
+    const brandMenus = {
+        mobiles: [
+            { label: 'iPhone', value: "apple", icon: iphone },
+            { label: 'Samsung', value: "samsung", icon: samsung },
+            { label: 'OPPO', value: "oppo", icon: oppo },
+        ],
+        laptop: [
+            { label: 'MacBook', value: "apple", icon: iphone },
+            { label: 'Asus', value: "asus", icon: asus },
+            { label: 'Acer', value: "acer", icon: acer },
+        ],
+        ipad: [
+            { label: 'iPad Air', value: "apple", icon: iphone },
+            { label: 'Samsung', value: "samsung", icon: samsung },
+            { label: 'OPPO', value: "oppo", icon: oppo },
+        ],
+        watches: [
+            { label: 'Apple Watch', value: "apple", icon: iphone },
+            { label: 'Samsung', value: "samsung", icon: samsung },
+            { label: 'Xiaomi', value: "xiaomi", icon: xiaomi },
+        ],
+        televisions: [
+            { label: 'Samsung', value: "samsung", icon: samsung },
+            { label: 'LG', value: "lg", icon: lg },
+            { label: 'Xiaomi', value: "xiaomi", icon: xiaomi },
+        ],
+    };
+
+    const brandMenu = brandMenus[isCategory] || [];
+
+
+    const fetchData = async (selectedCategory, limit = 3) => {
+        const res = await fetchDataTopSelling(selectedCategory, limit)
+        setData(res?.data);
+    };
+
+    useEffect(() => {
+        fetchData(isCategory)
+    }, [isCategory])
+
+    const handleProductDetails = (e, id) => {
+        e.preventDefault();
+        navigate(`/product/${id}`)
+        setIsHovering(false)
+        setIsHoveringlabel(false)
+        setIsCategory("")
+    }
+
+    const handleCategoryProduct = (e, category) => {
+        e.preventDefault();
+        navigate(`/product-category?category=${isCategory}&brand=${category}`)
+        setIsHovering(false)
+        setIsHoveringlabel(false)
+        setIsCategory("")
     }
 
     return (
@@ -142,61 +204,107 @@ const Header = () => {
 
                             <div className="w-full md:w-2/4">
                                 <div className="py-0 md:px-3.5 px-5">
-                                    <form className='relative flex' onSubmit={(e) => e.preventDefault()}>
+                                    <form className="relative flex" onSubmit={(e) => e.preventDefault()}>
                                         <div
                                             className="relative inline-block bg-white rounded-l-full text-nowrap"
-                                            onMouseEnter={() => {
-                                                setIsHovering(true)
-
-                                            }}
+                                            onMouseEnter={() => setIsHovering(true)}
                                             onMouseLeave={() => setIsHovering(false)}
                                         >
-                                            <button className="input-select flex justify-center items-center font-semibold rounded-s-full h-10 py-0 px-3.5 outline-none">
-                                                {selectedCategory}
+                                            <button className="input-select flex justify-center items-center font-semibold rounded-s-full h-10 py-0 px-3.5 outline-none shadow-sm border border-gray-300">
+                                                Danh Mục
                                                 <BiChevronDown className="ml-2 text-lg" />
                                             </button>
 
                                             {isHovering && (
-                                                <ul className="absolute group z-50 left-0 w-[700px] bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
+                                                <ul className="absolute flex flex-col gap-9 group z-50 md:-left-[50%] h-[375px] md:w-[760px] w-[725px] bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
                                                     {productCategory?.map((category) => (
                                                         <li
                                                             key={category?.id}
-                                                            className="relative w-96 group flex items-center px-4 py-3 cursor-pointer hover:bg-gray-100 transition-colors"
-                                                            onClick={() => handleCategorySelect(category)}
-                                                            onMouseEnter={() => setIsHoveringlabel(category?.id)}
-                                                            onMouseLeave={() => setIsHoveringlabel(null)}
+                                                            style={{ paddingRight: category?.paddingRight }}
+                                                            className="relative w-fit group flex items-center md:px-4 px-1 py-3 cursor-pointer hover:bg-gray-100 transition-all duration-200"
+                                                            onMouseEnter={() => {
+                                                                setIsHoveringlabel(category?.id)
+                                                                setIsCategory(category?.value)
+                                                            }}
+                                                            onMouseLeave={() => {
+                                                                setIsHoveringlabel(null)
+                                                                setIsCategory('')
+                                                            }}
+
                                                         >
-                                                            <span className="mr-3 text-xl text-blue-500">{category?.icon}</span>
-                                                            <span className="text-gray-700 font-medium">{category?.label}</span>
+                                                            <span className="mr-1 text-xl text-red-300">{category?.icon}</span>
+                                                            <span className="text-black font-medium">{category?.label}</span>
                                                             {isHoveringLabel === category?.id && (
-                                                                <div className="absolute left-56 top-0 bg-white shadow-lg border rounded-md w-64 mt-2 z-50">
-                                                                    <div className="grid grid-cols-1 gap-4 p-4">
-                                                                        {category?.subCategories?.map((subCategory) => (
-                                                                            <div key={subCategory?.id}>
-                                                                                <h3 className="font-semibold text-gray-800 mb-2">{subCategory?.title}</h3>
-                                                                                <ul className="space-y-1">
-                                                                                    {subCategory?.items?.map((item, index) => (
-                                                                                        <li
-                                                                                            key={index}
-                                                                                            className="text-gray-600 hover:text-blue-500 cursor-pointer transition"
-                                                                                        >
-                                                                                            {item}
-                                                                                        </li>
-                                                                                    ))}
-                                                                                </ul>
+                                                                <div style={{ top: category?.top }} className='absolute flex left-[100%] bg-white border-x-2 w-[590px] h-96 z-50 md:p-4 p-3 transform transition-all duration-200'>
+                                                                    <div className='w-2/3 border-r-2'>
+                                                                        <div className='font-bold mb-3 text-lg capitalize'>Thương hiệu nổi bật</div>
+                                                                        <div className="flex gap-2 items-center mb-5">
+                                                                            {brandMenu.map((br, index) => (
+                                                                                <div
+                                                                                    onClick={(e) => handleCategoryProduct(e, br.value)}
+                                                                                    key={index}
+                                                                                    className="flex gap-1 flex-row items-center justify-center text-center border border-gray-200 rounded-md p-2 w-28 h-16"
+                                                                                >
+                                                                                    <img
+                                                                                        src={br.icon}
+                                                                                        alt={br.value}
+                                                                                        className="h-10 w-10 object-contain mb-2"
+                                                                                    />
+                                                                                    <span className="text-xs font-medium text-gray-700">
+                                                                                        {br.label}
+                                                                                    </span>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                        <div className=''>
+                                                                            <div className="grid grid-cols-2 gap-5 items-center justify-center">
+                                                                                {category?.subCategories?.map((subCategory) => (
+                                                                                    <div key={subCategory?.id}>
+                                                                                        <h3 className="font-semibold text-gray-800 mb-1.5">{subCategory?.title}</h3>
+                                                                                        <ul className="space-y-1">
+                                                                                            {subCategory?.items?.map((item, index) => (
+                                                                                                <li
+                                                                                                    key={index}
+                                                                                                    className="text-gray-600 hover:text-red-500 font-semibold cursor-pointer transition-colors duration-200"
+                                                                                                >
+                                                                                                    {item}
+                                                                                                </li>
+                                                                                            ))}
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                ))}
                                                                             </div>
-                                                                        ))}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className='md:px-2 px-1 mt-5'>
+                                                                        <div className='font-bold mb-3 text-sm capitalize'>Bán chạy nhất</div>
+                                                                        <div className="space-y-6 w-full">
+                                                                            {
+                                                                                data?.map((product, i) =>
+                                                                                    <div onClick={(e) => handleProductDetails(e, product?._id)} key={i} className="flex group items-center space-x-3 w-full cursor-pointer">
+                                                                                        <img src={product?.productImage[0]} alt={product?.productName} className="w-12 h-12 object-cover" />
+                                                                                        <div className='w-full'>
+                                                                                            <p className="text-gray-500 text-xs">{translatedCategory(product?.category)}</p>
+                                                                                            <p className="text-wrap text-xs group-hover:text-red-500 font-bold w-28 text-ellipsis truncate-2-lines break-words overflow-hidden">
+                                                                                                {product?.productName}
+                                                                                            </p>
+                                                                                            <p className="text-red-500 flex flex-col  group-hover:text-black text-xs font-bold">
+                                                                                                {displayCurrency(product?.sellingPrice)}
+                                                                                                <span className="line-through text-gray-500">{displayCurrency(product?.price)}</span>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             )}
                                                         </li>
                                                     ))}
                                                 </ul>
-                                            )}
-                                           
-
+                                             )} 
                                         </div>
-                                        {/* <SidebarMenu /> */}
                                         <SearchDropdown
                                             suggestions={filteredSuggestions}
                                             search={search}
@@ -206,6 +314,7 @@ const Header = () => {
                                     </form>
                                 </div>
                             </div>
+
 
                             <div className="md:w-1/4 w-full">
                                 <div className="header-ctn flex items-center justify-end md:gap-2 gap-6 mt-2 md:px-3.5 px-10 md:py-0 py-5 ">
@@ -263,7 +372,7 @@ const Header = () => {
                                     />
 
                                     <div className="menu-toggle md:hidden block">
-                                        <div className='flex flex-col items-center text-white' onClick={toggleMenu}>
+                                        <div className='flex flex-col items-center text-white cursor-pointer' onClick={toggleMenu}>
                                             <FaBars className='flex md:text-lg text-sm items-center md:w-7 w-5 h-5 md:h-7' />
                                             <span className='text-sm'>Menu</span>
                                         </div>
@@ -275,43 +384,43 @@ const Header = () => {
                                             </div>
                                             <ul className="mt-4 p-4 text-white">
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/"} className='hover:text-[#D10024] font-semibold'>
                                                         Trang chủ
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/hotdeal"} className='hover:text-[#D10024] font-semibold'>
                                                         Hot Deals
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/product-category?category=ipad"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/product-category?category=ipad"} className='hover:text-[#D10024] font-semibold'>
                                                         Máy Tính Bảng
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/product-category?category=laptop"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/product-category?category=laptop"} className='hover:text-[#D10024] font-semibold'>
                                                         Laptops
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/product-category?category=mobiles"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/product-category?category=mobiles"} className='hover:text-[#D10024] font-semibold'>
                                                         Điện Thoại
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/product-category?category=watches"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/product-category?category=watches"} className='hover:text-[#D10024] font-semibold'>
                                                         Đồng Hồ
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>
                                                 </li>
                                                 <li className="relative group py-5 text-current">
-                                                    <Link to={"/product-category?category=accessory"} className='hover:text-[#D10024] font-semibold'>
+                                                    <Link onClick={closeMenu} to={"/product-category?category=accessory"} className='hover:text-[#D10024] font-semibold'>
                                                         Phụ Kiện
                                                         <span className=" outline-none absolute left-0 bottom-5 w-0 h-[2px] bg-[#D10024] hover:text-[#D10024] transition-all duration-200 group-hover:w-full focus:w-full"></span>
                                                     </Link>

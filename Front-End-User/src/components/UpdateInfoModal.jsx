@@ -108,7 +108,7 @@ const UpdateInfoModal = ({ data, handleOnChange, handleUpdateInfo, setIsOpenModa
                                     <input
                                         type="text"
                                         name='fullAddress'
-                                        value={`${selectedCity} ${selectedDistrict} ${selectedWard}`}
+                                        value={`${selectedWard} ${selectedDistrict} ${selectedCity}`}
                                         readOnly
                                         onClick={() => setDropdownVisible(!dropdownVisible)}
                                         className="w-full p-2 border rounded cursor-pointer"
@@ -163,7 +163,7 @@ const UpdateInfoModal = ({ data, handleOnChange, handleUpdateInfo, setIsOpenModa
                                 )}
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700 mb-1">Địa chỉ cụ thể</label>
+                                <label className="block text-gray-700 mb-1">Số nhà, đường</label>
                                 <input
                                     type="text"
                                     name='detailAddress'
@@ -173,14 +173,14 @@ const UpdateInfoModal = ({ data, handleOnChange, handleUpdateInfo, setIsOpenModa
                                     required
                                 />
                             </div>
-                            <div className="mb-4">
+                            {/* <div className="mb-4">
                                 <button
                                     type="button"
                                     className="w-full py-2 text-blue-500 border border-blue-500 rounded hover:bg-blue-100"
                                 >
                                     + Thêm vị trí
                                 </button>
-                            </div>
+                            </div> */}
                             <div className="mb-4">
                                 <label className="block text-gray-700 mb-1">Giao Tới:</label>
                                 <div className="flex space-x-4">

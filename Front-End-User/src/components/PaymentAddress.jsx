@@ -5,7 +5,7 @@ import ShippingMethod from './ShippingMethod';
 import UpdateInfoModal from './UpdateInfoModal';
 import useAddressSelection from '../helpers/useAddressSelection';
 
-const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUpdateInfo }) => {
+const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false);
     const [shippingMethod, setShippingMethod] = useState('FAST');
@@ -33,6 +33,12 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
         handleDistrictSelect,
         handleWardSelect
     } = useAddressSelection();
+
+    const handleChange = (e) => {
+        if (e.target.value === "shipping") {
+            setIsOpenModalUpdateInfo(e.target.checked);
+        } 
+    };
 
     const [selectedAddress, setSelectedAddress] = useState(() => {
         if (!dataShipping || (dataShipping?.length || 0) === 0) {
@@ -83,7 +89,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                             </div>
                             <p className='font-medium'><span className='font-bold text-lg'>Họ tên:</span> {selectedAddress?.fullName}</p>
                             <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ:</span> {selectedAddress?.fullAddress}</p>
-                            <p className='font-medium'><span className='font-bold text-lg'>Địa chỉ cụ thể:</span> {selectedAddress?.detailAddress}</p>
+                            <p className='font-medium'><span className='font-bold text-lg'>Số nhà, đường:</span> {selectedAddress?.detailAddress}</p>
                             <p className='font-medium'><span className='font-bold text-lg'>Giao tới:</span> {selectedAddress?.addressType}</p>
                             <p className='font-medium'><span className='font-bold text-lg'>Số điện thoại:</span> {selectedAddress?.phone}</p>
                         </div>
@@ -110,7 +116,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                                             <div className="ml-4">
                                                 <p className='font-semibold'>Họ tên: {address?.fullName}</p>
                                                 <p className='font-semibold'>Địa chỉ: {address?.fullAddress}</p>
-                                                <p className='font-semibold'>Địa chỉ cụ thể: {address?.detailAddress}</p>
+                                                <p className='font-semibold'>Số nhà, đường: {address?.detailAddress}</p>
                                                 <p className='font-semibold'>Giao tới: {address?.addressType}</p>
                                                 <p className='font-semibold'>Số điện thoại: {address?.phone}</p>
                                                 <p className='font-bold text-red-500 uppercase'>{address?.defaultAddress ? "mặc định" : ""}</p>
@@ -237,7 +243,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleChange, handleUp
                         )}
                     </div>
                     <div className="mb-4">
-                        <label className="block font-bold mb-2">Địa chỉ cụ thể:</label>
+                        <label className="block font-bold mb-2">Số nhà, đường:</label>
                         <input
                             type="text"
                             name="detailAddress"

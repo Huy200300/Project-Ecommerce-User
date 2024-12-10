@@ -24,7 +24,7 @@ const CategoryProduct = () => {
   const [limit, setLimit] = useState(6);
   const [loading, setLoading] = useState(false);
   const [priceRange, setPriceRange] = useState([100000, 50000000]);
-
+  const [viewMode, setViewMode] = useState("grid");
   const location = useLocation();
   const { addToCart } = useCart();
   const { addFavorite, favorites, removeFavorite } = useFavorites();
@@ -212,6 +212,8 @@ const CategoryProduct = () => {
           handleFavoriteClick={handleFavoriteClick}
           loading={loading}
           handleCompare={handleCompare}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
         />
       </div>
     </div>

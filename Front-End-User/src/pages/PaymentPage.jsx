@@ -145,31 +145,29 @@ const PaymentPage = () => {
     const handleUpdateInfo = async (e) => {
         e?.stopPropagation();
         e?.preventDefault();
-
-        const dataResponse = await fetch(SummaryAip.add_new_address.url, {
-            method: SummaryAip.add_new_address.method,
-            credentials: "include",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                userId: dataUser?._id,
-                ...data
-            })
-        });
-        const dataApi = await dataResponse?.json();
-        if (dataApi?.success) {
-            toast.success(dataApi?.message);
-            fetchUserDetails();
-            setIsOpenModalUpdateInfo(false);
+        if (!user) {
+            setIsLoginOpen(true);
+            toast.error('Vui lòng đăng nhập..!');
         } else {
-            if (!user) {
-                setIsLoginOpen(true);
-                toast.error(dataApi?.message);
-            } else if (dataApi?.error) {
+            const dataResponse = await fetch(SummaryAip.add_new_address.url, {
+                method: SummaryAip.add_new_address.method,
+                credentials: "include",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: dataUser?._id,
+                    ...data
+                })
+            });
+            const dataApi = await dataResponse?.json();
+            if (dataApi?.success) {
+                toast.success(dataApi?.message);
+                fetchUserDetails();
+                setIsOpenModalUpdateInfo(false);
+            } else {
                 toast.error(dataApi?.message);
             }
-
         }
     };
 
@@ -193,7 +191,6 @@ const PaymentPage = () => {
     const handleLogin = () => {
         navigate('/login', { state: location?.pathname });
     }
-
 
     const handlePlaceOrder = async (e, productId) => {
         e?.stopPropagation();
@@ -237,7 +234,8 @@ const PaymentPage = () => {
             products,
             shipping: shippingFee,
             shippingMethod,
-            shippingAddress: selectedAddress
+            shippingAddress: selectedAddress,
+            sourceApp: "ReactJS"
         };
         const datas = await makeApiRequest(SummaryAip.payment_COD.url, SummaryAip.payment_COD.method, body);
         if (datas?.error) {
@@ -276,7 +274,8 @@ const PaymentPage = () => {
             products,
             shipping: shippingFee,
             shippingMethod,
-            shippingAddress: selectedAddress
+            shippingAddress: selectedAddress,
+            sourceApp: "ReactJS"
         };
 
         const datas = await makeApiRequest(SummaryAip.payment_momo.url, SummaryAip.payment_momo.method, body);
@@ -333,7 +332,6 @@ const PaymentPage = () => {
                             <PaymentProducts selectedProducts={selectedProducts} />
                             <PaymentAddress
                                 dataShipping={dataShipping}
-                                handleChange={handleChange}
                                 handleUpdateInfo={handleUpdateInfo}
                                 shippingOrClause={shippingOrClause}
                             />

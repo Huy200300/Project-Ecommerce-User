@@ -6,6 +6,10 @@ import { useTabContext } from '../context/TabContext';
 import { FaCheck } from 'react-icons/fa';
 import translatedCategory from "../helpers/translatedCategory";
 import SummaryAip from "../common";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 
 const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFavoriteClick, isFavorite, updateQuantity, count, selectedColor, setSelectedColor }) => {
@@ -227,14 +231,15 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                         </div>
 
                         <div className="flex items-center mt-4">
-                            <div className="flex items-center border">
-                                <button className="px-2 py-1" onClick={() => updateQuantity('decrease', count === 1)}>-</button>
+                            <span className="font-semibold text-sm mr-10">Số lượng </span>
+                            <div className="flex items-center border-2 border-black">
+                                <button className="px-2 py-1" onClick={() => updateQuantity('decrease', count === 1)}><FaMinus /></button>
                                 <input
                                     type="text"
                                     value={count}
-                                    className="w-8 text-center border-l border-r"
+                                    className="w-8 text-center border-l-2 border-r-2 border-black "
                                 />
-                                <button className="px-2 py-1" onClick={() => updateQuantity('increase', count === data?.countInStock)}>+</button>
+                                <button className="px-2 py-1" onClick={() => updateQuantity('increase', count === data?.countInStock)}><FaPlus/></button>
                             </div>
                             <button className="bg-red-600 cursor-pointer hover:bg-white hover:text-red-600 border-white border-2 hover:border-red-600 text-white px-6 py-2 ml-4 relative group flex items-center rounded-full">
                                 <FaShoppingCart
@@ -251,10 +256,10 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                             </button>
                         </div>
 
-                        <div className="flex mt-4 text-sm text-gray-500">
+                        <div className="flex mt-4 gap-2 text-sm text-gray-500">
                             <button
                                 onClick={(e) => handleFavoriteClick(e, data)}
-                                className={`p-2 relative rounded-full font-semibold ${isFavorite(data) ? "text-red-500 hover:text-black" : "hover:text-red-500"}  hover-icon`}
+                                className={` relative rounded-full font-semibold ${isFavorite(data) ? "text-red-500 hover:text-black" : "hover:text-red-500"}  hover-icon`}
                             >
                                 {isFavorite(data) ? <div className="flex items-center gap-2 capitalize"><FaHeart /> Bỏ yêu thích</div> : <div className="flex items-center gap-2 capitalize"><FaRegHeart />Thêm vào yêu thích</div>}
                             </button>
@@ -264,13 +269,13 @@ const ProductInfo = ({ data, productId, handleCompare, handleAddToCart, handleFa
                         </div>
 
                         <div className="mt-4">
-                            <p className="text-sm flex items-center gap-2 font-semibold">Danh mục: {translatedCategory(data?.category, true)}</p>
+                            <p className="text-sm flex items-center gap-2 font-semibold">Danh mục:<Link to={`/product-category?category=${data?.category}`} className="hover:text-red-500"> {translatedCategory(data?.category, true)}</Link></p>
                             <div className="flex items-center mt-2 gap-2">
                                 <span className="text-sm font-semibold">SHARE:</span>
-                                <FaFacebookF />
-                                <FaTwitter />
-                                <FaGooglePlusG />
-                                <FaEnvelope />
+                                <FaFacebookF className="cursor-pointer hover:text-red-500"/>
+                                <FaTwitter className="cursor-pointer hover:text-red-500"/>
+                                <FaGooglePlusG className="cursor-pointer hover:text-red-500"/>
+                                <FaEnvelope className="cursor-pointer hover:text-red-500"/>
                             </div>
                         </div>
                     </div>

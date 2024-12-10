@@ -44,12 +44,9 @@ const OrderPage = () => {
     window.location.reload();
   };
 
-
   const fetchOrder = async (id, page = 1, limit, status, startDate, endDate) => {
-    // setLoading(true);
-    const response = await fetch(`${SummaryAip.getOrder.url}/${id}?page=${page}&limit=${limit}&status=${status}&startDate=${startDate}&endDate=${endDate}`);
+    const response = await fetch(`${SummaryAip.getOrderUser.url}/${id}?page=${page}&limit=${limit}&status=${status}&startDate=${startDate}&endDate=${endDate}`);
     const dataApi = await response?.json();
-    // setLoading(false);
 
     const fetchedOrders = dataApi?.data || [];
     setCurrentPage(dataApi?.currentPage);
@@ -144,7 +141,6 @@ const OrderPage = () => {
     fetchOrder(dataUser?._id, currentPage, limit, statusFilter);
   };
 
-
   if (loading) {
     return <p className="text-center text-gray-500">Loading...</p>;
   }
@@ -196,12 +192,14 @@ const OrderPage = () => {
                   <div className="mt-2">
                     {statusHistory?.statusHistory?.some(s => s?.orderStatus === step?.status) && (
                       <>
-                        {/* <div className={`text-sm font-semibold ${isCompleted || isActive ? 'text-gray-800' : 'text-gray-400'}`}>
-                          Nhân viên: {statusHistory.statusHistory.find(s => s.orderStatus === step.status)?.createdBy?.name || 'Không'}
-                        </div> */}
                         <div className={`text-xs font-semibold ${isCompleted || isActive ? 'text-gray-800' : 'text-gray-400'}`}>
                           Ngày cập nhật: {new Date(statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.updatedAt).toLocaleString() || 'Không có dữ liệu'}
                         </div>
+                        {
+                          step.status === "Cancelled" && <div className={`text-xs font-semibold ${isCompleted || isActive ? 'text-gray-800' : 'text-gray-400'}`}>
+                            Người hủy: {statusHistory.statusHistory.find(s => s.orderStatus === step.status)?.createdBy?.name || 'Không'}
+                          </div>
+                        }
                         {step?.status === 'Cancelled' && statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.reason && (
                           <div className={`text-xs font-semibold text-red-500`}>
                             Lý do: {statusHistory?.statusHistory?.find(s => s?.orderStatus === step?.status)?.reason}
@@ -226,7 +224,6 @@ const OrderPage = () => {
       </div>
     );
   };
-
 
   const steps = [
     { label: 'Chờ xác nhận', status: 'Pending', bgColor: 'bg-yellow-100', textColor: 'text-yellow-600' },
@@ -395,20 +392,11 @@ const OrderPage = () => {
                               </td>
                               <td className='text-center'>{product?.color}</td>
                               <td className="p-2 text-center border border-gray-300">
-                                {
-                                  !product?.color ?
-                                    <img
-                                      src={product?.colorImage[0]}
-                                      alt={product?.productName}
-                                      className="w-24 h-24 object-contain mx-auto"
-                                    />
-                                    :
-                                    <img
-                                      src={product?.colorImage}
-                                      alt={product?.productName}
-                                      className="w-24 h-24 object-contain mx-auto"
-                                    />
-                                }
+                                <img
+                                  src={product?.colorImage}
+                                  alt={product?.productName}
+                                  className="w-24 h-24 object-contain mx-auto"
+                                />
                               </td>
                               <td className="p-2 text-center border border-gray-300">{product?.quantity}</td>
                               <td className="p-2 text-center border border-gray-300">{displayCurrency(product.sellingPrice)}</td>

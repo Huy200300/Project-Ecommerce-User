@@ -54,6 +54,7 @@ const ProductDetail = () => {
             credentials: "include"
         })
         const dataApi = await res?.json()
+
         setDataSpec(dataApi.data)
     }
 
@@ -79,13 +80,11 @@ const ProductDetail = () => {
         e?.stopPropagation();
         e?.preventDefault();
 
-        console.log(product, count, selectedStorage)
-
         const filteredColors = product?.colors?.filter(color => color?.size === selectedStorage);
         const colorData = product?.colors?.find(color => color?.colorName === selectedColor && color?.size === selectedStorage);
         const price = colorData?.price || product.price;
         const sellingPrice = colorData?.sellingPrice || product?.sellingPrice
-        const countInStock = colorData?.countInStock || product?.countInStock
+        const countInStock = colorData?.stock || product?.countInStock
         const productWithSelections = {
             _id: product?._id,
             productName: product?.productName,
@@ -99,7 +98,7 @@ const ProductDetail = () => {
             colors: filteredColors
         };
 
-        addToCart(productWithSelections, count);
+        addToCart(productWithSelections);
     };
 
 

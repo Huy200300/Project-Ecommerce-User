@@ -5,6 +5,7 @@ import displayCurrency from '../helpers/displayCurrency';
 import { Link, useNavigate } from 'react-router-dom';
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import fetchDataTopSelling from '../helpers/fetchDataTopSelling';
 
 const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, renderBrandCheckboxes, fetchDataFilter, selectedBrands, priceRange }) => {
     const [data, setData] = useState([]);
@@ -14,17 +15,8 @@ const Sidebar = ({ category, selectedCategory, loading, brandCategoryMap, render
     const navigate = useNavigate();
 
     const fetchData = async (selectedCategory, limit = 3) => {
-        setLoading(true);
-        const res = await fetch(`${SummaryAip.filter_top_selling.url}?category=${selectedCategory}&limit=${limit}`, {
-            method: SummaryAip.filter_top_selling.method,
-            credentials: "include",
-            headers: {
-                "content-type": "application/json"
-            },
-        });
-        setLoading(false);
-        const dataApi = await res?.json();
-        setData(dataApi?.data);
+        const res = await fetchDataTopSelling(selectedCategory,limit)
+        setData(res?.data);
     };
 
     const fetchCountCategory = async () => {

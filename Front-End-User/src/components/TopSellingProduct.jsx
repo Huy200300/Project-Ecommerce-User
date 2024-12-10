@@ -26,9 +26,18 @@ const TopSellingProduct = () => {
             },
             body: JSON.stringify({ limit })
         })
-        const dataApi = await res?.json();
         setLoading(false);
-        setData(dataApi?.data);
+        const dataApi = await res?.json();
+        if (dataApi?.success) {
+            const products = dataApi?.data || [];
+            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
+                const reviewStats = await fetchReviewStats(product?._id);
+                return { ...product, ...reviewStats };
+            }));
+            setData(productsWithReviews)
+        } else if (dataApi?.error) {
+            toast(dataApi?.message)
+        }
     }
 
     useEffect(() => { fetchData() }, [])
@@ -41,6 +50,7 @@ const TopSellingProduct = () => {
     }
 
     const handleOnChange = async (value, limit = 10) => {
+        console.log(value)
         setLoading(true)
         const res = await fetch(SummaryAip.filter_top_selling.url, {
             method: SummaryAip.filter_top_selling.method,

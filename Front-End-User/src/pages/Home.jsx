@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 
 const CategoryGrid = React.lazy(() => import('../components/CategoryGrid'))
 const Banner = React.lazy(() => import('../components/Banner'))
@@ -11,20 +11,18 @@ const TopSellingProduct = React.lazy(() => import('../components/TopSellingProdu
 
 const Home = () => {
   return (
-    <Suspense fallback={<>...</>}>
-      <div>
-        <SectionCategory />
-        <Banner />
-        <CategoryGrid />
-        <NewProductList />
-        <HorizontalCardProduct category={"laptop"} heading={"Laptop Nổi Bật"} />
-        <ProductBanner />
-        <VerticalCardProduct category={"mobiles"} heading={"Điện Thoại Nổi Bật"} />
-        <TopSellingProduct />
-        <VerticalCardProduct category={"ipad"} heading={"Ipads Thịnh Hành"} />
-        <VerticalCardProduct category={"watches"} heading={"Đồng Hồ Phổ Biến"} />
-      </div>
-    </Suspense>
+    <div>
+      <SectionCategory />
+      <Banner />
+      <CategoryGrid />
+      <VerticalCardProduct category={"ipad"} heading={"Ipads Thịnh Hành"} />
+      <NewProductList />
+      <VerticalCardProduct category={"mobiles"} heading={"Điện Thoại Nổi Bật"} />
+      <ProductBanner />
+      <TopSellingProduct />
+      <HorizontalCardProduct category={"laptop"} heading={"Laptop Nổi Bật"} />
+      <VerticalCardProduct category={"watches"} heading={"Đồng Hồ Phổ Biến"} />
+    </div>
   )
 }
 
