@@ -79,7 +79,8 @@ const paymentMomo = async (req, res) => {
 
   const redirectUrl =
     sourceApp === "ReactNative" ? "" : "http://localhost:3000/payment-result";
-  const ipnUrl = "https://a378-58-187-76-86.ngrok-free.app/api/callback";
+  const ipnUrl =
+    "https://project-ecommerce-user-i0dvaeryd-huy200300s-projects.vercel.app/api/callback";
   const requestType = "payWithMethod";
   const amount = req.body.amount;
   const orderId = partnerCode + new Date().getTime();
