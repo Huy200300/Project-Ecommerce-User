@@ -60,7 +60,7 @@ async function paymentCastOnDelivery(req, res) {
       });
     } else {
       return res.redirect(
-        `https://project-ecommerce-user-i0dvaeryd-huy200300s-projects.vercel.app/api/payment-result?resultCode=0`
+        `${process.env.BACKEND_DOMAIN}/api/payment-result?resultCode=0`
       );
     }
   } catch (error) {
