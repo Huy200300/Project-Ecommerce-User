@@ -241,7 +241,7 @@ const PaymentPage = () => {
         if (datas?.error) {
             handlePaymentError(datas);
         } else {
-            window.location.href = `http://localhost:8080/api/payment-result?resultCode=0`;
+            window.location.href = `https://project-ecommerce-user-i0dvaeryd-huy200300s-projects.vercel.app/api/payment-result?resultCode=0`;
         }
     }
 
