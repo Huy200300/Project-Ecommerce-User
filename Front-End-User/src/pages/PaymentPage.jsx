@@ -58,8 +58,8 @@ const PaymentPage = () => {
     });
 
     const fetchDataShipping = async (user) => {
-        const res = await fetch(`http://localhost:8080/api/user/${user}/address`, {
-            method: "GET",
+        const res = await fetch(`${SummaryAip.getDataShipping.url}/${user}/address`, {
+            method: SummaryAip.getDataShipping.method,
             "credentials": "include",
             headers: {
                 "content-type": "application/json"
@@ -241,7 +241,7 @@ const PaymentPage = () => {
         if (datas?.error) {
             handlePaymentError(datas);
         } else {
-            window.location.href = `https://project-ecommerce-user-i0dvaeryd-huy200300s-projects.vercel.app/api/payment-result?resultCode=0`;
+            window.location.href = `${SummaryAip.paymentResult.url}`;
         }
     }
 

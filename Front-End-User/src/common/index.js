@@ -216,7 +216,14 @@ const SummaryAip = {
   getSearchName: {
     url: `${backendDomain}/api/search`,
     method: "GET",
-  }
+  },
+  getDataShipping: {
+    url: `${backendDomain}/api/user`,
+    method: "GET",
+  },
+  paymentResult: {
+    url: `${backendDomain}/api/payment-result?resultCode=0`,
+  },
 };
 
 export default SummaryAip;
