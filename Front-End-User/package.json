@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/bar": "^0.88.0",
+    "@nivo/core": "^0.88.0",
+    "@nivo/line": "^0.88.0",
     "@payos/node": "^1.0.6",
     "@reduxjs/toolkit": "^2.2.3",
     "@stripe/stripe-js": "^3.5.0",

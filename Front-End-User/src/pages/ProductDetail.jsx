@@ -85,6 +85,7 @@ const ProductDetail = () => {
         const price = colorData?.price || product.price;
         const sellingPrice = colorData?.sellingPrice || product?.sellingPrice
         const countInStock = colorData?.stock || product?.countInStock
+        console.log(countInStock)
         const productWithSelections = {
             _id: product?._id,
             productName: product?.productName,

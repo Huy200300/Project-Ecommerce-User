@@ -51,20 +51,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // const initializeApp = async () => {
-      fetchUserDetails();
-       fetchUserAddToCart();
-      // setTimeout(() => setLoading(false), 100);
-    // };
+    const initializeApp = async () => {
+      await fetchUserDetails();
+      await fetchUserAddToCart();
+      setTimeout(() => setLoading(false), 100);
+    };
 
-    // initializeApp();
+    initializeApp();
   }, []);
 
   return (
     <>
-      {/* {loading ? (
+      {loading ? (
         <LoadingSpinner />
-      ) : ( */}
+      ) : (
         <Context.Provider
           value={{
             fetchUserDetails,
@@ -96,7 +96,7 @@ function App() {
             <ScrollToTopButton />
           </TabProvider>
         </Context.Provider>
-      {/* )} */}
+      )}
     </>
   );
 }

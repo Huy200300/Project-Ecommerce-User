@@ -1,23 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GenericModal from './GenericModal'
 import { IoIosArrowDroprightCircle } from 'react-icons/io';
 import ShippingMethod from './ShippingMethod';
 import UpdateInfoModal from './UpdateInfoModal';
 import useAddressSelection from '../helpers/useAddressSelection';
 
-const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) => {
+const PaymentAddress = ({ dataShipping, data, setData, shippingMethod, setShippingMethod, setShippingFee, shippingOrClause, handleUpdateInfo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false);
-    const [shippingMethod, setShippingMethod] = useState('FAST');
-    const [shippingFee, setShippingFee] = useState(20000);
-    const [data, setData] = useState({
-        fullName: "",
-        addressType: "",
-        phone: "",
-        defaultAddress: false,
-        detailAddress: "",
-        fullAddress: ""
-    });
+
     const {
         selectedCity,
         selectedDistrict,
@@ -37,8 +28,10 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) =>
     const handleChange = (e) => {
         if (e.target.value === "shipping") {
             setIsOpenModalUpdateInfo(e.target.checked);
-        } 
+        }
     };
+
+
 
     const [selectedAddress, setSelectedAddress] = useState(() => {
         if (!dataShipping || (dataShipping?.length || 0) === 0) {
@@ -48,6 +41,21 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) =>
 
         return defaultAddr || dataShipping[0];
     });
+
+    const handleOnChange = (event) => {
+        const { name, value, checked, type } = event?.target;
+        setData(prevData => ({
+            ...prevData,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    useEffect(() => {
+        handleOnChange({ target: { name: 'fullAddress', value: `${selectedWard} ${selectedDistrict} ${selectedCity}` } });
+    }, [selectedCity, selectedDistrict, selectedWard]);
+
+    useEffect(() => {}, [dataShipping])
+
     const handleSelectAddress = (id) => {
         const address = dataShipping?.find(address => address?._id === id);
         setSelectedAddress(address);
@@ -61,13 +69,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) =>
             setShippingFee(25000);
         }
     };
-    const handleOnChange = (event) => {
-        const { name, value, checked, type } = event?.target;
-        setData(prevData => ({
-            ...prevData,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
+
     const handleInputChange = (e) => {
         const { name, value } = e?.target;
         setData(prevData => ({
@@ -79,7 +81,7 @@ const PaymentAddress = ({ dataShipping, shippingOrClause, handleUpdateInfo }) =>
     return (
         <>
             <h2 className="text-2xl font-bold mb-4 uppercase">Địa chỉ giao hàng</h2>
-            {dataShipping?.length > 0 ? (
+            {dataShipping.length > 0 ? (
                 <>
                     {selectedAddress && (
                         <div className="p-4 bg-blue-100 border rounded-md mt-4 cursor-pointer" onClick={() => setIsModalOpen(true)}>

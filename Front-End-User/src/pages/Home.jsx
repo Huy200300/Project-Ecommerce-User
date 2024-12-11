@@ -1,13 +1,14 @@
 import React from 'react'
 
-const CategoryGrid = React.lazy(() => import('../components/CategoryGrid'))
-const Banner = React.lazy(() => import('../components/Banner'))
-const HorizontalCardProduct = React.lazy(() => import('../components/HorizontalCardProduct'))
-const VerticalCardProduct = React.lazy(() => import('../components/VerticalCardProduct'))
-const SectionCategory = React.lazy(() => import('../components/SectionCategory'))
-const NewProductList = React.lazy(() => import('../components/NewProductList'))
-const ProductBanner = React.lazy(() => import('../components/ProductBanner'))
-const TopSellingProduct = React.lazy(() => import('../components/TopSellingProduct'))
+import CategoryGrid from '../components/CategoryGrid';
+import Banner from '../components/Banner';
+import HorizontalCardProduct from '../components/HorizontalCardProduct';
+import VerticalCardProduct from '../components/VerticalCardProduct';
+import SectionCategory from '../components/SectionCategory';
+import NewProductList from '../components/NewProductList';
+import ProductBanner from '../components/ProductBanner';
+import TopSellingProduct from '../components/TopSellingProduct';
+
 
 const Home = () => {
   return (
@@ -19,8 +20,8 @@ const Home = () => {
       <NewProductList />
       <VerticalCardProduct category={"mobiles"} heading={"Điện Thoại Nổi Bật"} />
       <ProductBanner />
-      <TopSellingProduct />
       <HorizontalCardProduct category={"laptop"} heading={"Laptop Nổi Bật"} />
+      <TopSellingProduct />
       <VerticalCardProduct category={"watches"} heading={"Đồng Hồ Phổ Biến"} />
     </div>
   )

@@ -40,7 +40,7 @@ const UpdateInfoModal = ({ data, handleOnChange, handleUpdateInfo, setIsOpenModa
 
 
     useEffect(() => {
-        handleOnChange({ target: { name: 'fullAddress', value: `${selectedCity} ${selectedDistrict} ${selectedWard}` } });
+        handleOnChange({ target: { name: 'fullAddress', value: `${selectedWard} ${selectedDistrict} ${selectedCity}` } });
     }, [selectedCity, selectedDistrict, selectedWard, handleOnChange]);
 
     const handleCitySelect = (city) => {

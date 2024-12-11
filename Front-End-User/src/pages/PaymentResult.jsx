@@ -4,6 +4,7 @@ import success from "../assets/success.gif";
 import cancel from "../assets/cancel.gif";
 import { useCart } from '../context/CartContext';
 import { useSelectedProducts } from '../context/SelectedProducts';
+import displayCurrency from '../helpers/displayCurrency';
 
 const PaymentResult = () => {
     const location = useLocation();
@@ -38,7 +39,7 @@ const PaymentResult = () => {
                 item => !idsToRemove.includes(item._id)
             );
             // console.log(updatedSelectedProducts)
-            // updateSelectedProducts(updatedSelectedProducts)
+            updateSelectedProducts(updatedSelectedProducts)
 
 
             setTimeout(() => {
@@ -80,12 +81,12 @@ const PaymentResult = () => {
                                                         <p className="font-semibold">{product.productName}</p>
                                                         {
                                                             product?.colors?.length > 0 ? <>
-                                                                <p className="text-gray-500">Màu sắc: {product.selectedColor}</p>
+                                                                <p className="text-gray-500 font-semibold">Màu sắc: {product.selectedColor}</p>
 
                                                             </> :
                                                                 <></>
                                                         }
-
+                                                        <p className='font-semibold text-red-500'>Giá: {displayCurrency(product.sellingPrice)}</p>
                                                     </div>
                                                 </li>
                                             ))}
