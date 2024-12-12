@@ -154,7 +154,7 @@ const vnpayReturn = async (req, res) => {
       } else {
         order.paymentDetails = {
           card: vnp_Params["vnp_CardType"],
-          bank: "VNPay",
+          bank: "VNPAY",
         };
       }
 
