@@ -6,6 +6,8 @@ async function paymentResult(req, res) {
 
     const resultCode = queryParams.get("resultCode");
 
+    console.log(resultCode)
+
     res.redirect(
       `${process.env.FRONTEND_URL}/payment-result?resultCode=${resultCode}`
     );

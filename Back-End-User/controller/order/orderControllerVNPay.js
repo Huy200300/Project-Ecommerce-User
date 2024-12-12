@@ -10,6 +10,33 @@ const addToCartModel = require("../../model/cartProduct");
 
 const createVNPAYTransaction = async (req, res) => {
   process.env.TZ = "Asia/Ho_Chi_Minh";
+  const {
+    products,
+    userId,
+    shipping,
+    shippingMethod,
+    shippingAddress,
+    sourceApp,
+  } = req.body;
+
+  const existingOrder = await Order.findOne({
+    userId,
+    status: { $in: ["pending"] },
+  });
+
+  if (existingOrder) {
+    await Order.deleteOne({
+      _id: existingOrder._id,
+    });
+    return res.status(400).json({
+      success: false,
+      error: true,
+      message:
+        "Giao dịch trước đó chưa hoàn tất hoặc bị lỗi. Vui lòng thanh toán sau ít phút nữa.",
+      orderId: existingOrder.orderId,
+      status: existingOrder.status,
+    });
+  }
 
   let date = new Date();
   let createDate = moment(date).format("YYYYMMDDHHmmss");
@@ -22,8 +49,12 @@ const createVNPAYTransaction = async (req, res) => {
 
   let tmnCode = config.get("vnp_TmnCode");
   let secretKey = config.get("vnp_HashSecret");
+
   let vnpUrl = config.get("vnp_Url");
-  let returnUrl = config.get("vnp_ReturnUrl");
+  let returnUrl = config
+    .get("vnp_ReturnUrl")
+    .replace("PLACEHOLDER_BACKEND_DOMAIN", process.env.BACKEND_DOMAIN);
+
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
   let bankCode = req.body.bankCode;
@@ -39,9 +70,9 @@ const createVNPAYTransaction = async (req, res) => {
   vnp_Params["vnp_TmnCode"] = tmnCode;
   vnp_Params["vnp_Locale"] = locale;
   vnp_Params["vnp_CurrCode"] = currCode;
-  vnp_Params["vnp_TxnRef"] = orderId;
+  vnp_Params["vnp_TxnRef"] = "VNPay" + orderId;
   vnp_Params["vnp_OrderInfo"] = "Thanh toan cho ma GD:" + orderId;
-  vnp_Params["vnp_OrderType"] = "other";
+  vnp_Params["vnp_OrderType"] = sourceApp;
   vnp_Params["vnp_Amount"] = amount * 100;
   vnp_Params["vnp_ReturnUrl"] = returnUrl;
   vnp_Params["vnp_IpAddr"] = ipAddr;
@@ -51,27 +82,13 @@ const createVNPAYTransaction = async (req, res) => {
   }
 
   vnp_Params = sortObject(vnp_Params);
-  const { productId, userId, shipping, shippingMethod, shippingAddress } =
-    req.body;
   try {
-    const productsInfo = await Promise.all(
-      productId.map(async (item) => {
-        return {
-          productId: item._id,
-          name: item.productName,
-          price: item.price,
-          image: item.productImage,
-          quantity: item.amount,
-        };
-      })
-    );
-
     const payload = {
       orderId: vnp_Params["vnp_TxnRef"],
       amount: vnp_Params["vnp_Amount"] / 100,
       bankCode: vnp_Params["vnp_BankCode"],
       userId: userId,
-      productDetails: productsInfo,
+      productDetails: products,
       shippingDetails: {
         shipping: shipping,
         shippingMethod: shippingMethod,
@@ -87,6 +104,8 @@ const createVNPAYTransaction = async (req, res) => {
     vnp_Params["vnp_SecureHash"] = signed;
     vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: false });
 
+    console.log("vnpUrl: " + vnpUrl);
+
     res.json({ url: vnpUrl });
   } catch (error) {
     console.error("Error creating VNPAY transaction:", error);
@@ -96,6 +115,7 @@ const createVNPAYTransaction = async (req, res) => {
 
 const vnpayReturn = async (req, res) => {
   let vnp_Params = req.query;
+  console.log("1", vnp_Params["vnp_OrderType"]);
   let secureHash = vnp_Params["vnp_SecureHash"];
   const orderId = vnp_Params["vnp_TxnRef"];
 
@@ -121,6 +141,7 @@ const vnpayReturn = async (req, res) => {
       order.status =
         vnp_Params["vnp_ResponseCode"] === "00" ? "paid" : "failed";
       order.isPaid = true;
+      order.orderId = vnp_Params["vnp_TxnRef"];
       order.paidAt = Date.now();
       order.statusHistory.push({
         orderStatus: "Pending",
@@ -133,16 +154,22 @@ const vnpayReturn = async (req, res) => {
         };
       } else {
         order.paymentDetails = {
-          card: "card",
-          bank: "VNPay",
+          card: vnp_Params["vnp_CardType"],
+          bank: vnp_Params["vnp_BankCode"],
         };
       }
 
       await order.save();
 
       if (vnp_Params["vnp_ResponseCode"] === "00") {
+        order.statusHistory.push({
+          orderStatus: "Pending",
+          updatedAt: Date.now(),
+        });
+        order.isPaid = true;
+        order.paidAt = Date.now();
         const promises = order.productDetails.map(async (product) => {
-          if (product.selectedColor) {
+          if (product.color) {
             // $elemMatch là một toán tử trong MongoDB dùng để tìm kiếm các
             // phần tử trong mảng mà thỏa mãn tất cả các điều kiện trong biểu thức của nó.
             await productModel.findOneAndUpdate(
@@ -150,7 +177,7 @@ const vnpayReturn = async (req, res) => {
                 _id: product.productId,
                 colors: {
                   $elemMatch: {
-                    colorName: product.selectedColor,
+                    colorName: product.color,
                     stock: { $gte: product.quantity },
                   },
                 },
@@ -163,16 +190,15 @@ const vnpayReturn = async (req, res) => {
               },
               {
                 // arrayFilters cung cấp điều kiện lọc cho các phần tử mảng mà bạn muốn áp dụng cập nhật.
-                arrayFilters: [{ "elem.colorName": product.selectedColor }],
+                arrayFilters: [{ "elem.colorName": product.color }],
                 new: true,
               }
             );
           } else {
-            // Nếu sản phẩm không có `selectedColor`, cập nhật `countInStock` và `selled`
             await productModel.findOneAndUpdate(
               {
                 _id: product.productId,
-                countInStock: { $gte: product.quantity }, // Kiểm tra tồn kho của sản phẩm
+                countInStock: { $gte: product.quantity },
               },
               {
                 $inc: {
@@ -197,11 +223,11 @@ const vnpayReturn = async (req, res) => {
           }
         );
 
-        res.redirect(
-          `${process.env.FRONTEND_URL}/payment-result?status=success`
-        );
+        res.redirect(`${process.env.FRONTEND_URL}/payment-result?resultCode=0`);
       } else {
-        res.redirect(`${process.env.FRONTEND_URL}/payment-result?status=error`);
+        res.redirect(
+          `${process.env.FRONTEND_URL}/payment-result?resultCode=error`
+        );
       }
     } catch (error) {
       console.error("Error processing payment:", error);

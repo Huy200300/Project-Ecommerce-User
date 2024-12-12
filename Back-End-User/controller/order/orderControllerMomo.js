@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const Order = require("../../model/orderModel");
 const productModel = require("../../model/productModel");
 const userModel = require("../../model/userModel");
+const { console } = require("inspector");
 
 const accessKey = process.env.MOMO_ACCESSKEY;
 const secretKey = process.env.MOMO_SECRETKEY;
@@ -16,7 +17,7 @@ const paymentMomo = async (req, res) => {
     shippingAddress,
     sourceApp,
   } = req.body;
-  // console.log(req.body);
+  // console.log("momo",req.body);
 
   // console.log(accessKey, secretKey);
 
@@ -81,7 +82,8 @@ const paymentMomo = async (req, res) => {
     sourceApp === "ReactNative"
       ? ""
       : `${process.env.FRONTEND_URL}/payment-result`;
-  const ipnUrl = `${process.env.BACKEND_DOMAIN}/api/callback`;
+  const ipnUrl = `https://bcad-58-187-76-86.ngrok-free.app/api/callback`;
+  console.log("ipnUrl", ipnUrl);
   const requestType = "payWithMethod";
   const amount = req.body.amount;
   const orderId = partnerCode + new Date().getTime();
@@ -183,7 +185,7 @@ const paymentCallback = async (req, res) => {
     orderType,
     message,
   } = req.body;
-
+  console.log("bdy", req.body);
   const order = await Order.findOne({ orderId: orderId });
   if (!order) {
     return res.status(404).json({ message: "Order not found" });
@@ -212,7 +214,7 @@ const paymentCallback = async (req, res) => {
     order.paidAt = Date.now();
 
     const promises = order.productDetails.map(async (product) => {
-      if (product.selectedColor) {
+      if (product.color) {
         // $elemMatch là một toán tử trong MongoDB dùng để tìm kiếm các
         // phần tử trong mảng mà thỏa mãn tất cả các điều kiện trong biểu thức của nó.
         await productModel.findOneAndUpdate(
@@ -220,7 +222,7 @@ const paymentCallback = async (req, res) => {
             _id: product.productId,
             colors: {
               $elemMatch: {
-                colorName: product.selectedColor,
+                colorName: product.color,
                 stock: { $gte: product.quantity },
               },
             },
@@ -233,7 +235,7 @@ const paymentCallback = async (req, res) => {
           },
           {
             // arrayFilters cung cấp điều kiện lọc cho các phần tử mảng mà bạn muốn áp dụng cập nhật.
-            arrayFilters: [{ "elem.colorName": product.selectedColor }],
+            arrayFilters: [{ "elem.colorName": product.color }],
             new: true,
           }
         );

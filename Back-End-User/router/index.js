@@ -123,7 +123,7 @@ router.post("/delete-cart-product", authToken, deleteAddToCartProduct);
 router.post("/delete-all-cart-product", authToken, deleteAllAddToCartProduct);
 
 //payment and order
-router.post("/create_payment_url", authToken, createVNPAYTransaction);
+router.post("/create_payment_url", createVNPAYTransaction);
 router.get("/vnpay_return", vnpayReturn);
 router.get("/orders/user/:userId", orderVNPAY);
 router.post("/orders-detail", orderDetails);
