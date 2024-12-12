@@ -47,13 +47,11 @@ const createVNPAYTransaction = async (req, res) => {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
 
-  let tmnCode = config.get("vnp_TmnCode");
-  let secretKey = config.get("vnp_HashSecret");
+  let tmnCode = process.env.VNPAY_TMN_CODE;
+  let secretKey = process.env.VNPAY_SECRET_KEY;
 
-  let vnpUrl = config.get("vnp_Url");
-  let returnUrl = config
-    .get("vnp_ReturnUrl")
-    .replace("PLACEHOLDER_BACKEND_DOMAIN", process.env.BACKEND_DOMAIN);
+  let vnpUrl = process.env.VNPAY_URL;
+  let returnUrl = process.env.VNPAY_RETURNURL;
 
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
