@@ -141,6 +141,7 @@ const vnpayReturn = async (req, res) => {
       order.isPaid = true;
       order.orderId = vnp_Params["vnp_TxnRef"];
       order.paidAt = Date.now();
+      order.bankCode = vnp_Params["vnp_BankCode"];
       order.statusHistory.push({
         orderStatus: "Pending",
         updatedAt: Date.now(),
@@ -153,7 +154,7 @@ const vnpayReturn = async (req, res) => {
       } else {
         order.paymentDetails = {
           card: vnp_Params["vnp_CardType"],
-          bank: vnp_Params["vnp_BankCode"],
+          bank: "VNPay",
         };
       }
 
