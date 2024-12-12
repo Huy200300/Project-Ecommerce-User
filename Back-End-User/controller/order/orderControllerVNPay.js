@@ -121,7 +121,7 @@ const vnpayReturn = async (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-  let secretKey = config.get("vnp_HashSecret");
+  let secretKey = process.env.VNPAY_SECRET_KEY;
   let signData = querystring.stringify(vnp_Params, { encode: false });
   let hmac = crypto.createHmac("sha512", secretKey);
   let signed = hmac.update(Buffer.from(signData, "utf-8")).digest("hex");
