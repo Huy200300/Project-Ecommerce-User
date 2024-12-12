@@ -44,7 +44,7 @@ const PaymentResult = () => {
 
             setTimeout(() => {
                 setShowOptions(true);
-            }, 100000);
+            }, 10000);
         }
     }, [location.search, removeFromCart, cart, updateSelectedProducts, selectedProducts]);
 
