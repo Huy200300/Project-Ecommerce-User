@@ -51,9 +51,7 @@ const createVNPAYTransaction = async (req, res) => {
   let secretKey = process.env.VNPAY_SECRET_KEY;
 
   let vnpUrl = process.env.VNPAY_URL;
-  let returnUrl = config
-    .get("vnp_ReturnUrl")
-    .replace("PLACEHOLDER_BACKEND_DOMAIN", process.env.BACKEND_DOMAIN);
+  let returnUrl = process.env.VNP_RETURN_URL;
 
   let orderId = moment(date).format("DDHHmmss");
   let amount = req.body.amount;
