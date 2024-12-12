@@ -82,7 +82,7 @@ const paymentMomo = async (req, res) => {
     sourceApp === "ReactNative"
       ? ""
       : `${process.env.FRONTEND_URL}/payment-result`;
-  const ipnUrl = `https://bcad-58-187-76-86.ngrok-free.app/api/callback`;
+  const ipnUrl = `${process.env.BACKEND_DOMAIN}/api/callback`;
   console.log("ipnUrl", ipnUrl);
   const requestType = "payWithMethod";
   const amount = req.body.amount;
