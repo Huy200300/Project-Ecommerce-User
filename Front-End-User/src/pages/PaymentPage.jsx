@@ -279,15 +279,17 @@ const PaymentPage = () => {
     }
 
     const handleVNPayPayment = async (productId) => {
+        const products = getSelectedProductInfo(selectedProducts);
         const body = {
             amount: total,
             language: "vn",
             bankCode: paymentType,
             userId: dataUser?._id,
-            productId,
+            products,
             shipping: shippingFee,
             shippingMethod,
-            shippingAddress: data
+            shippingAddress: selectedAddress,
+            sourceApp: "ReactJS"
         };
 
         const datas = await makeApiRequest(SummaryAip.payment_vnpay.url, SummaryAip.payment_vnpay.method, body);
@@ -310,10 +312,9 @@ const PaymentPage = () => {
             shippingAddress: selectedAddress,
             sourceApp: "ReactJS"
         };
-        console.log(SummaryAip.payment_momo.url);
         const datas = await makeApiRequest(SummaryAip.payment_momo.url, SummaryAip.payment_momo.method, body);
         if (datas?.payUrl) {
-            // window.location.href = datas?.payUrl;
+            window.location.href = datas?.payUrl;
         } else {
             handlePaymentError(datas);
         }
