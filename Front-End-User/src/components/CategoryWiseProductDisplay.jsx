@@ -5,6 +5,7 @@ import translatedCategory from "../helpers/translatedCategory";
 import { useEffect, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
 
+
 const CategoryWiseProductDisplay = ({ category, heading, excludeProductId }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);

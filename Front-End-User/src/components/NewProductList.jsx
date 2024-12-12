@@ -7,6 +7,7 @@ import fetchReviewStats from '../helpers/fetchReviewStats';
 import { useCart } from '../context/CartContext';
 import { useFavorites } from '../context/FavoritesContext';
 import { useProductCompare } from '../context/ProductCompareContext';
+import pLimit from 'p-limit';
 
 
 const NewProductList = () => {
@@ -30,12 +31,22 @@ const NewProductList = () => {
         })
         const dataApi = await res?.json();
         setLoading(false)
+
         if (dataApi?.success) {
             const products = dataApi?.data || [];
-            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-                const reviewStats = await fetchReviewStats(product?._id);
-                return { ...product, ...reviewStats };
-            }));
+            const limit = pLimit(5);
+            const productsWithReviews = await Promise.all(
+                products?.map((product) =>
+                    limit(async () => {
+                        const reviewStats = await fetchReviewStats(product?._id);
+                        return { ...product, ...reviewStats };
+                    })
+                )
+            );
+            // const productsWithReviews = await Promise?.all(products?.map(async (product) => {
+            //     const reviewStats = await fetchReviewStats(product?._id);
+            //     return { ...product, ...reviewStats };
+            // }));
             setData(productsWithReviews)
         } else if (dataApi?.error) {
             toast(dataApi?.message)
@@ -64,10 +75,15 @@ const NewProductList = () => {
         const dataApi = await res?.json();
         if (dataApi?.success) {
             const products = dataApi?.data || [];
-            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-                const reviewStats = await fetchReviewStats(product?._id);
-                return { ...product, ...reviewStats };
-            }));
+            const limit = pLimit(5);
+            const productsWithReviews = await Promise.all(
+                products?.map((product) =>
+                    limit(async () => {
+                        const reviewStats = await fetchReviewStats(product?._id);
+                        return { ...product, ...reviewStats };
+                    })
+                )
+            );
             setData(productsWithReviews)
         } else if (dataApi?.error) {
             toast(dataApi?.message)

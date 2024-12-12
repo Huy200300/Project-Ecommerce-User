@@ -6,6 +6,7 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import fetchReviewStats from '../helpers/fetchReviewStats';
 import { useCart } from '../context/CartContext';
 import { useFavorites } from '../context/FavoritesContext';
+import pLimit from 'p-limit';
 
 
 const TopSellingProduct = () => {
@@ -30,10 +31,15 @@ const TopSellingProduct = () => {
         const dataApi = await res?.json();
         if (dataApi?.success) {
             const products = dataApi?.data || [];
-            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-                const reviewStats = await fetchReviewStats(product?._id);
-                return { ...product, ...reviewStats };
-            }));
+            const limit = pLimit(5);
+            const productsWithReviews = await Promise.all(
+                products?.map((product) =>
+                    limit(async () => {
+                        const reviewStats = await fetchReviewStats(product?._id);
+                        return { ...product, ...reviewStats };
+                    })
+                )
+            );
             setData(productsWithReviews)
         } else if (dataApi?.error) {
             toast(dataApi?.message)
@@ -50,7 +56,6 @@ const TopSellingProduct = () => {
     }
 
     const handleOnChange = async (value, limit = 10) => {
-        console.log(value)
         setLoading(true)
         const res = await fetch(SummaryAip.filter_top_selling.url, {
             method: SummaryAip.filter_top_selling.method,
@@ -64,10 +69,15 @@ const TopSellingProduct = () => {
         const dataApi = await res?.json();
         if (dataApi?.success) {
             const products = dataApi?.data || [];
-            const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-                const reviewStats = await fetchReviewStats(product?._id);
-                return { ...product, ...reviewStats };
-            }));
+            const limit = pLimit(5);
+            const productsWithReviews = await Promise.all(
+                products?.map((product) =>
+                    limit(async () => {
+                        const reviewStats = await fetchReviewStats(product?._id);
+                        return { ...product, ...reviewStats };
+                    })
+                )
+            );
             setData(productsWithReviews)
         } else if (dataApi?.error) {
             toast(dataApi?.message)
