@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import calculateDiscount from '../helpers/calculateDiscount'
 import fetchReviewStats from '../helpers/fetchReviewStats'
 import { FaStar } from 'react-icons/fa'
+import pLimit from 'p-limit';
+
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const navigate = useNavigate();
@@ -18,10 +20,15 @@ const HorizontalCardProduct = ({ category, heading }) => {
     setLoading(true);
     const categoryProduct = await fetchCategoryWiseProduct(category);
     const products = categoryProduct?.data || [];
-    const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-      const reviewStats = await fetchReviewStats(product?._id);
-      return { ...product, ...reviewStats };
-    }));
+    const limit = pLimit(5);
+    const productsWithReviews = await Promise.all(
+      products?.map((product) =>
+        limit(async () => {
+          const reviewStats = await fetchReviewStats(product?._id);
+          return { ...product, ...reviewStats };
+        })
+      )
+    );
     setLoading(false);
     setdata(productsWithReviews);
   }

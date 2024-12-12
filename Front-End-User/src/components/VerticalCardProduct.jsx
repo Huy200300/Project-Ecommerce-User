@@ -6,6 +6,8 @@ import fetchReviewStats from '../helpers/fetchReviewStats';
 import { useCart } from '../context/CartContext';
 import { useFavorites } from '../context/FavoritesContext';
 import ProductsListCards from './ProductsListCards';
+import pLimit from 'p-limit';
+
 
 const VerticalCardProduct = ({ category, heading }) => {
     const [data, setData] = useState([])
@@ -21,10 +23,15 @@ const VerticalCardProduct = ({ category, heading }) => {
         setLoading(true);
         const categoryProduct = await fetchCategoryWiseProduct(category);
         const products = categoryProduct?.data || [];
-        const productsWithReviews = await Promise?.all(products?.map(async (product) => {
-            const reviewStats = await fetchReviewStats(product?._id);
-            return { ...product, ...reviewStats };
-        }));
+        const limit = pLimit(5);
+        const productsWithReviews = await Promise.all(
+            products?.map((product) =>
+                limit(async () => {
+                    const reviewStats = await fetchReviewStats(product?._id);
+                    return { ...product, ...reviewStats };
+                })
+            )
+        );
         setLoading(false);
         setData(productsWithReviews);
     };
